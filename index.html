@@ -1424,6 +1424,7 @@ document.getElementById('finish').addEventListener('click', function(){
     : 'Bank ' + disp(code) + ' to history and set up the next session from it?';
   ask(msg, again ? 'Replace' : 'Bank it').then(function(ok){
     if(!ok) return;
+    var logTxt = buildLog(code);
     snapshot = {label: disp(code), data: JSON.stringify(state)};
     showUndo(true);
     var d = today();
@@ -1445,7 +1446,19 @@ document.getElementById('finish').addEventListener('click', function(){
     markSaved(code);
     stopRest();
     save();
-    toast(again ? disp(code) + ' entry replaced' : disp(code) + ' banked, next targets ready');
+    var done = again ? disp(code) + ' entry replaced' : disp(code) + ' banked';
+    function copied(ok2){ toast(done + (ok2 ? ' \u00b7 log copied \u2014 paste it to Claude' : ' \u00b7 auto-copy failed, use Copy log')); }
+    if(logTxt && navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(logTxt).then(function(){ copied(true); }, function(){
+        var ta = document.createElement('textarea');
+        ta.value = logTxt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        var ok3 = false;
+        try{ ok3 = document.execCommand('copy'); }catch(e){}
+        document.body.removeChild(ta);
+        copied(ok3);
+      });
+    } else copied(false);
   });
 });
 
