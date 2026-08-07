@@ -127,6 +127,56 @@ main{max-width:880px;margin:0 auto;padding:0 12px 72px}
 .log tbody tr+tr td,.log tbody tr+tr th{border-top:1px solid #23282C}
 .log input{width:100%;min-width:0;background:var(--surf2);border:1px solid var(--line);border-radius:3px;
  color:var(--ink);font-family:var(--mono);font-size:15px;padding:9px 8px;text-align:center;min-height:42px}
+.xc{white-space:nowrap;width:34px}
+.rpe{appearance:none;border:1px solid #33393E;background:none;color:var(--steel);
+ font-family:var(--mono);font-size:10.5px;width:26px;height:22px;border-radius:5px;padding:0;cursor:pointer}
+.rpe.on{border-color:#4A4231;color:var(--amber)}
+.pain{appearance:none;border:1px solid #33393E;background:none;width:26px;height:10px;
+ border-radius:5px;padding:0;margin-top:3px;display:block;cursor:pointer}
+.pain[data-v="1"]{background:#2F5C41;border-color:#2F5C41}
+.pain[data-v="2"]{background:#8a6d1d;border-color:#8a6d1d}
+.pain[data-v="3"]{background:#5C2326;border-color:#F08A8E}
+.ex:not([data-pain]) .pain{display:none}
+.th-x{width:34px;color:var(--steel)}
+.e1{float:right;font-family:var(--mono);font-size:10px;color:var(--steel)}
+.plate{margin:2px 4px 8px;font-family:var(--mono);font-size:11px;color:#9FB6A8}
+.trendbox{margin:0 0 6px}
+.trend{appearance:none;background:none;border:0;color:var(--steel);font-family:var(--mono);
+ font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px;cursor:pointer}
+.chart{padding:4px 2px 8px}
+.chart svg{width:100%;height:auto;display:block}
+.notebox{margin:0 0 10px}
+.exnote{width:100%;box-sizing:border-box;background:#171B1E;border:1px dashed #33393E;border-radius:5px;
+ color:var(--ink);font-size:13px;padding:8px 10px}
+.exnote:focus{outline:none;border-color:#4A4231}
+.lastnote{margin:5px 2px 0;font-size:12px;color:var(--amber);opacity:.85}
+.spark{margin-left:auto;margin-right:8px;display:inline-flex;align-items:center}
+.spark svg{width:56px;height:16px;display:block}
+.wkcard{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px;margin-bottom:12px}
+.wkcard h3{margin:0 0 10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+ text-transform:uppercase;color:var(--steel);font-weight:600}
+.wk-legend{font-family:var(--mono);font-size:10px;color:var(--steel);margin:8px 0 0;display:flex;gap:12px;align-items:center}
+.lg{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px}
+.lg-low{background:#2A3138}.lg-ok{background:#2F5C41}.lg-hi{background:#5C2326}
+.wk-sub{font-family:var(--mono);font-size:11px;color:var(--steel);margin:8px 0 0}
+#heatmap .hm-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+#heatmap .hm-name{flex:0 0 92px;font-size:12px;color:#C9CDD1}
+#heatmap .hm-bar{flex:1;height:14px;border-radius:4px;background:#22272B;position:relative;overflow:hidden}
+#heatmap .hm-fill{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
+#heatmap .hm-n{flex:0 0 26px;text-align:right;font-family:var(--mono);font-size:10.5px;color:var(--steel)}
+#cal{display:grid;grid-template-columns:repeat(14, 1fr);gap:4px}
+#cal i{aspect-ratio:1;border-radius:3px;background:#22272B;display:block}
+#cal i.on{background:#2F5C41}
+#cal i.today{outline:1px solid var(--amber)}
+#recomp svg{width:100%;height:auto;display:block}
+.bwrow{display:flex;gap:8px;margin-top:10px}
+.bwrow input{flex:1;background:#171B1E;border:1px solid #33393E;border-radius:5px;color:var(--ink);
+ font-size:14px;padding:9px 10px}
+.rc-leg{font-family:var(--mono);font-size:10px;color:var(--steel);margin:4px 0 0;display:flex;gap:14px}
+.rc-leg b{font-weight:600}
+@keyframes confetti-fall{0%{transform:translateY(-8px) rotate(0);opacity:1}100%{transform:translateY(90vh) rotate(540deg);opacity:0}}
+.cf{position:fixed;top:0;width:7px;height:11px;z-index:80;pointer-events:none;
+ animation:confetti-fall 1.3s ease-in forwards}
 .log input.bwlock{background:none;border-style:dashed;border-color:#33393E;color:var(--steel);pointer-events:none}
 .log input[data-sug]{color:var(--amber);border-style:dashed;border-color:#4A4231}
 .log input:focus{outline:none;border-color:var(--amber);border-style:solid;background:#282E33;color:var(--ink)}
@@ -186,7 +236,7 @@ footer b{color:var(--ink);font-weight:500}
 
 <div class="bar">
   <div class="brand"><b>Workouts</b><span>U1 → L1 → U2 → L2 · 3–4×/week</span></div>
-  <div role="tablist" aria-label="Workout sessions"><button role="tab" class="tab" id="t-A1" aria-controls="s-A1" aria-selected="true" tabindex="0" data-s="A1"><span class="tc">U1</span><span class="tl">Upper</span><span class="tf">Push</span></button><button role="tab" class="tab" id="t-A2" aria-controls="s-A2" aria-selected="false" tabindex="-1" data-s="A2"><span class="tc">L1</span><span class="tl">Lower</span><span class="tf">Squat &amp; hinge</span></button><button role="tab" class="tab" id="t-B1" aria-controls="s-B1" aria-selected="false" tabindex="-1" data-s="B1"><span class="tc">U2</span><span class="tl">Upper</span><span class="tf">Pull</span></button><button role="tab" class="tab" id="t-B2" aria-controls="s-B2" aria-selected="false" tabindex="-1" data-s="B2"><span class="tc">L2</span><span class="tl">Lower</span><span class="tf">Carry</span></button></div>
+  <div role="tablist" aria-label="Workout sessions"><button role="tab" class="tab" id="t-A1" aria-controls="s-A1" aria-selected="true" tabindex="0" data-s="A1"><span class="tc">U1</span><span class="tl">Upper</span><span class="tf">Push</span></button><button role="tab" class="tab" id="t-A2" aria-controls="s-A2" aria-selected="false" tabindex="-1" data-s="A2"><span class="tc">L1</span><span class="tl">Lower</span><span class="tf">Squat &amp; hinge</span></button><button role="tab" class="tab" id="t-B1" aria-controls="s-B1" aria-selected="false" tabindex="-1" data-s="B1"><span class="tc">U2</span><span class="tl">Upper</span><span class="tf">Pull</span></button><button role="tab" class="tab" id="t-B2" aria-controls="s-B2" aria-selected="false" tabindex="-1" data-s="B2"><span class="tc">L2</span><span class="tl">Lower</span><span class="tf">Carry</span></button><button role="tab" class="tab" id="t-WK" aria-controls="s-WK" aria-selected="false" tabindex="-1" data-s="WK"><span class="tc">WK</span><span class="tl">Week</span><span class="tf">Trends</span></button></div>
   <div class="acts">
     <button id="copy" class="act">Copy log</button>
     <button id="finish" class="act go">Finish <b id="fs">U1</b></button>
@@ -204,9 +254,10 @@ footer b{color:var(--ink);font-weight:500}
   </div>
 </div>
 
-<main><section role="tabpanel" id="s-A1" aria-labelledby="t-A1" class="pane"><p class="pane-hd">9 movements · run in order<span data-saved class="saved"></span></p><details class="wu"><summary><span class="wu-t">Warm-up</span><span class="wu-m">~6 min · not logged</span><svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ol><li>90 sec easy spin or jumping jacks</li><li>Arm circles × 10 each way</li><li>Band pull-aparts × 15</li><li>Scap push-ups × 10</li><li>Front plank 30–45 sec</li><li>Wrist circles + forearm stretch 20 sec/side</li><li>First pressing set light</li></ol></details><div class="ex" data-ex="a11">
+<main><section role="tabpanel" id="s-A1" aria-labelledby="t-A1" class="pane"><p class="pane-hd">9 movements · run in order<span data-saved class="saved"></span></p><details class="wu"><summary><span class="wu-t">Warm-up</span><span class="wu-m">~6 min · not logged</span><svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ol><li>90 sec easy spin or jumping jacks</li><li>Arm circles × 10 each way</li><li>Band pull-aparts × 15</li><li>Scap push-ups × 10</li><li>Front plank 30–45 sec</li><li>Wrist circles + forearm stretch 20 sec/side</li><li>First pressing set light</li></ol></details><div class="ex" data-ex="a11" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a11" id="b-a11">
    <span class="n">1</span><span class="nm">Flat Dumbbell Press</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 8–10</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -218,9 +269,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight <em>ea</em></th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Flat+Dumbbell+Press+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -231,9 +288,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Palms facing each other. Lower over 3 seconds until the dumbbells are level with your chest — stretch, not pinch. Press up and stop an inch short of lockout.</dd></dl>
    <div class="elbow"><span class="tag">Elbow</span><p>Your new primary press. Each arm finds its own path instead of being locked to a bar, which is exactly what a cranky elbow wants. The risky moment is the kick-up, not the set — one dumbbell at a time, never both.</p></div>
  </div>
-</div><div class="ex" data-ex="a12">
+</div><div class="ex" data-ex="a12" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a12" id="b-a12">
    <span class="n">2</span><span class="nm">Incline Dumbbell Press  (30°)</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 10–12</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -245,9 +303,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight <em>ea</em></th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Incline+Dumbbell+Press+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -258,9 +322,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Palms facing each other the entire set. Lower over 3 seconds until the dumbbells are level with your upper chest, press up, stop short of lockout.</dd></dl>
    <div class="elbow"><span class="tag">Elbow</span><p>Same free joint path as the flat press, different angle of stress. Rotating the angle across sessions is how you keep progressing without ever loading the elbow the same way twice.</p></div>
  </div>
-</div><div class="ex" data-ex="a13">
+</div><div class="ex" data-ex="a13" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a13" id="b-a13">
    <span class="n">3</span><span class="nm">Lat Pulldown</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 10–12</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -272,9 +337,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">On bar</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Lat+Pulldown+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -288,6 +359,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="a14">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a14" id="b-a14">
    <span class="n">4</span><span class="nm">Ancore Cable Fly</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 12–15</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -299,9 +371,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight <em>ea</em></th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Ancore+Cable+Fly+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -315,6 +393,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="a15">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a15" id="b-a15">
    <span class="n">5</span><span class="nm">Dumbbell Lateral Raise</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 12–15</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -326,9 +405,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight <em>ea</em></th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Dumbbell+Lateral+Raise+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -339,9 +424,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Raise to shoulder height with the pinkies slightly high, then take 3 seconds to lower. If you're swinging, drop 5 lb — this one is never heavy.</dd></dl>
    <div class="elbow"><span class="tag">Elbow</span><p>Light load, no joint stress. Don't ego this.</p></div>
  </div>
-</div><div class="ex" data-ex="a18">
+</div><div class="ex" data-ex="a18" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a18" id="b-a18">
    <span class="n">6</span><span class="nm">EZ-Bar Curl 7/7/7</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">2 × 21</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -353,9 +439,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">On bar</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=EZ-Bar+Curl+7%2F7%2F7+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -366,9 +458,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>7 reps bottom half (stopping short of full extension at the bottom, as always) → 7 reps top half → 7 full reps. That's one set. The burn is the point — the weight stays humble.</dd></dl>
    <div class="elbow"><span class="tag">Elbow</span><p>Highest-strain biceps work in the program: long time under tension, deep fatigue. Bare bar until two clean weeks. If the elbow whispers during curls, THIS is the first exercise dropped.</p></div>
  </div>
-</div><div class="ex" data-ex="a19">
+</div><div class="ex" data-ex="a19" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a19" id="b-a19">
    <span class="n">7</span><span class="nm">Bayesian Cable Curl  (single arm)</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">2 × 12–15 per arm</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -380,9 +473,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Bayesian+Cable+Curl+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -393,9 +492,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Curl from the stretched position up toward your shoulder. Squeeze 1 second, return over 3 into a long — not locked — stretch. The behind-the-body line loads the long head where nothing else in your week does.</dd></dl>
    <div class="elbow"><span class="tag">Elbow</span><p>Cable tension is smooth and the stretch is loaded gently. Hip-height anchor is what keeps tension on the stretch — a floor pulley pulls too vertically. Numbers are Ancore settings, relative to it only.</p></div>
  </div>
-</div><div class="ex" data-ex="a16">
+</div><div class="ex" data-ex="a16" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a16" id="b-a16">
    <span class="n">8</span><span class="nm">Triceps Pushdown  (Y-handle)</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">2 × 15</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -407,9 +507,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">On bar</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Triceps+Pushdown+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -423,6 +529,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="a17">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a17" id="b-a17">
    <span class="n">9</span><span class="nm">Wrist Extensor Eccentric</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">2 × 15</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -434,9 +541,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Wrist+Extensor+Eccentric+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -450,6 +563,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-A2" aria-labelledby="t-A2" class="pane" hidden><p class="pane-hd">6 movements · run in order<span data-saved class="saved"></span></p><details class="wu"><summary><span class="wu-t">Warm-up</span><span class="wu-m">~8 min · not logged</span><svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ol><li>2 min easy spin</li><li>Cat-cow × 8</li><li>Bird dogs 6/side · 3-sec hold</li><li>Dead bugs 8/side</li><li>Leg swings 10/side</li><li>Bodyweight squats × 10</li><li>Couch stretch 30 sec/side (Hyper Pro)</li></ol></details><div class="ex" data-ex="a21">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a21" id="b-a21">
    <span class="n">1</span><span class="nm">Back Squat  (or Goblet Squat)</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 6–8</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -461,9 +575,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">On bar</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Back+Squat+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -477,6 +597,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="a22">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a22" id="b-a22">
    <span class="n">2</span><span class="nm">Romanian Deadlift</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 8–10</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -488,9 +609,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">On bar</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid" href="https://youtu.be/5rIqP63yWFg" target="_blank" rel="noopener"><span class="vi">▶</span> Watch demo</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -504,6 +631,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="a23">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a23" id="b-a23">
    <span class="n">3</span><span class="nm">Leg Extension</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 12–15</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -515,9 +643,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">On bar</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Leg+Extension+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -531,6 +665,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="a24">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a24" id="b-a24">
    <span class="n">4</span><span class="nm">Leg Curl</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 12–15</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -542,9 +677,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">On bar</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Leg+Curl+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -558,6 +699,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="a25">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a25" id="b-a25">
    <span class="n">5</span><span class="nm">Calf Raises & Rocks  (The Bob)</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 12–15 · both ways</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -569,9 +711,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Body</th>
        <th scope="col" class="th-tot">&#8211;</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w bwlock" type="text" value="BW" readonly tabindex="-1" aria-label="Bodyweight"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w bwlock" type="text" value="BW" readonly tabindex="-1" aria-label="Bodyweight"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w bwlock" type="text" value="BW" readonly tabindex="-1" aria-label="Bodyweight"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w bwlock" type="text" value="BW" readonly tabindex="-1" aria-label="Bodyweight"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w bwlock" type="text" value="BW" readonly tabindex="-1" aria-label="Bodyweight"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w bwlock" type="text" value="BW" readonly tabindex="-1" aria-label="Bodyweight"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Calf+Raises+%26+Rocks+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -585,6 +733,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="a26">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-a26" id="b-a26">
    <span class="n">6</span><span class="nm">Ab Wheel</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 8–12</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -596,9 +745,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">On bar</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Ab+Wheel+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -609,9 +764,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Roll out only as far as you can keep your lower back flat. Ribs pulled down, glutes squeezed. The moment your back arches, you've gone too far.</dd></dl>
    
  </div>
-</div></section><section role="tabpanel" id="s-B1" aria-labelledby="t-B1" class="pane" hidden><p class="pane-hd">9 movements · run in order<span data-saved class="saved"></span></p><details class="wu"><summary><span class="wu-t">Warm-up</span><span class="wu-m">~6 min · not logged</span><svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ol><li>90 sec spin or jumping jacks</li><li>Band pull-aparts × 15</li><li>Dead hang 20–30 sec · neutral grip · skip if elbow objects</li><li>Scap pull-ups × 8</li><li>Front plank 30–45 sec</li><li>Wrist circles + forearm stretch</li><li>First pulldown set light</li></ol></details><div class="ex" data-ex="b11">
+</div></section><section role="tabpanel" id="s-B1" aria-labelledby="t-B1" class="pane" hidden><p class="pane-hd">9 movements · run in order<span data-saved class="saved"></span></p><details class="wu"><summary><span class="wu-t">Warm-up</span><span class="wu-m">~6 min · not logged</span><svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ol><li>90 sec spin or jumping jacks</li><li>Band pull-aparts × 15</li><li>Dead hang 20–30 sec · neutral grip · skip if elbow objects</li><li>Scap pull-ups × 8</li><li>Front plank 30–45 sec</li><li>Wrist circles + forearm stretch</li><li>First pulldown set light</li></ol></details><div class="ex" data-ex="b11" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b11" id="b-b11">
    <span class="n">1</span><span class="nm">Lat Pulldown  (heavy)</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 8–10</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -623,9 +779,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">On bar</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Lat+Pulldown+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -636,9 +798,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Drive the elbows down and back, bar to the top of the chest, chest up. 3 seconds back up to a full stretch. This is your heavy pull — lower reps and more weight than the U1 version.</dd></dl>
    <div class="elbow"><span class="tag">Elbow</span><p>Shoulder-width, elbows tracking down in front of you — that path is easy on the elbow. It's the WIDE grip with flared elbows to avoid, not the bar itself.</p></div>
  </div>
-</div><div class="ex" data-ex="b12">
+</div><div class="ex" data-ex="b12" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b12" id="b-b12">
    <span class="n">2</span><span class="nm">Chest-Supported Dumbbell Row</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 10–12</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -650,9 +813,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight <em>ea</em></th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Chest-Supported+Dumbbell+Row+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -663,9 +832,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Pull the shoulder blades DOWN and back first, then row the elbows toward your hips — lower ribs, not armpits. Squeeze 1 second, lower over 3. Shoulders stay away from the ears the whole set.</dd></dl>
    <div class="elbow"><span class="tag">Elbow</span><p>Chest support kills the lower-back swing and the biceps cheat. Pure back, no momentum.</p></div><div class="note"><span class="tag">Note</span><p>Feeling this in your neck means the reps are starting with a shrug or your chin is craning up. Blades down first, eyes down, elbows low — and if it persists, drop 5 per hand.</p></div>
  </div>
-</div><div class="ex" data-ex="b13">
+</div><div class="ex" data-ex="b13" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b13" id="b-b13">
    <span class="n">3</span><span class="nm">High-Incline DB Press  (75°)</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 8–10</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -677,9 +847,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight <em>ea</em></th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=High-Incline+DB+Press+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -690,9 +866,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Press up and slightly back until the arms are long — stop an inch short of locked. 3 seconds down to shoulder height. The steep bench gives an overhead stimulus while the pad protects your pressing path.</dd></dl>
    <div class="elbow"><span class="tag">Elbow</span><p>Palms-in, back supported, and stop short of lockout. Start lighter than pride wants — 35s — and let the add-a-rep rule do the rest. If anything sharp shows up, drop 10 lb; overhead is the least forgiving angle.</p></div>
  </div>
-</div><div class="ex" data-ex="b14">
+</div><div class="ex" data-ex="b14" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b14" id="b-b14">
    <span class="n">4</span><span class="nm">Cable Row</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 12</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -704,9 +881,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">On bar</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Cable+Row+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -717,9 +900,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Pull the handle to your navel, squeeze the shoulder blades together, return over 3 seconds and let your back reach a full stretch.</dd></dl>
    
  </div>
-</div><div class="ex" data-ex="b15">
+</div><div class="ex" data-ex="b15" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b15" id="b-b15">
    <span class="n">5</span><span class="nm">Single-Arm Preacher Curl</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 10–12</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -731,9 +915,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Single-Arm+Preacher+Curl+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -744,9 +934,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Curl the dumbbell up, squeeze 2 seconds, lower over 3. Let the forearm rotate naturally through the rep instead of being locked by a bar. Right arm first, then match it with the left.</dd></dl>
    <div class="elbow danger"><span class="tag">Elbow</span><p>STOP 15–20° SHORT OF FULL EXTENSION at the bottom. Never let the arm straighten completely under load with the upper arm pinned to a pad — that position is one of the most common ways lifters wreck an elbow. One arm at a time also frees the wrist: a fixed bar locks your forearm into one rotation for every single rep, and that lock is a common driver of elbow pain.</p></div>
  </div>
-</div><div class="ex" data-ex="b19">
+</div><div class="ex" data-ex="b19" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b19" id="b-b19">
    <span class="n">6</span><span class="nm">Dumbbell Hammer Curl</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">2 × 10–12</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -758,9 +949,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight <em>ea</em></th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Dumbbell+Hammer+Curl+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -774,6 +971,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="b16">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b16" id="b-b16">
    <span class="n">7</span><span class="nm">Face Pull / Rear Delt Fly</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 15</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -785,9 +983,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight <em>ea</em></th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Face+Pull+%2F+Rear+Delt+Fly+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -798,9 +1002,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Pull toward your face with the hands separating and the elbows high. Finish with a small external rotation — knuckles ending up behind your ears.</dd></dl>
    <div class="elbow"><span class="tag">Elbow</span><p>Best shoulder-health insurance in the program. Never skip it.</p></div>
  </div>
-</div><div class="ex" data-ex="b18">
+</div><div class="ex" data-ex="b18" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b18" id="b-b18">
    <span class="n">8</span><span class="nm">Ancore Triceps Pullback  (single arm)</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">2 × 12–15 per arm</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -812,9 +1017,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Ancore+Triceps+Pullback+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -828,6 +1039,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="b17">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b17" id="b-b17">
    <span class="n">9</span><span class="nm">Wrist Extensor Eccentric</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">2 × 15</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -839,9 +1051,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Wrist+Extensor+Eccentric+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -855,6 +1073,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-B2" aria-labelledby="t-B2" class="pane" hidden><p class="pane-hd">7 movements · run in order<span data-saved class="saved"></span></p><details class="wu"><summary><span class="wu-t">Warm-up</span><span class="wu-m">~8 min · not logged</span><svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ol><li>2 min easy spin</li><li>Cat-cow × 8</li><li>Bird dogs 8/side</li><li>Dead bugs 6/side</li><li>Side plank 20–30 sec/side</li><li>Glute bridges × 12</li><li>Elephant walk 8/side (Hyper Pro)</li></ol></details><div class="ex" data-ex="b21">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b21" id="b-b21">
    <span class="n">1</span><span class="nm">Barbell Hip Thrust</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 8–10</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -866,9 +1085,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">On bar</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Barbell+Hip+Thrust+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -882,6 +1107,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="b22">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b22" id="b-b22">
    <span class="n">2</span><span class="nm">Bulgarian Split Squat</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 8–10 per leg</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -893,9 +1119,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight <em>ea</em></th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Bulgarian+Split+Squat+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -909,6 +1141,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="b23">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b23" id="b-b23">
    <span class="n">3</span><span class="nm">Back Extension</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 12</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -920,9 +1153,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">On bar</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Back+Extension+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -936,6 +1175,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="b24">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b24" id="b-b24">
    <span class="n">4</span><span class="nm">Nordic Curl Eccentric</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 5–8</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -947,9 +1187,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Angle&#176;</th>
        <th scope="col" class="th-tot">&#8211;</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Nordic+Curl+Eccentric+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -963,6 +1209,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="b25">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b25" id="b-b25">
    <span class="n">5</span><span class="nm">Step-Ups</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">2 × 10 per leg</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -974,9 +1221,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight <em>ea</em></th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Step-Ups+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -990,6 +1243,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="b26">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b26" id="b-b26">
    <span class="n">6</span><span class="nm">Farmer Carry</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 45 sec</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -1001,9 +1255,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and sec by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight <em>ea</em></th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Sec</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 sec" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 sec" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 sec" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Sec</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 sec" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 sec" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr><tr><th scope="row">3</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 3 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 3 sec" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 3 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 3 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 3 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=Farmer+Carry+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -1017,6 +1277,7 @@ footer b{color:var(--ink);font-weight:500}
 </div><div class="ex" data-ex="b27">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b27" id="b-b27">
    <span class="n">7</span><span class="nm">QL Raise  (side bend)</span>
+   <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">2 × 10–12 per side</span>
    <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -1028,9 +1289,15 @@ footer b{color:var(--ink);font-weight:500}
    <table class="log"><caption class="vis-hidden">Weight and reps by set</caption>
      <thead><tr><th scope="col">Set</th><th scope="col">Weight</th>
        <th scope="col" class="th-tot">Total</th>
-       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>
-     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td></tr></tbody></table>
-   <p class="vol" data-vol>Volume <b>&#8212;</b></p>
+       <th scope="col">Reps</th><th scope="col"><span class="vis-hidden">Done</span></th><th scope="col" class="th-x">@</th></tr></thead>
+     <tbody><tr><th scope="row">1</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 1 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 1 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 1 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 1 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 1 elbow pain"></button></td></tr><tr><th scope="row">2</th><td><input class="w" type="text" inputmode="decimal" aria-label="Set 2 weight" placeholder="&#8211;"></td><td class="tot x2" data-tot>&#8211;</td><td><input class="r" type="text" inputmode="numeric" aria-label="Set 2 reps" placeholder="&#8211;"></td><td><button class="tick" aria-label="Mark set 2 done" aria-pressed="false"></button></td><td class="xc"><button class="rpe" data-v="" aria-label="Set 2 effort RPE">–</button><button class="pain" data-v="0" aria-label="Set 2 elbow pain"></button></td></tr></tbody></table>
+   <p class="vol" data-vol>Volume <b>&#8212;</b><span class="e1" data-e1></span></p>
+   <p class="plate" data-plate hidden></p>
+   <div class="trendbox"><button class="trend" type="button">Trend ▸</button>
+     <div class="chart" data-chart hidden></div></div>
+   <div class="notebox"><input class="exnote" type="text" maxlength="140"
+     placeholder="Note to next-session you…" aria-label="Exercise note">
+     <p class="lastnote" data-lastnote hidden></p></div>
    <a class="vid srch" href="https://www.youtube.com/results?search_query=QL+Raise+exercise+proper+form" target="_blank" rel="noopener"><span class="vi">▶</span> Video demos</a>
    <details class="artbox"><summary><span class="ab-t">Diagram</span>
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
@@ -1041,7 +1308,7 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Bend sideways toward the floor under control, then raise back up to a straight line — stop there, no over-bending past straight. Do the weaker side first, match reps on the stronger side. Hold a plate at your chest once bodyweight is easy.</dd></dl>
    <div class="note"><span class="tag">Note</span><p>This is the lateral trunk work nothing else in the program covers — quadratus lumborum and obliques. Keep it smooth and slow; it is a control exercise, not a max-effort one.</p></div>
  </div>
-</div></section></main>
+</div></section><section role="tabpanel" id="s-WK" aria-labelledby="t-WK" class="pane" hidden><p class="pane-hd">This week at a glance</p><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div><div class="bwrow"><input id="bwin" type="text" inputmode="decimal" placeholder="Today’s weight (lb)"><button id="bwadd" class="act">Log</button></div></div></section></main>
 
 <footer>
   <b id="mode">Checking storage…</b><br>
@@ -1055,7 +1322,7 @@ footer b{color:var(--ink);font-weight:500}
 <script>
 (function(){
 'use strict';
-var META = {"a11": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "deg": 0, "rest": 180}, "a12": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "deg": 0, "rest": 180}, "a13": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 0, "rest": 180}, "a14": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "deg": 0, "rest": 90}, "a15": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "deg": 0, "rest": 90}, "a18": {"n": 2, "lo": 21, "hi": 21, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 0, "rest": 90}, "a19": {"n": 2, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "deg": 0, "rest": 90}, "a16": {"n": 2, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 0, "rest": 90}, "a17": {"n": 2, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "deg": 0, "rest": 90}, "a21": {"n": 3, "lo": 6, "hi": 8, "inc": 10, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 0, "rest": 180}, "a22": {"n": 3, "lo": 8, "hi": 10, "inc": 10, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 0, "rest": 180}, "a23": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 0, "rest": 90}, "a24": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 0, "rest": 90}, "a25": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 1, "deg": 0, "rest": 90}, "a26": {"n": 3, "lo": 8, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 0, "rest": 90}, "b11": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 0, "rest": 180}, "b12": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "deg": 0, "rest": 180}, "b13": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "deg": 0, "rest": 180}, "b14": {"n": 3, "lo": 12, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 0, "rest": 90}, "b15": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "deg": 0, "rest": 90}, "b19": {"n": 2, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "deg": 0, "rest": 90}, "b16": {"n": 3, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "deg": 0, "rest": 90}, "b18": {"n": 2, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "deg": 0, "rest": 90}, "b17": {"n": 2, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "deg": 0, "rest": 90}, "b21": {"n": 3, "lo": 8, "hi": 10, "inc": 10, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 0, "rest": 180}, "b22": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "deg": 0, "rest": 180}, "b23": {"n": 3, "lo": 12, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 0, "rest": 90}, "b24": {"n": 3, "lo": 5, "hi": 8, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "deg": 1, "rest": 180}, "b25": {"n": 2, "lo": 10, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "deg": 0, "rest": 90}, "b26": {"n": 3, "lo": 45, "hi": 45, "inc": 5, "unit": "sec", "ph": 1, "vm": 2, "bw": 0, "deg": 0, "rest": 90}, "b27": {"n": 2, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "deg": 0, "rest": 90}}, SEED = {}, SEED_HIST = {"a11": [{"date": "2026-07-27", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "40", "r": "10", "d": 1}, {"w": "40", "r": "10", "d": 1}]}, {"date": "2026-08-04", "sets": [{"w": "45", "r": "8", "d": 1}, {"w": "45", "r": "8", "d": 1}, {"w": "45", "r": "8", "d": 1}]}], "a12": [{"date": "2026-07-27", "sets": [{"w": "35", "r": "10", "d": 1}, {"w": "35", "r": "10", "d": 1}, {"w": "35", "r": "10", "d": 1}]}, {"date": "2026-08-04", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "12", "d": 1}]}], "a13": [{"date": "2026-07-27", "sets": [{"w": "75", "r": "12", "d": 1}, {"w": "75", "r": "15", "d": 1}, {"w": "75", "r": "15", "d": 1}]}, {"date": "2026-08-04", "sets": [{"w": "80", "r": "12", "d": 1}, {"w": "80", "r": "12", "d": 1}, {"w": "80", "r": "8", "d": 1}]}], "a14": [{"date": "2026-08-04", "sets": [{"w": "20", "r": "10", "d": 1}, {"w": "20", "r": "12", "d": 1}, {"w": "20", "r": "10", "d": 1}]}], "a15": [{"date": "2026-08-04", "sets": [{"w": "10", "r": "12", "d": 1}, {"w": "10", "r": "10", "d": 1}, {"w": "10", "r": "12", "d": 1}]}], "a16": [{"date": "2026-08-04", "sets": [{"w": "35", "r": "8", "d": 1}, {"w": "35", "r": "7", "d": 1}]}], "a17": [{"date": "2026-08-04", "sets": [{"w": "5", "r": "15", "d": 1}, {"w": "5", "r": "15", "d": 1}]}], "a21": [{"date": "2026-07-29", "sets": [{"w": "45", "r": "10", "d": 1}, {"w": "55", "r": "10", "d": 1}, {"w": "55", "r": "10", "d": 1}]}], "a22": [{"date": "2026-07-29", "sets": [{"w": "55", "r": "8", "d": 1}, {"w": "55", "r": "8", "d": 1}, {"w": "55", "r": "7", "d": 1}]}], "a23": [{"date": "2026-07-29", "sets": [{"w": "25", "r": "14", "d": 1}, {"w": "35", "r": "10", "d": 1}, {"w": "35", "r": "12", "d": 1}]}], "a24": [{"date": "2026-07-29", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "10", "d": 1}]}], "a25": [{"date": "2026-07-29", "sets": [{"w": "BW", "r": "12", "d": 1}, {"w": "BW", "r": "12", "d": 1}, {"w": "BW", "r": "12", "d": 1}]}], "b11": [{"date": "2026-07-30", "sets": [{"w": "50", "r": "15", "d": 1}, {"w": "75", "r": "8", "d": 1}]}], "b12": [{"date": "2026-07-30", "sets": [{"w": "25", "r": "10", "d": 1}, {"w": "25", "r": "10", "d": 1}]}], "b13": [{"date": "2026-07-30", "sets": [{"w": "25", "r": "10", "d": 1}, {"w": "25", "r": "10", "d": 1}]}], "b14": [{"date": "2026-07-30", "sets": [{"w": "75", "r": "12", "d": 1}, {"w": "75", "r": "15", "d": 1}]}], "b15": [{"date": "2026-07-30", "sets": [{"w": "20", "r": "12", "d": 1}, {"w": "20", "r": "10", "d": 1}]}], "b16": [{"date": "2026-07-30", "sets": [{"w": "15", "r": "10", "d": 1}, {"w": "15", "r": "11", "d": 1}]}], "b17": [{"date": "2026-07-30", "sets": [{"w": "10", "r": "15", "d": 1}, {"w": "10", "r": "15", "d": 1}]}], "b18": [{"date": "2026-07-30", "sets": [{"w": "15", "r": "10", "d": 1}, {"w": "15", "r": "8", "d": 1}]}], "b21": [{"date": "2026-08-03", "sets": [{"w": "95", "r": "8", "d": 1}, {"w": "95", "r": "8", "d": 1}]}], "b22": [{"date": "2026-08-03", "sets": [{"w": "0", "r": "8", "d": 1}, {"w": "0", "r": "9", "d": 1}]}], "b23": [{"date": "2026-08-03", "sets": [{"w": "", "r": "8", "d": 1}, {"w": "", "r": "8", "d": 1}]}], "b24": [{"date": "2026-08-03", "sets": [{"w": "35", "r": "5", "d": 1}]}], "b27": [{"date": "2026-08-03", "sets": [{"w": "", "r": "8", "d": 1}]}]}, KEY = 'workouts.v1';
+var META = {"a11": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["chest", "front delts", "triceps"], "deg": 0, "rest": 180}, "a12": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["chest", "front delts", "triceps"], "deg": 0, "rest": 180}, "a13": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 0, "mus": ["lats", "biceps"], "deg": 0, "rest": 180}, "a14": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["chest"], "deg": 0, "rest": 90}, "a15": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["side delts"], "deg": 0, "rest": 90}, "a18": {"n": 2, "lo": 21, "hi": 21, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 20, "mus": ["biceps"], "deg": 0, "rest": 90}, "a19": {"n": 2, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["biceps"], "deg": 0, "rest": 90}, "a16": {"n": 2, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 0, "mus": ["triceps"], "deg": 0, "rest": 90}, "a17": {"n": 2, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["forearms"], "deg": 0, "rest": 90}, "a21": {"n": 3, "lo": 6, "hi": 8, "inc": 10, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["quads", "glutes"], "deg": 0, "rest": 180}, "a22": {"n": 3, "lo": 8, "hi": 10, "inc": 10, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["hamstrings", "glutes", "low back"], "deg": 0, "rest": 180}, "a23": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["quads"], "deg": 0, "rest": 90}, "a24": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["hamstrings"], "deg": 0, "rest": 90}, "a25": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 1, "pain": 0, "bar": 0, "mus": ["calves"], "deg": 0, "rest": 90}, "a26": {"n": 3, "lo": 8, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["abs"], "deg": 0, "rest": 90}, "b11": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 0, "mus": ["lats", "biceps"], "deg": 0, "rest": 180}, "b12": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["upper back", "rear delts", "lats"], "deg": 0, "rest": 180}, "b13": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["front delts", "triceps"], "deg": 0, "rest": 180}, "b14": {"n": 3, "lo": 12, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 0, "mus": ["upper back", "lats"], "deg": 0, "rest": 90}, "b15": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["biceps"], "deg": 0, "rest": 90}, "b19": {"n": 2, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["biceps", "forearms"], "deg": 0, "rest": 90}, "b16": {"n": 3, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["rear delts", "upper back"], "deg": 0, "rest": 90}, "b18": {"n": 2, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["triceps"], "deg": 0, "rest": 90}, "b17": {"n": 2, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["forearms"], "deg": 0, "rest": 90}, "b21": {"n": 3, "lo": 8, "hi": 10, "inc": 10, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 45, "mus": ["glutes", "hamstrings"], "deg": 0, "rest": 180}, "b22": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["quads", "glutes"], "deg": 0, "rest": 180}, "b23": {"n": 3, "lo": 12, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["low back", "glutes", "hamstrings"], "deg": 0, "rest": 90}, "b24": {"n": 3, "lo": 5, "hi": 8, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["hamstrings"], "deg": 1, "rest": 180}, "b25": {"n": 2, "lo": 10, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["quads", "glutes"], "deg": 0, "rest": 90}, "b26": {"n": 3, "lo": 45, "hi": 45, "inc": 5, "unit": "sec", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["forearms", "abs"], "deg": 0, "rest": 90}, "b27": {"n": 2, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["obliques"], "deg": 0, "rest": 90}}, SEED = {}, SEED_HIST = {"a11": [{"date": "2026-07-27", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "40", "r": "10", "d": 1}, {"w": "40", "r": "10", "d": 1}]}, {"date": "2026-08-04", "sets": [{"w": "45", "r": "8", "d": 1}, {"w": "45", "r": "8", "d": 1}, {"w": "45", "r": "8", "d": 1}]}], "a12": [{"date": "2026-07-27", "sets": [{"w": "35", "r": "10", "d": 1}, {"w": "35", "r": "10", "d": 1}, {"w": "35", "r": "10", "d": 1}]}, {"date": "2026-08-04", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "12", "d": 1}]}], "a13": [{"date": "2026-07-27", "sets": [{"w": "75", "r": "12", "d": 1}, {"w": "75", "r": "15", "d": 1}, {"w": "75", "r": "15", "d": 1}]}, {"date": "2026-08-04", "sets": [{"w": "80", "r": "12", "d": 1}, {"w": "80", "r": "12", "d": 1}, {"w": "80", "r": "8", "d": 1}]}], "a14": [{"date": "2026-08-04", "sets": [{"w": "20", "r": "10", "d": 1}, {"w": "20", "r": "12", "d": 1}, {"w": "20", "r": "10", "d": 1}]}], "a15": [{"date": "2026-08-04", "sets": [{"w": "10", "r": "12", "d": 1}, {"w": "10", "r": "10", "d": 1}, {"w": "10", "r": "12", "d": 1}]}], "a16": [{"date": "2026-08-04", "sets": [{"w": "35", "r": "8", "d": 1}, {"w": "35", "r": "7", "d": 1}]}], "a17": [{"date": "2026-08-04", "sets": [{"w": "5", "r": "15", "d": 1}, {"w": "5", "r": "15", "d": 1}]}], "a21": [{"date": "2026-07-29", "sets": [{"w": "45", "r": "10", "d": 1}, {"w": "55", "r": "10", "d": 1}, {"w": "55", "r": "10", "d": 1}]}], "a22": [{"date": "2026-07-29", "sets": [{"w": "55", "r": "8", "d": 1}, {"w": "55", "r": "8", "d": 1}, {"w": "55", "r": "7", "d": 1}]}], "a23": [{"date": "2026-07-29", "sets": [{"w": "25", "r": "14", "d": 1}, {"w": "35", "r": "10", "d": 1}, {"w": "35", "r": "12", "d": 1}]}], "a24": [{"date": "2026-07-29", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "10", "d": 1}]}], "a25": [{"date": "2026-07-29", "sets": [{"w": "BW", "r": "12", "d": 1}, {"w": "BW", "r": "12", "d": 1}, {"w": "BW", "r": "12", "d": 1}]}], "b11": [{"date": "2026-07-30", "sets": [{"w": "50", "r": "15", "d": 1}, {"w": "75", "r": "8", "d": 1}]}], "b12": [{"date": "2026-07-30", "sets": [{"w": "25", "r": "10", "d": 1}, {"w": "25", "r": "10", "d": 1}]}], "b13": [{"date": "2026-07-30", "sets": [{"w": "25", "r": "10", "d": 1}, {"w": "25", "r": "10", "d": 1}]}], "b14": [{"date": "2026-07-30", "sets": [{"w": "75", "r": "12", "d": 1}, {"w": "75", "r": "15", "d": 1}]}], "b15": [{"date": "2026-07-30", "sets": [{"w": "20", "r": "12", "d": 1}, {"w": "20", "r": "10", "d": 1}]}], "b16": [{"date": "2026-07-30", "sets": [{"w": "15", "r": "10", "d": 1}, {"w": "15", "r": "11", "d": 1}]}], "b17": [{"date": "2026-07-30", "sets": [{"w": "10", "r": "15", "d": 1}, {"w": "10", "r": "15", "d": 1}]}], "b18": [{"date": "2026-07-30", "sets": [{"w": "15", "r": "10", "d": 1}, {"w": "15", "r": "8", "d": 1}]}], "b21": [{"date": "2026-08-03", "sets": [{"w": "95", "r": "8", "d": 1}, {"w": "95", "r": "8", "d": 1}]}], "b22": [{"date": "2026-08-03", "sets": [{"w": "0", "r": "8", "d": 1}, {"w": "0", "r": "9", "d": 1}]}], "b23": [{"date": "2026-08-03", "sets": [{"w": "", "r": "8", "d": 1}, {"w": "", "r": "8", "d": 1}]}], "b24": [{"date": "2026-08-03", "sets": [{"w": "35", "r": "5", "d": 1}]}], "b27": [{"date": "2026-08-03", "sets": [{"w": "", "r": "8", "d": 1}]}]}, KEY = 'workouts.v1';
 var DISP = {A1:'U1', A2:'L1', B1:'U2', B2:'L2'};
 function disp(c){ return DISP[c] || c; }
 var tabs = [].slice.call(document.querySelectorAll('[role=tab]'));
@@ -1145,7 +1412,9 @@ function readEx(id){
   return [].slice.call(el.querySelectorAll('.log tbody tr')).map(function(tr){
     return {w: tr.querySelector('.w').value.trim(),
             r: tr.querySelector('.r').value.trim(),
-            d: tr.querySelector('.tick').getAttribute('aria-pressed') === 'true' ? 1 : 0};
+            d: tr.querySelector('.tick').getAttribute('aria-pressed') === 'true' ? 1 : 0,
+            e: tr.querySelector('.rpe').dataset.v || '',
+            p: +(tr.querySelector('.pain').dataset.v || 0)};
   });
 }
 function writeEx(id, sets, suggested){
@@ -1156,9 +1425,96 @@ function writeEx(id, sets, suggested){
     w.value = META[id].bw ? 'BW' : (s.w || '');
     r.value = s.r || '';
     tk.setAttribute('aria-pressed', s.d ? 'true' : 'false');
+    var rp = tr.querySelector('.rpe'), pn = tr.querySelector('.pain');
+    rp.dataset.v = s.e || ''; rp.textContent = s.e || '\u2013';
+    rp.classList.toggle('on', !!s.e);
+    pn.dataset.v = String(s.p || 0);
+    var lg = lastFor(id), ls = lg && lg.sets[i];
+    if(!META[id].bw && !w.value){ w.placeholder = (ls && ls.w) ? ls.w : '\u2013'; }
+    if(!r.value){ r.placeholder = (ls && ls.r) ? ls.r : '\u2013'; }
     if(suggested && (s.w || s.r)){ w.setAttribute('data-sug',''); r.setAttribute('data-sug',''); }
     else { w.removeAttribute('data-sug'); r.removeAttribute('data-sug'); }
   });
+}
+
+function e1rm(w, r){ w = num(w); r = num(r); if(!w || !r || r > 15) return 0; return Math.round(w * (1 + r / 30)); }
+function bestE1(entry){
+  var b = 0;
+  (entry.sets || []).forEach(function(st){ var v = e1rm(st.w, st.r); if(v > b) b = v; });
+  return b;
+}
+function priorBests(id, beforeDate){
+  var bw2 = 0, be = 0;
+  (state.hist[id] || []).forEach(function(en){
+    if(beforeDate && en.date >= beforeDate) return;
+    en.sets.forEach(function(st){
+      if(num(st.r) > 0 && num(st.w) > bw2) bw2 = num(st.w);
+    });
+    var v = bestE1(en); if(v > be) be = v;
+  });
+  return {w: bw2, e: be};
+}
+function plateLine(id){
+  var el = exEl(id), p = el && el.querySelector('[data-plate]'); if(!p) return;
+  var bar = META[id].bar;
+  if(!bar){ p.hidden = true; return; }
+  var top = 0;
+  [].slice.call(el.querySelectorAll('.log tbody tr .w')).forEach(function(w){
+    var v = num(w.value); if(v > top) top = v;
+  });
+  if(!top || top <= bar){ p.hidden = true; return; }
+  var side = (top - bar) / 2, left = side, out = [], plates = [45,35,25,10,5,2.5];
+  plates.forEach(function(pl){ while(left >= pl - 0.01){ out.push(pl); left -= pl; } });
+  p.textContent = 'Load: ' + out.join(' + ') + ' per side  (bar ' + bar + ')' +
+    (left > 0.01 ? '  \u00b7 ' + left.toFixed(1) + ' short' : '');
+  p.hidden = false;
+}
+function seriesFor(id){
+  return (state.hist[id] || []).map(function(en){
+    var top = 0, e1 = bestE1(en), reps = 0;
+    en.sets.forEach(function(st){
+      if(num(st.r) > 0){ reps += num(st.r); if(num(st.w) > top) top = num(st.w); }
+    });
+    var v = META[id].deg ? (90 - top) : META[id].bw ? reps : (e1 || top);
+    return {date: en.date, v: v, top: top, e1: e1};
+  }).filter(function(d){ return d.v > 0; });
+}
+function svgLine(pts, wpx, hpx, color, pad){
+  pad = pad || 3;
+  var vs = pts.map(function(p){ return p.v; });
+  var lo = Math.min.apply(null, vs), hi = Math.max.apply(null, vs);
+  if(hi === lo){ hi = lo + 1; }
+  var step = pts.length > 1 ? (wpx - pad * 2) / (pts.length - 1) : 0;
+  var d = pts.map(function(p, i){
+    var x = pad + i * step;
+    var y = hpx - pad - (p.v - lo) / (hi - lo) * (hpx - pad * 2);
+    return (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+  }).join(' ');
+  return '<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="2" ' +
+         'stroke-linecap="round" stroke-linejoin="round"/>';
+}
+function renderSpark(id){
+  var el = exEl(id), sp = el && el.querySelector('[data-spark]'); if(!sp) return;
+  var pts = seriesFor(id).slice(-8);
+  if(pts.length < 2){ sp.innerHTML = ''; return; }
+  var up = pts[pts.length - 1].v >= pts[0].v;
+  sp.innerHTML = '<svg viewBox="0 0 56 16">' +
+    svgLine(pts, 56, 16, up ? '#8FD3A6' : '#F08A8E') + '</svg>';
+}
+function renderChart(id){
+  var el = exEl(id), box = el && el.querySelector('[data-chart]'); if(!box) return;
+  var pts = seriesFor(id);
+  if(pts.length < 2){
+    box.innerHTML = '<p style="color:var(--steel);font-size:12px;margin:4px">Two banked sessions and a trend appears here.</p>';
+    return;
+  }
+  var lab = META[id].deg ? 'progress (lower angle = higher)' : META[id].bw ? 'total reps' : 'estimated 1RM';
+  var last = pts[pts.length - 1];
+  box.innerHTML = '<svg viewBox="0 0 300 72">' + svgLine(pts, 300, 72, '#8FD3A6', 6) + '</svg>' +
+    '<p style="font-family:var(--mono);font-size:10px;color:var(--steel);margin:2px 4px">' +
+    pts.length + ' sessions \u00b7 ' + lab +
+    (META[id].deg || META[id].bw ? '' : ' \u00b7 latest e1RM <b style="color:#8FD3A6">' + last.e1 + '</b>') +
+    '</p>';
 }
 
 function lastFor(id){ var h = state.hist[id]; return (h && h.length) ? h[h.length-1] : null; }
@@ -1226,6 +1582,15 @@ function renderPrev(id){
   p.innerHTML = 'Last time (' + last.date + ') &nbsp; <b>' + txt + '</b>' +
     (s ? '<br>Target &nbsp; <b>' + s.w + '\u00d7' + s.r + '</b> &nbsp; <i>' + s.why + '</i>' : '');
   p.hidden = false;
+  var el2 = exEl(id), ln = el2 && el2.querySelector('[data-lastnote]');
+  if(ln){
+    var nt = state.note && state.note[id];
+    if(nt && nt.txt && nt.date !== today()){
+      ln.textContent = '\ud83d\udccc ' + nt.date + ': ' + nt.txt;
+      ln.hidden = false;
+    } else ln.hidden = true;
+  }
+  renderSpark(id);
 }
 
 function refresh(id){
@@ -1239,6 +1604,16 @@ function refresh(id){
     if(tr.querySelector('.tick').getAttribute('aria-pressed') === 'true') done++;
   });
   var holder = el.querySelector('[data-vol]');
+  var e1el = el.querySelector('[data-e1]');
+  if(e1el){
+    var bestNow = 0;
+    [].slice.call(el.querySelectorAll('.log tbody tr')).forEach(function(tr){
+      var v = e1rm(tr.querySelector('.w').value, tr.querySelector('.r').value);
+      if(v > bestNow) bestNow = v;
+    });
+    e1el.textContent = (bestNow && !META[id].bw && !META[id].deg) ? 'e1RM ' + bestNow : '';
+  }
+  plateLine(id);
   var b = holder && holder.querySelector('b');
   if(META[id].bw){
     var reps = 0;
@@ -1295,6 +1670,9 @@ function select(code, focus){
   var rs = document.getElementById('rs'), fs = document.getElementById('fs');
   if(rs) rs.textContent = disp(code);
   if(fs) fs.textContent = disp(code);
+  var abar = document.querySelector('.acts');
+  if(abar) abar.style.display = code === 'WK' ? 'none' : '';
+  if(code === 'WK') renderWeek();
   window.scrollTo({top: 0, behavior: 'instant'});
 }
 
@@ -1337,6 +1715,33 @@ tabs.forEach(function(t, i){
       state.cur[id] = readEx(id); refresh(id); save();
     });
   });
+  [].slice.call(ex.querySelectorAll('.rpe')).forEach(function(bt){
+    bt.addEventListener('click', function(){
+      var order = ['', '7', '8', '9', '10'];
+      var next = order[(order.indexOf(bt.dataset.v || '') + 1) % order.length];
+      bt.dataset.v = next; bt.textContent = next || '\u2013';
+      bt.classList.toggle('on', !!next);
+      state.cur[id] = readEx(id); save();
+    });
+  });
+  [].slice.call(ex.querySelectorAll('.pain')).forEach(function(bt){
+    bt.addEventListener('click', function(){
+      bt.dataset.v = String((+(bt.dataset.v || 0) + 1) % 4);
+      state.cur[id] = readEx(id); save();
+    });
+  });
+  var trendBtn = ex.querySelector('.trend'), chartBox = ex.querySelector('[data-chart]');
+  if(trendBtn) trendBtn.addEventListener('click', function(){
+    chartBox.hidden = !chartBox.hidden;
+    trendBtn.textContent = chartBox.hidden ? 'Trend \u25b8' : 'Trend \u25be';
+    if(!chartBox.hidden) renderChart(id);
+  });
+  var noteIn = ex.querySelector('.exnote');
+  if(noteIn) noteIn.addEventListener('input', function(){
+    state.note = state.note || {};
+    state.note[id] = {date: today(), txt: noteIn.value};
+    save();
+  });
   [].slice.call(ex.querySelectorAll('.tick')).forEach(function(tk){
     tk.addEventListener('click', function(){
       tk.setAttribute('aria-pressed', tk.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
@@ -1356,8 +1761,14 @@ function buildLog(code){
     [].slice.call(el.querySelectorAll('.log tbody tr')).forEach(function(tr, i){
       var w = tr.querySelector('.w').value.trim(), r = tr.querySelector('.r').value.trim();
       if(!w && !r) return;
+      var wi = tr.querySelector('.w'), ri = tr.querySelector('.r');
+      if(wi.hasAttribute('data-sug') && ri.hasAttribute('data-sug')) return;
       var wlbl = META[id].bw ? 'BW' : META[id].deg ? (w || '-') + '\u00b0' : (w || '-') + (META[id].ph ? '/hand' : '');
-      lines.push('  ' + (i+1) + '. ' + wlbl + ' x ' + (r || '-'));
+      var ann = '', ev = tr.querySelector('.rpe').dataset.v, pv = +(tr.querySelector('.pain').dataset.v || 0);
+      if(ev) ann += ' @' + ev;
+      if(pv === 2) ann += ' \u00b7 elbow amber';
+      if(pv === 3) ann += ' \u00b7 ELBOW RED';
+      lines.push('  ' + (i+1) + '. ' + wlbl + ' x ' + (r || '-') + ann);
       if(!META[id].bw && !META[id].deg) vol += num(w) * num(r) * (META[id].vm || 1);
     });
     if(!lines.length) return;
@@ -1416,6 +1827,7 @@ function markSaved(code){
 
 document.getElementById('finish').addEventListener('click', function(){
   var code = curSession(), ids = idsIn(code);
+  if(code === 'WK'){ toast('Open a session tab first'); return; }
   var live = ids.filter(touched);
   if(!live.length){ toast('Nothing new to save in ' + disp(code)); return; }
   var again = savedToday(code);
@@ -1425,6 +1837,19 @@ document.getElementById('finish').addEventListener('click', function(){
   ask(msg, again ? 'Replace' : 'Bank it').then(function(ok){
     if(!ok) return;
     var logTxt = buildLog(code);
+    var prs = [];
+    live.forEach(function(idp){
+      if(META[idp].bw || META[idp].deg) return;
+      var prior = priorBests(idp, today());
+      var bw5 = 0, be5 = 0;
+      readEx(idp).forEach(function(st){
+        if(num(st.r) > 0 && num(st.w) > bw5) bw5 = num(st.w);
+        var v5 = e1rm(st.w, st.r); if(v5 > be5) be5 = v5;
+      });
+      var nm = exEl(idp).querySelector('.nm').textContent.trim().replace(/\s*\(.*?\)\s*/g, ' ').trim();
+      if(prior.e && be5 > prior.e) prs.push(nm + ' e1RM ' + be5);
+      else if(prior.w && bw5 > prior.w) prs.push(nm + ' ' + bw5 + ' lb');
+    });
     snapshot = {label: disp(code), data: JSON.stringify(state)};
     showUndo(true);
     var d = today();
@@ -1446,7 +1871,10 @@ document.getElementById('finish').addEventListener('click', function(){
     markSaved(code);
     stopRest();
     save();
-    var done = again ? disp(code) + ' entry replaced' : disp(code) + ' banked';
+    if(prs.length){ confetti(); }
+    idsIn(code).forEach(function(id6){ renderSpark(id6); });
+    var done = (prs.length ? '\ud83c\udfc6 PR: ' + prs.join(' \u00b7 ') + ' \u2014 ' : '') +
+      (again ? disp(code) + ' entry replaced' : disp(code) + ' banked');
     function copied(ok2){ toast(done + (ok2 ? ' \u00b7 log copied \u2014 paste it to Claude' : ' \u00b7 auto-copy failed, use Copy log')); }
     if(logTxt && navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(logTxt).then(function(){ copied(true); }, function(){
@@ -1549,6 +1977,85 @@ function ask(msg, yesLabel){
 
 var restT = null, restStart = 0;
 function mmss(sec){ return Math.floor(sec/60) + ':' + String(sec%60).padStart(2,'0'); }
+var BW_LOG = [["2026-06-01", 192.1], ["2026-06-08", 191.5], ["2026-06-15", 191.7], ["2026-07-06", 193.8], ["2026-07-13", 193.0], ["2026-08-04", 191.4]];
+function allDates(){
+  var ds = {};
+  Object.keys(state.hist || {}).forEach(function(id){
+    (state.hist[id] || []).forEach(function(en){ ds[en.date] = 1; });
+  });
+  return ds;
+}
+function renderWeek(){
+  var hm = document.getElementById('heatmap');
+  if(hm){
+    var cutoff = new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10);
+    var per = {};
+    Object.keys(META).forEach(function(id){
+      (state.hist[id] || []).forEach(function(en){
+        if(en.date < cutoff) return;
+        var sets = en.sets.filter(function(st){ return num(st.r) > 0; }).length;
+        (META[id].mus || []).forEach(function(mu){ per[mu] = (per[mu] || 0) + sets; });
+      });
+    });
+    var order = ['chest','front delts','side delts','rear delts','upper back','lats','biceps','triceps',
+                 'forearms','abs','obliques','low back','glutes','quads','hamstrings','calves'];
+    hm.innerHTML = order.map(function(mu){
+      var n2 = per[mu] || 0;
+      var col = n2 >= 20 ? '#5C2326' : n2 >= 8 ? '#2F5C41' : n2 > 0 ? '#33471f' : '#2A3138';
+      var w2 = Math.min(n2 / 24 * 100, 100);
+      return '<div class="hm-row"><span class="hm-name">' + mu + '</span>' +
+        '<span class="hm-bar"><span class="hm-fill" style="width:' + w2 + '%;background:' + col + '"></span></span>' +
+        '<span class="hm-n">' + n2 + '</span></div>';
+    }).join('');
+  }
+  var cal = document.getElementById('cal');
+  if(cal){
+    var ds = allDates(), cells = [], today2 = today();
+    for(var i2 = 55; i2 >= 0; i2--){
+      var d2 = new Date(Date.now() - i2 * 864e5).toISOString().slice(0, 10);
+      cells.push('<i class="' + (ds[d2] ? 'on' : '') + (d2 === today2 ? ' today' : '') + '"></i>');
+    }
+    cal.innerHTML = cells.join('');
+    var wk = 0, mo = 0;
+    Object.keys(ds).forEach(function(d3){
+      if(d3 >= new Date(Date.now() - 7 * 864e5).toISOString().slice(0, 10)) wk++;
+      if(d3 >= new Date(Date.now() - 30 * 864e5).toISOString().slice(0, 10)) mo++;
+    });
+    var st2 = document.getElementById('streak');
+    if(st2) st2.textContent = wk + ' sessions this week \u00b7 ' + mo + ' in the last 30 days';
+  }
+  var rc = document.getElementById('recomp');
+  if(rc){
+    var bw3 = BW_LOG.concat(state.bw || []).sort(function(a, b2){ return a[0] < b2[0] ? -1 : 1; });
+    var roll = bw3.map(function(p3, i3){
+      var lo3 = Math.max(0, i3 - 3);
+      var win = bw3.slice(lo3, i3 + 1);
+      return {v: win.reduce(function(a4, b4){ return a4 + b4[1]; }, 0) / win.length};
+    });
+    var e1s = (state.hist.a11 || []).map(function(en){ return {v: bestE1(en)}; }).filter(function(p4){ return p4.v > 0; });
+    var body = '';
+    if(roll.length > 1) body += svgLine(roll, 300, 70, '#AEB6BC', 6);
+    if(e1s.length > 1) body += svgLine(e1s, 300, 70, '#8FD3A6', 6);
+    var lastBw = bw3.length ? bw3[bw3.length - 1] : null;
+    var lastE1 = e1s.length ? e1s[e1s.length - 1].v : 0;
+    rc.innerHTML = '<svg viewBox="0 0 300 70">' + body + '</svg>' +
+      '<p class="rc-leg"><b style="color:#AEB6BC">weight</b> ' + (lastBw ? lastBw[1] + ' lb (' + lastBw[0].slice(5) + ')' : '\u2014') +
+      ' <b style="color:#8FD3A6">flat press e1RM</b> ' + (lastE1 || '\u2014') + '</p>' +
+      '<p class="wk-sub">Weight flat or down while the green line rises = recomposition working.</p>';
+  }
+}
+function confetti(){
+  var colors = ['#E8534A', '#8FD3A6', '#C9CDD1', '#E8B44A'];
+  for(var i5 = 0; i5 < 26; i5++){
+    var p5 = document.createElement('i');
+    p5.className = 'cf';
+    p5.style.left = (5 + Math.random() * 90) + 'vw';
+    p5.style.background = colors[i5 % colors.length];
+    p5.style.animationDelay = (Math.random() * 0.25) + 's';
+    document.body.appendChild(p5);
+    setTimeout(function(el5){ return function(){ el5.remove(); }; }(p5), 1800);
+  }
+}
 function startRest(id){
   restStart = Date.now();
   var target = (META[id] && META[id].rest) || 90;
@@ -1570,6 +2077,18 @@ function stopRest(){
   if(el) el.hidden = true;
 }
 document.getElementById('rest').addEventListener('click', stopRest);
+var bwBtn = document.getElementById('bwadd');
+if(bwBtn) bwBtn.addEventListener('click', function(){
+  var v6 = num(document.getElementById('bwin').value);
+  if(!v6 || v6 < 80 || v6 > 400){ toast('Enter a weight in pounds'); return; }
+  state.bw = state.bw || [];
+  state.bw = state.bw.filter(function(p6){ return p6[0] !== today(); });
+  state.bw.push([today(), v6]);
+  save();
+  document.getElementById('bwin').value = '';
+  toast('Weight logged \u00b7 ' + v6 + ' lb');
+  renderWeek();
+});
 
 var tEl = document.getElementById('toast'), tT;
 function toast(m){
