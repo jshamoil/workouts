@@ -2104,7 +2104,26 @@ store.load().then(function(saved){
   } else {
     state = {cur: JSON.parse(JSON.stringify(SEED)), hist: JSON.parse(JSON.stringify(SEED_HIST))};
   }
-  redrawAll();
+  // absorb any seed sessions this device hasn't seen (e.g. logged elsewhere, baked in later)
+  var merged = 0;
+  Object.keys(SEED_HIST).forEach(function(id7){
+    var have = {};
+    (state.hist[id7] = state.hist[id7] || []).forEach(function(en){ have[en.date] = 1; });
+    SEED_HIST[id7].forEach(function(en){
+      if(!have[en.date]){
+        state.hist[id7].push(JSON.parse(JSON.stringify(en)));
+        merged++;
+      }
+    });
+    state.hist[id7].sort(function(a7, b7){ return a7.date < b7.date ? -1 : 1; });
+    state.hist[id7] = state.hist[id7].slice(-10);
+  });
+  if(merged){
+    redrawAll();
+    toast('Caught up \u00b7 merged ' + merged + ' logged sets from Claude');
+  } else {
+    redrawAll();
+  }
   store.save(state).then(function(ok){
     setSaveStat(ok ? 'ok' : 'bad', ok ? 'Saved' : 'NOT SAVED \u2014 use Copy log');
   });
