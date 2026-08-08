@@ -163,6 +163,12 @@ main{max-width:880px;margin:0 auto;padding:0 12px 72px}
 .lastnote{margin:5px 2px 0;font-size:12px;color:var(--amber);opacity:.85}
 .spark{margin-left:auto;margin-right:8px;display:inline-flex;align-items:center}
 .spark svg{width:56px;height:16px;display:block}
+.brand{display:flex;align-items:center}
+.brand span{flex:1}
+#logbtn{appearance:none;background:none;border:1px solid #33393E;border-radius:6px;color:var(--steel);
+ font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+ padding:7px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#logbtn.on{border-color:#4A4231;color:var(--amber)}
 .wkcard{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px;margin-bottom:12px}
 .wkcard h3{margin:0 0 10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
  text-transform:uppercase;color:var(--steel);font-weight:600}
@@ -246,8 +252,8 @@ footer b{color:var(--ink);font-weight:500}
 </style></head><body>
 
 <div class="bar">
-  <div class="brand"><b>Workouts</b><span>U1 → L1 → U2 → L2 · 3–4×/week</span></div>
-  <div role="tablist" aria-label="Workout sessions"><button role="tab" class="tab" id="t-A1" aria-controls="s-A1" aria-selected="true" tabindex="0" data-s="A1"><span class="tc">U1</span><span class="tl">Upper</span><span class="tf">Push</span></button><button role="tab" class="tab" id="t-A2" aria-controls="s-A2" aria-selected="false" tabindex="-1" data-s="A2"><span class="tc">L1</span><span class="tl">Lower</span><span class="tf">Squat &amp; hinge</span></button><button role="tab" class="tab" id="t-B1" aria-controls="s-B1" aria-selected="false" tabindex="-1" data-s="B1"><span class="tc">U2</span><span class="tl">Upper</span><span class="tf">Pull</span></button><button role="tab" class="tab" id="t-B2" aria-controls="s-B2" aria-selected="false" tabindex="-1" data-s="B2"><span class="tc">L2</span><span class="tl">Lower</span><span class="tf">Carry</span></button><button role="tab" class="tab" id="t-WK" aria-controls="s-WK" aria-selected="false" tabindex="-1" data-s="WK"><span class="tc">WK</span><span class="tl">Week</span><span class="tf">Trends</span></button></div>
+  <div class="brand"><b>Workouts</b><span>U1 → L1 → U2 → L2 · 3–4×/week</span><button id="logbtn" type="button">Log</button></div>
+  <div role="tablist" aria-label="Workout sessions"><button role="tab" class="tab" id="t-A1" aria-controls="s-A1" aria-selected="true" tabindex="0" data-s="A1"><span class="tc">U1</span><span class="tl">Upper</span><span class="tf">Push</span></button><button role="tab" class="tab" id="t-A2" aria-controls="s-A2" aria-selected="false" tabindex="-1" data-s="A2"><span class="tc">L1</span><span class="tl">Lower</span><span class="tf">Squat &amp; hinge</span></button><button role="tab" class="tab" id="t-B1" aria-controls="s-B1" aria-selected="false" tabindex="-1" data-s="B1"><span class="tc">U2</span><span class="tl">Upper</span><span class="tf">Pull</span></button><button role="tab" class="tab" id="t-B2" aria-controls="s-B2" aria-selected="false" tabindex="-1" data-s="B2"><span class="tc">L2</span><span class="tl">Lower</span><span class="tf">Carry</span></button></div>
   <div class="acts">
     <button id="copy" class="act">Copy log</button>
     <button id="finish" class="act go">Finish <b id="fs">U1</b></button>
@@ -1319,7 +1325,7 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Bend sideways toward the floor under control, then raise back up to a straight line — stop there, no over-bending past straight. Do the weaker side first, match reps on the stronger side. Hold a plate at your chest once bodyweight is easy.</dd></dl>
    <div class="note"><span class="tag">Note</span><p>This is the lateral trunk work nothing else in the program covers — quadratus lumborum and obliques. Keep it smooth and slow; it is a control exercise, not a max-effort one.</p></div>
  </div>
-</div></section><section role="tabpanel" id="s-WK" aria-labelledby="t-WK" class="pane" hidden><p class="pane-hd">This week at a glance</p><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div><div class="bwrow"><input id="bwin" type="text" inputmode="decimal" placeholder="Today’s weight (lb)"><button id="bwadd" class="act">Log</button></div></div></section></main>
+</div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div><div class="bwrow"><input id="bwin" type="text" inputmode="decimal" placeholder="Today’s weight (lb)"><button id="bwadd" class="act">Log</button></div></div></section></main>
 
 <footer>
   <b id="mode">Checking storage…</b><br>
@@ -1328,7 +1334,7 @@ footer b{color:var(--ink);font-weight:500}
   <b>Finish</b> only ever touches the session tab you are on. <b>Undo bank</b> reverses it until you reload.<br>
   Log <b>one dumbbell</b>. Volume counts both sides for you.<br>
   When you finish: <b>Copy log</b> → paste to Claude → Claude writes it to Airtable.<br>
-  <span id="buildv">build 2026-08-07.f · elbow button visible on iOS</span>
+  <span id="buildv">build 2026-08-07.g · Log moved to the header</span>
 </footer>
 
 <script>
@@ -1396,6 +1402,8 @@ function today(){ var d = new Date();
   return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
 function exEl(id){ return document.querySelector('.ex[data-ex="' + id + '"]'); }
 function curSession(){
+  var wk = document.getElementById('s-WK');
+  if(wk && !wk.hidden) return 'WK';
   var t = tabs.filter(function(x){ return x.getAttribute('aria-selected') === 'true'; })[0];
   return (t || tabs[0]).dataset.s;
 }
@@ -1680,6 +1688,10 @@ function select(code, focus){
     document.getElementById('s-' + t.dataset.s).hidden = !on;
     if(on && focus) t.focus();
   });
+  var wkPane = document.getElementById('s-WK');
+  if(wkPane) wkPane.hidden = code !== 'WK';
+  var lb = document.getElementById('logbtn');
+  if(lb) lb.classList.toggle('on', code === 'WK');
   var rs = document.getElementById('rs'), fs = document.getElementById('fs');
   if(rs) rs.textContent = disp(code);
   if(fs) fs.textContent = disp(code);
@@ -1689,6 +1701,10 @@ function select(code, focus){
   window.scrollTo({top: 0, behavior: 'instant'});
 }
 
+var logBtn = document.getElementById('logbtn');
+if(logBtn) logBtn.addEventListener('click', function(){
+  select(curSession() === 'WK' ? 'A1' : 'WK');
+});
 tabs.forEach(function(t, i){
   t.addEventListener('click', function(){ select(t.dataset.s); });
   t.addEventListener('keydown', function(e){
@@ -2055,7 +2071,7 @@ function renderWeek(){
     rc.innerHTML = '<svg viewBox="0 0 300 70">' + body + '</svg>' +
       '<p class="rc-leg"><b style="color:#AEB6BC">weight</b> ' + (lastBw ? lastBw[1] + ' lb (' + lastBw[0].slice(5) + ')' : '\u2014') +
       ' <b style="color:#8FD3A6">flat press e1RM</b> ' + (lastE1 || '\u2014') + '</p>' +
-      '<p class="wk-sub">Weight flat or down while the green line rises = recomposition working.</p>';
+      '';
   }
 }
 function confetti(){
