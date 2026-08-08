@@ -165,6 +165,7 @@ main{max-width:880px;margin:0 auto;padding:0 12px 72px}
 .spark svg{width:56px;height:16px;display:block}
 .brand{display:flex;align-items:center}
 .brand span{flex:1}
+#rotline b{color:var(--ink);font-weight:600}
 #logbtn{appearance:none;background:none;border:1px solid #33393E;border-radius:6px;color:var(--steel);
  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
  padding:7px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -252,7 +253,7 @@ footer b{color:var(--ink);font-weight:500}
 </style></head><body>
 
 <div class="bar">
-  <div class="brand"><b>Workouts</b><span>U1 → L1 → U2 → L2 · 3–4×/week</span><button id="logbtn" type="button">Log</button></div>
+  <div class="brand"><b>Workouts</b><span id="rotline"></span><button id="logbtn" type="button">Log</button></div>
   <div role="tablist" aria-label="Workout sessions"><button role="tab" class="tab" id="t-A1" aria-controls="s-A1" aria-selected="true" tabindex="0" data-s="A1"><span class="tc">U1</span><span class="tl">Upper</span><span class="tf">Push</span></button><button role="tab" class="tab" id="t-A2" aria-controls="s-A2" aria-selected="false" tabindex="-1" data-s="A2"><span class="tc">L1</span><span class="tl">Lower</span><span class="tf">Squat &amp; hinge</span></button><button role="tab" class="tab" id="t-B1" aria-controls="s-B1" aria-selected="false" tabindex="-1" data-s="B1"><span class="tc">U2</span><span class="tl">Upper</span><span class="tf">Pull</span></button><button role="tab" class="tab" id="t-B2" aria-controls="s-B2" aria-selected="false" tabindex="-1" data-s="B2"><span class="tc">L2</span><span class="tl">Lower</span><span class="tf">Carry</span></button></div>
   <div class="acts">
     <button id="copy" class="act">Copy log</button>
@@ -1333,7 +1334,7 @@ footer b{color:var(--ink);font-weight:500}
   <b>Finish</b> only ever touches the session tab you are on. <b>Undo bank</b> reverses it until you reload.<br>
   Log <b>one dumbbell</b>. Volume counts both sides for you.<br>
   When you finish: <b>Copy log</b> → paste to Claude → Claude writes it to Airtable.<br>
-  <span id="buildv">build 2026-08-07.h · Erase removed</span>
+  <span id="buildv">build 2026-08-07.i · header shows last/next session</span>
 </footer>
 
 <script>
@@ -1902,6 +1903,7 @@ document.getElementById('finish').addEventListener('click', function(){
     save();
     if(prs.length){ confetti(); }
     idsIn(code).forEach(function(id6){ renderSpark(id6); });
+    renderRot();
     var done = (prs.length ? '\ud83c\udfc6 PR: ' + prs.join(' \u00b7 ') + ' \u2014 ' : '') +
       (again ? disp(code) + ' entry replaced' : disp(code) + ' banked');
     function copied(ok2){ toast(done + (ok2 ? ' \u00b7 log copied \u2014 paste it to Claude' : ' \u00b7 auto-copy failed, use Copy log')); }
@@ -1996,6 +1998,22 @@ function allDates(){
     (state.hist[id] || []).forEach(function(en){ ds[en.date] = 1; });
   });
   return ds;
+}
+var ROT = ['A1', 'A2', 'B1', 'B2'];
+function renderRot(){
+  var el = document.getElementById('rotline'); if(!el) return;
+  var best = null;
+  ROT.forEach(function(code){
+    idsIn(code).forEach(function(id){
+      (state.hist[id] || []).forEach(function(en){
+        if(!best || en.date > best.date) best = {date: en.date, code: code};
+      });
+    });
+  });
+  if(!best){ el.textContent = 'First session: ' + disp('A1'); return; }
+  var next = ROT[(ROT.indexOf(best.code) + 1) % 4];
+  el.innerHTML = 'Last <b>' + disp(best.code) + '</b> ' + best.date.slice(5).replace('-', '/') +
+    ' \u2192 next <b>' + disp(next) + '</b>';
 }
 function renderWeek(){
   var hm = document.getElementById('heatmap');
@@ -2136,6 +2154,7 @@ store.load().then(function(saved){
   } else {
     redrawAll();
   }
+  renderRot();
   store.save(state).then(function(ok){
     setSaveStat(ok ? 'ok' : 'bad', ok ? 'Saved' : 'NOT SAVED \u2014 use Copy log');
   });
