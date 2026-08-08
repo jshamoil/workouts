@@ -256,9 +256,9 @@ footer b{color:var(--ink);font-weight:500}
   <div class="brand"><b>Workouts</b><span id="rotline"></span><button id="logbtn" type="button">Log</button></div>
   <div role="tablist" aria-label="Workout sessions"><button role="tab" class="tab" id="t-A1" aria-controls="s-A1" aria-selected="true" tabindex="0" data-s="A1"><span class="tc">U1</span><span class="tl">Upper</span><span class="tf">Push</span></button><button role="tab" class="tab" id="t-A2" aria-controls="s-A2" aria-selected="false" tabindex="-1" data-s="A2"><span class="tc">L1</span><span class="tl">Lower</span><span class="tf">Squat &amp; hinge</span></button><button role="tab" class="tab" id="t-B1" aria-controls="s-B1" aria-selected="false" tabindex="-1" data-s="B1"><span class="tc">U2</span><span class="tl">Upper</span><span class="tf">Pull</span></button><button role="tab" class="tab" id="t-B2" aria-controls="s-B2" aria-selected="false" tabindex="-1" data-s="B2"><span class="tc">L2</span><span class="tl">Lower</span><span class="tf">Carry</span></button></div>
   <div class="acts">
+    <button id="reset" class="act">Clear <b id="rs">U1</b></button>
     <button id="copy" class="act">Copy log</button>
     <button id="finish" class="act go">Finish <b id="fs">U1</b></button>
-    <button id="reset" class="act">Clear <b id="rs">U1</b></button>
     <button id="undo" class="act undo" hidden>Undo bank</button>
   </div>
   <div id="savestat" class="savestat">—</div>
@@ -1334,7 +1334,7 @@ footer b{color:var(--ink);font-weight:500}
   <b>Finish</b> only ever touches the session tab you are on. <b>Undo bank</b> reverses it until you reload.<br>
   Log <b>one dumbbell</b>. Volume counts both sides for you.<br>
   When you finish: <b>Copy log</b> → paste to Claude → Claude writes it to Airtable.<br>
-  <span id="buildv">build 2026-08-07.j · self-updating</span>
+  <span id="buildv">build 2026-08-07.k · Clear / Copy / Finish</span>
 </footer>
 
 <script>
