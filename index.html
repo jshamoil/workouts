@@ -1334,7 +1334,7 @@ footer b{color:var(--ink);font-weight:500}
   <b>Finish</b> only ever touches the session tab you are on. <b>Undo bank</b> reverses it until you reload.<br>
   Log <b>one dumbbell</b>. Volume counts both sides for you.<br>
   When you finish: <b>Copy log</b> → paste to Claude → Claude writes it to Airtable.<br>
-  <span id="buildv">build 2026-08-07.i · header shows last/next session</span>
+  <span id="buildv">build 2026-08-07.j · self-updating</span>
 </footer>
 
 <script>
@@ -1999,6 +1999,26 @@ function allDates(){
   });
   return ds;
 }
+var BUILD = document.getElementById('buildv') ? document.getElementById('buildv').textContent : '';
+function selfUpdate(){
+  if(location.protocol === 'file:') return;
+  var flag = 'wk.updated.' + BUILD;
+  try { if(sessionStorage.getItem(flag)) return; } catch(e){ return; }
+  fetch(location.pathname + '?u=' + Date.now(), {cache: 'no-store'}).then(function(r){
+    if(!r.ok) return null;
+    return r.text();
+  }).then(function(html){
+    if(!html) return;
+    var m2 = html.match(/id="buildv">([^<]+)</);
+    if(!m2 || m2[1] === BUILD) return;
+    try { sessionStorage.setItem(flag, '1'); } catch(e){}
+    document.open();
+    document.write(html);
+    document.close();
+  }).catch(function(){});
+}
+setTimeout(selfUpdate, 800);
+
 var ROT = ['A1', 'A2', 'B1', 'B2'];
 function renderRot(){
   var el = document.getElementById('rotline'); if(!el) return;
