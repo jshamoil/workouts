@@ -1334,7 +1334,7 @@ footer b{color:var(--ink);font-weight:500}
   <b>Finish</b> only ever touches the session tab you are on. <b>Undo bank</b> reverses it until you reload.<br>
   Log <b>one dumbbell</b>. Volume counts both sides for you.<br>
   When you finish: <b>Copy log</b> → paste to Claude → Claude writes it to Airtable.<br>
-  <span id="buildv">build 2026-08-07.k · Clear / Copy / Finish</span>
+  <span id="buildv">build 2026-08-07.l · opens on the next session</span>
 </footer>
 
 <script>
@@ -2020,8 +2020,7 @@ function selfUpdate(){
 setTimeout(selfUpdate, 800);
 
 var ROT = ['A1', 'A2', 'B1', 'B2'];
-function renderRot(){
-  var el = document.getElementById('rotline'); if(!el) return;
+function lastSession(){
   var best = null;
   ROT.forEach(function(code){
     idsIn(code).forEach(function(id){
@@ -2030,10 +2029,18 @@ function renderRot(){
       });
     });
   });
+  return best;
+}
+function nextSession(){
+  var best = lastSession();
+  return best ? ROT[(ROT.indexOf(best.code) + 1) % 4] : 'A1';
+}
+function renderRot(){
+  var el = document.getElementById('rotline'); if(!el) return;
+  var best = lastSession();
   if(!best){ el.textContent = 'First session: ' + disp('A1'); return; }
-  var next = ROT[(ROT.indexOf(best.code) + 1) % 4];
   el.innerHTML = 'Last <b>' + disp(best.code) + '</b> ' + best.date.slice(5).replace('-', '/') +
-    ' \u2192 next <b>' + disp(next) + '</b>';
+    ' \u2192 next <b>' + disp(nextSession()) + '</b>';
 }
 function renderWeek(){
   var hm = document.getElementById('heatmap');
@@ -2175,6 +2182,7 @@ store.load().then(function(saved){
     redrawAll();
   }
   renderRot();
+  select(nextSession());
   store.save(state).then(function(ok){
     setSaveStat(ok ? 'ok' : 'bad', ok ? 'Saved' : 'NOT SAVED \u2014 use Copy log');
   });
