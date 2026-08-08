@@ -259,7 +259,6 @@ footer b{color:var(--ink);font-weight:500}
     <button id="finish" class="act go">Finish <b id="fs">U1</b></button>
     <button id="reset" class="act">Clear <b id="rs">U1</b></button>
     <button id="undo" class="act undo" hidden>Undo bank</button>
-    <button id="wipe" class="act ghost" title="Erase all logs and history">Erase</button>
   </div>
   <div id="savestat" class="savestat">—</div>
 </div>
@@ -1330,11 +1329,11 @@ footer b{color:var(--ink);font-weight:500}
 <footer>
   <b id="mode">Checking storage…</b><br>
   <b>Finish</b> banks the session and pre-fills the next one from what you just did.<br>
-  <b>Clear</b> wipes only what is on screen. <b>Erase</b> also deletes saved history.<br>
+  <b>Clear</b> wipes only what is on screen — banked history is never touched.<br>
   <b>Finish</b> only ever touches the session tab you are on. <b>Undo bank</b> reverses it until you reload.<br>
   Log <b>one dumbbell</b>. Volume counts both sides for you.<br>
   When you finish: <b>Copy log</b> → paste to Claude → Claude writes it to Airtable.<br>
-  <span id="buildv">build 2026-08-07.g · Log moved to the header</span>
+  <span id="buildv">build 2026-08-07.h · Erase removed</span>
 </footer>
 
 <script>
@@ -1934,23 +1933,6 @@ document.getElementById('reset').addEventListener('click', function(){
       });
       save();
       toast(disp(code) + ' cleared');
-    });
-});
-
-document.getElementById('wipe').addEventListener('click', function(){
-  ask('Erase all logs AND all banked history for every session? This cannot be undone.', 'Erase everything')
-    .then(function(ok){
-      if(!ok) return;
-      state = {cur:{}, hist:{}};
-      snapshot = null; showUndo(false);
-      [].slice.call(document.querySelectorAll('.ex')).forEach(function(ex){
-        writeEx(ex.dataset.ex, [], false);
-        var p = ex.querySelector('[data-prev]'); if(p) p.hidden = true;
-        refresh(ex.dataset.ex);
-      });
-      tabs.forEach(function(t){ markSaved(t.dataset.s); });
-      save();
-      toast('Everything erased');
     });
 });
 
