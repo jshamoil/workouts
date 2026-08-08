@@ -130,9 +130,9 @@ main{max-width:880px;margin:0 auto;padding:0 12px 72px}
 .xc{white-space:nowrap;width:96px;padding-left:6px}
 .xc .xw{display:flex;gap:8px;align-items:stretch}
 .rpe{appearance:none;border:1px solid #33393E;background:#171B1E;color:var(--steel);
- font-family:var(--mono);font-size:13px;flex:1;min-width:42px;min-height:40px;
+ font-family:var(--mono);font-size:11px;flex:1;min-width:48px;min-height:40px;
  border-radius:7px;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.rpe::before{content:'RPE';display:block;font-size:8px;letter-spacing:.1em;opacity:.7;margin-bottom:1px}
+.rpe::before{content:'EFFORT';display:block;font-size:8px;letter-spacing:.1em;opacity:.7;margin-bottom:1px}
 .rpe.on{border-color:#4A4231;color:var(--amber);background:#1d1a14}
 .pain{appearance:none;border:1px solid #33393E;background:#171B1E;color:var(--steel);
  flex:1;min-width:42px;min-height:40px;border-radius:7px;padding:0;cursor:pointer;
@@ -1437,7 +1437,8 @@ function writeEx(id, sets, suggested){
     r.value = s.r || '';
     tk.setAttribute('aria-pressed', s.d ? 'true' : 'false');
     var rp = tr.querySelector('.rpe'), pn = tr.querySelector('.pain');
-    rp.dataset.v = s.e || ''; rp.textContent = s.e || '\u2013';
+    rp.dataset.v = s.e || '';
+    rp.textContent = ({easy:'Easy',med:'Med',hard:'Hard',max:'MAX','7':'Easy','8':'Med','9':'Hard','10':'MAX'})[s.e] || '\u2013';
     rp.classList.toggle('on', !!s.e);
     pn.dataset.v = String(s.p || 0);
     var lg = lastFor(id), ls = lg && lg.sets[i];
@@ -1728,9 +1729,10 @@ tabs.forEach(function(t, i){
   });
   [].slice.call(ex.querySelectorAll('.rpe')).forEach(function(bt){
     bt.addEventListener('click', function(){
-      var order = ['', '7', '8', '9', '10'];
+      var order = ['', 'easy', 'med', 'hard', 'max'];
+      var lbl = {easy: 'Easy', med: 'Med', hard: 'Hard', max: 'MAX'};
       var next = order[(order.indexOf(bt.dataset.v || '') + 1) % order.length];
-      bt.dataset.v = next; bt.textContent = next || '\u2013';
+      bt.dataset.v = next; bt.textContent = lbl[next] || '\u2013';
       bt.classList.toggle('on', !!next);
       state.cur[id] = readEx(id); save();
     });
@@ -1776,7 +1778,7 @@ function buildLog(code){
       if(wi.hasAttribute('data-sug') && ri.hasAttribute('data-sug')) return;
       var wlbl = META[id].bw ? 'BW' : META[id].deg ? (w || '-') + '\u00b0' : (w || '-') + (META[id].ph ? '/hand' : '');
       var ann = '', ev = tr.querySelector('.rpe').dataset.v, pv = +(tr.querySelector('.pain').dataset.v || 0);
-      if(ev) ann += ' @' + ev;
+      if(ev) ann += ' \u00b7 ' + (({'7':'easy','8':'med','9':'hard','10':'max'})[ev] || ev);
       if(pv === 2) ann += ' \u00b7 elbow amber';
       if(pv === 3) ann += ' \u00b7 ELBOW RED';
       lines.push('  ' + (i+1) + '. ' + wlbl + ' x ' + (r || '-') + ann);
