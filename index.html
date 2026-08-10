@@ -90,6 +90,12 @@ main{max-width:880px;margin:0 auto;padding:0 12px 72px}
 .ask-p p{margin:0 0 17px;font-size:14.5px;line-height:1.55;color:var(--ink)}
 .ask-b{display:flex;gap:9px}
 .ask-b .act{flex:1;min-height:44px;font-size:11.5px}
+.ask-nrg{margin:-6px 0 15px}
+.ask-nrg[hidden]{display:none}
+.ask-nrg .nrg-l{display:block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--steel);margin-bottom:7px}
+.nrg-b{display:flex;gap:7px}
+.nrg-b button{flex:1;min-height:40px;border:1px solid #33393E;border-radius:5px;background:#171B1E;color:var(--steel);font:inherit;font-size:14px}
+.nrg-b button.on{border-color:#4A4231;color:var(--amber);background:#1d1a14}
 .ex{background:var(--surface);border:1px solid var(--line);border-radius:4px;margin-bottom:8px;overflow:hidden}
 .ex-hd{appearance:none;background:none;border:0;width:100%;display:flex;align-items:center;gap:10px;
  padding:14px 13px;cursor:pointer;color:var(--ink);font-family:inherit;text-align:left;min-height:56px}
@@ -271,6 +277,7 @@ footer b{color:var(--ink);font-weight:500}
 <button id="rest" class="rest" hidden>Rest</button>
 <div id="ask" class="ask" hidden role="dialog" aria-modal="true" aria-labelledby="ask-t">
   <div class="ask-p"><p id="ask-t"></p>
+    <div id="ask-nrg" class="ask-nrg" hidden><span class="nrg-l">Energy today · optional</span><div class="nrg-b"><button type="button" data-n="1">1</button><button type="button" data-n="2">2</button><button type="button" data-n="3">3</button><button type="button" data-n="4">4</button><button type="button" data-n="5">5</button></div></div>
     <div class="ask-b"><button id="ask-no" class="act">Cancel</button><button id="ask-yes" class="act go">Confirm</button></div>
   </div>
 </div>
@@ -1332,7 +1339,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div><div class="bwrow"><input id="bwin" type="text" inputmode="decimal" placeholder="Today’s weight (lb)"><button id="bwadd" class="act">Log</button></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-07.s</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-10.a</span></div>
   <p class="ft-tip"><b>Finish</b> banks the session, preps the next one, and copies your log — paste it to Claude and it lands in Airtable.</p>
 </footer>
 
@@ -1778,7 +1785,7 @@ tabs.forEach(function(t, i){
   [].slice.call(ex.querySelectorAll('.tick')).forEach(function(tk){
     tk.addEventListener('click', function(){
       tk.setAttribute('aria-pressed', tk.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
-      if(tk.getAttribute('aria-pressed') === 'true') startRest(id);
+      if(tk.getAttribute('aria-pressed') === 'true'){ startRest(id); markStart(id); }
       var tr = tk.parentElement.parentElement;
       tr.querySelector('.w').removeAttribute('data-sug');
       tr.querySelector('.r').removeAttribute('data-sug');
@@ -1787,7 +1794,7 @@ tabs.forEach(function(t, i){
   });
 });
 
-function buildLog(code){
+function buildLog(code, energy){
   var out = [disp(code) + '  \u00b7  ' + today(), 'weights are per dumbbell; volume counts both sides'], grand = 0;
   idsIn(code).forEach(function(id){
     var el = exEl(id), lines = [], vol = 0;
@@ -1801,8 +1808,9 @@ function buildLog(code){
       var ann = '', ev = (xr2.querySelector('.rpe') || {dataset: {}}).dataset.v || '',
           pv = +((xr2.querySelector('.pain') || {dataset: {}}).dataset.v || 0);
       if(ev) ann += ' \u00b7 ' + (({'7':'easy','8':'med','9':'hard','10':'max'})[ev] || ev);
-      if(pv === 2) ann += ' \u00b7 elbow amber';
-      if(pv === 3) ann += ' \u00b7 ELBOW RED';
+      if(pv === 1) ann += ' \u00b7 elbow fine';
+      if(pv === 2) ann += ' \u00b7 elbow twinge';
+      if(pv === 3) ann += ' \u00b7 ELBOW PAINFUL';
       lines.push('  ' + (i+1) + '. ' + wlbl + ' x ' + (r || '-') + ann);
       if(!META[id].bw && !META[id].deg) vol += num(w) * num(r) * (META[id].vm || 1);
     });
@@ -1813,6 +1821,18 @@ function buildLog(code){
     if(vol){ out.push('  volume ' + fmt(vol) + ' lb'); grand += vol; }
   });
   if(out.length === 2) return null;
+  var sm = [];
+  var dur = sessionDur(code);
+  if(dur) sm.push('duration ' + dur + ' min');
+  if(energy) sm.push('energy ' + energy + '/5');
+  if(idsIn(code).some(function(id9){ return META[id9].pain; })){
+    var wp = 0;
+    idsIn(code).forEach(function(id9){
+      readEx(id9).forEach(function(st){ if(st.p > wp) wp = st.p; });
+    });
+    sm.push('elbow ' + (wp >= 3 ? 'PAINFUL' : wp === 2 ? 'twinge' : 'fine'));
+  }
+  if(sm.length){ out.push(''); out.push(sm.join(' · ')); }
   out.push('');
   out.push('SESSION VOLUME ' + fmt(grand) + ' lb');
   return out.join('\n');
@@ -1834,6 +1854,18 @@ document.getElementById('copy').addEventListener('click', function(){
   } else fallback();
 });
 
+function markStart(id){
+  var code = id.slice(0, 2).toUpperCase();
+  state.st = state.st || {};
+  var s = state.st[code];
+  if(!s || s.d !== today()) state.st[code] = {d: today(), t: Date.now()};
+}
+function sessionDur(code){
+  var s = state.st && state.st[code];
+  if(!s || s.d !== today()) return 0;
+  var m = Math.round((Date.now() - s.t) / 60000);
+  return m > 0 && m <= 240 ? m : 0;
+}
 function touched(id){
   var el = exEl(id); if(!el) return false;
   return [].slice.call(el.querySelectorAll('.log tbody tr.mr')).some(function(tr){
@@ -1869,9 +1901,9 @@ document.getElementById('finish').addEventListener('click', function(){
   var msg = again
     ? disp(code) + ' was already banked today. Saving again REPLACES that entry rather than adding a second one.'
     : 'Bank ' + disp(code) + ' to history and set up the next session from it?';
-  ask(msg, again ? 'Replace' : 'Bank it').then(function(ok){
-    if(!ok) return;
-    var logTxt = buildLog(code);
+  ask(msg, again ? 'Replace' : 'Bank it', {energy: true}).then(function(res){
+    if(!res) return;
+    var logTxt = buildLog(code, res.energy || 0);
     var prs = [];
     live.forEach(function(idp){
       if(META[idp].bw || META[idp].deg) return;
@@ -1897,6 +1929,7 @@ document.getElementById('finish').addEventListener('click', function(){
       delete state.cur[id];
     });
     ids.forEach(function(id){ if(live.indexOf(id) < 0) delete state.cur[id]; });
+    if(state.st) delete state.st[code];
     ids.forEach(function(id){
       writeEx(id, [], false);
       applySuggestion(id);
@@ -1938,6 +1971,7 @@ document.getElementById('reset').addEventListener('click', function(){
         renderPrev(id);
         refresh(id);
       });
+      if(state.st) delete state.st[code];
       save();
       toast(disp(code) + ' cleared');
     });
@@ -1958,13 +1992,30 @@ document.getElementById('undo').addEventListener('click', function(){
     });
 });
 
-function ask(msg, yesLabel){
+function ask(msg, yesLabel, opts){
   return new Promise(function(resolve){
     var box = document.getElementById('ask'), txt = document.getElementById('ask-t');
     var yes = document.getElementById('ask-yes'), no = document.getElementById('ask-no');
     if(!box){ resolve(true); return; }
     txt.textContent = msg;
     yes.textContent = yesLabel || 'Confirm';
+    var nrg = document.getElementById('ask-nrg'), energy = 0;
+    var wantNrg = !!(opts && opts.energy && nrg);
+    if(nrg){
+      nrg.hidden = !wantNrg;
+      [].slice.call(nrg.querySelectorAll('button')).forEach(function(b){ b.classList.remove('on'); });
+    }
+    function onNrg(e){
+      var b = e.target;
+      while(b && b !== nrg && !b.dataset.n) b = b.parentElement;
+      if(!b || !b.dataset || !b.dataset.n) return;
+      var n = +b.dataset.n;
+      energy = energy === n ? 0 : n;
+      [].slice.call(nrg.querySelectorAll('button')).forEach(function(b2){
+        b2.classList.toggle('on', +b2.dataset.n === energy);
+      });
+    }
+    if(wantNrg) nrg.addEventListener('click', onNrg);
     box.hidden = false;
     var prev = document.activeElement;
     function finish(v){
@@ -1973,8 +2024,9 @@ function ask(msg, yesLabel){
       no.removeEventListener('click', onNo);
       box.removeEventListener('click', onBack);
       document.removeEventListener('keydown', onKey);
+      if(wantNrg) nrg.removeEventListener('click', onNrg);
       if(prev && prev.focus) prev.focus();
-      resolve(v);
+      resolve(wantNrg ? (v ? {ok: true, energy: energy} : false) : v);
     }
     function onYes(){ finish(true); }
     function onNo(){ finish(false); }
@@ -2023,6 +2075,11 @@ function selfUpdate(){
   }).catch(function(){});
 }
 setTimeout(selfUpdate, 800);
+// Offline shell: sw.js is network-first for index.html, so it never serves a
+// stale build while online and stays out of selfUpdate's way.
+if('serviceWorker' in navigator && location.protocol !== 'file:'){
+  navigator.serviceWorker.register('sw.js').catch(function(){});
+}
 
 var ROT = ['A1', 'A2', 'B1', 'B2'];
 function lastSession(){
@@ -2162,9 +2219,11 @@ function toast(m){
 
 store.load().then(function(saved){
   if(saved && (saved.cur || saved.hist)){
-    state = {cur: saved.cur || {}, hist: saved.hist || {}};
+    state = {cur: saved.cur || {}, hist: saved.hist || {},
+             note: saved.note || {}, bw: saved.bw || [], st: saved.st || {}};
   } else {
-    state = {cur: JSON.parse(JSON.stringify(SEED)), hist: JSON.parse(JSON.stringify(SEED_HIST))};
+    state = {cur: JSON.parse(JSON.stringify(SEED)), hist: JSON.parse(JSON.stringify(SEED_HIST)),
+             note: {}, bw: [], st: {}};
   }
   // absorb any seed sessions this device hasn't seen (e.g. logged elsewhere, baked in later)
   var merged = 0;
