@@ -1339,8 +1339,9 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div><div class="bwrow"><input id="bwin" type="text" inputmode="decimal" placeholder="Today’s weight (lb)"><button id="bwadd" class="act">Log</button></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-10.a</span></div>
-  <p class="ft-tip"><b>Finish</b> banks the session, preps the next one, and copies your log — paste it to Claude and it lands in Airtable.</p>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-10.b</span></div>
+  <p class="ft-tip" id="sync" hidden></p>
+  <p class="ft-tip"><b>Finish</b> banks the session, sends it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
 
 <script>
@@ -1818,6 +1819,8 @@ function buildLog(code, energy){
     out.push('');
     out.push(el.querySelector('.nm').textContent.trim());
     out = out.concat(lines);
+    var nt = state.note && state.note[id];
+    if(nt && nt.txt && nt.date === today()) out.push('  note: ' + nt.txt);
     if(vol){ out.push('  volume ' + fmt(vol) + ' lb'); grand += vol; }
   });
   if(out.length === 2) return null;
@@ -1853,6 +1856,84 @@ document.getElementById('copy').addEventListener('click', function(){
     navigator.clipboard.writeText(txt).then(function(){ toast('Log copied'); }, fallback);
   } else fallback();
 });
+
+// Airtable webhook: on Finish the banked session is POSTed here as JSON and an
+// automation in the Health base creates the Workout + Sets records. Payloads
+// queue in state.q when offline and retry on reconnect / next launch.
+var HOOK = '';
+function effortName(ev){
+  return ({easy:'Easy',med:'Med',hard:'Hard',max:'Max','7':'Easy','8':'Med','9':'Hard','10':'Max'})[ev] || null;
+}
+function buildPayload(code, energy){
+  var sets = [], notes = [];
+  idsIn(code).forEach(function(id){
+    var el = exEl(id), m = META[id];
+    var nm = el.querySelector('.nm').textContent.replace(/\s+/g,' ').trim();
+    [].slice.call(el.querySelectorAll('.log tbody tr.mr')).forEach(function(tr, i){
+      var w = tr.querySelector('.w').value.trim(), r = tr.querySelector('.r').value.trim();
+      if(!w && !r) return;
+      if(tr.querySelector('.w').hasAttribute('data-sug') && tr.querySelector('.r').hasAttribute('data-sug')) return;
+      var xr = xrow(tr);
+      var ev = (xr.querySelector('.rpe') || {dataset: {}}).dataset.v || '';
+      var pv = +((xr.querySelector('.pain') || {dataset: {}}).dataset.v || 0);
+      var s = {id: id, name: nm, n: i + 1};
+      if(num(r)) s.reps = num(r);
+      if(!m.bw && w){
+        s.weight = num(w);
+        if(!m.deg){
+          s.total = num(w) * (m.vm || 1);
+          if(num(r)) s.volume = num(w) * num(r) * (m.vm || 1);
+        }
+      }
+      var ef = effortName(ev);
+      if(ef) s.effort = ef;
+      if(pv) s.pain = pv >= 3 ? 'Painful' : pv === 2 ? 'Twinge' : 'Fine';
+      sets.push(s);
+    });
+    var nt = state.note && state.note[id];
+    if(nt && nt.txt && nt.date === today()) notes.push(nm + ': ' + nt.txt);
+  });
+  if(!sets.length) return null;
+  var p = {date: today(), session: disp(code), sets: sets};
+  var dur = sessionDur(code); if(dur) p.duration = dur;
+  if(energy) p.energy = energy;
+  if(idsIn(code).some(function(id){ return META[id].pain; })){
+    var wp = 0;
+    idsIn(code).forEach(function(id){ readEx(id).forEach(function(st){ if(st.p > wp) wp = st.p; }); });
+    p.elbow = wp >= 3 ? 'Painful' : wp === 2 ? 'Twinge' : 'Fine';
+  }
+  if(notes.length) p.notes = notes.join('\n');
+  return p;
+}
+function syncStat(){
+  var el = document.getElementById('sync'); if(!el) return;
+  var n = (state.q || []).length;
+  el.hidden = !n;
+  el.textContent = n ? n + ' workout' + (n > 1 ? 's' : '') + ' waiting to sync to Airtable — retries when online.' : '';
+}
+var pumping = false;
+function pump(){
+  if(!HOOK || pumping || !(state.q && state.q.length)) { syncStat(); return; }
+  pumping = true;
+  fetch(HOOK, {method: 'POST', headers: {'Content-Type': 'application/json'},
+               body: JSON.stringify(state.q[0]), mode: 'cors'})
+    .then(function(r){
+      pumping = false;
+      if(r.ok || r.type === 'opaque'){
+        state.q.shift(); save(); syncStat();
+        if(state.q.length) pump();
+        else toast('Synced to Airtable');
+      } else syncStat();
+    }, function(){ pumping = false; syncStat(); });
+}
+function queueSend(p){
+  if(!HOOK || !p) return;
+  state.q = state.q || [];
+  state.q.push(p);
+  save();
+  pump();
+}
+window.addEventListener('online', function(){ pump(); });
 
 function markStart(id){
   var code = id.slice(0, 2).toUpperCase();
@@ -1904,6 +1985,7 @@ document.getElementById('finish').addEventListener('click', function(){
   ask(msg, again ? 'Replace' : 'Bank it', {energy: true}).then(function(res){
     if(!res) return;
     var logTxt = buildLog(code, res.energy || 0);
+    var payload = buildPayload(code, res.energy || 0);
     var prs = [];
     live.forEach(function(idp){
       if(META[idp].bw || META[idp].deg) return;
@@ -1939,6 +2021,7 @@ document.getElementById('finish').addEventListener('click', function(){
     markSaved(code);
     stopRest();
     save();
+    queueSend(payload);
     if(prs.length){ confetti(); }
     idsIn(code).forEach(function(id6){ renderSpark(id6); });
     renderRot();
@@ -2220,11 +2303,13 @@ function toast(m){
 store.load().then(function(saved){
   if(saved && (saved.cur || saved.hist)){
     state = {cur: saved.cur || {}, hist: saved.hist || {},
-             note: saved.note || {}, bw: saved.bw || [], st: saved.st || {}};
+             note: saved.note || {}, bw: saved.bw || [], st: saved.st || {},
+             q: saved.q || []};
   } else {
     state = {cur: JSON.parse(JSON.stringify(SEED)), hist: JSON.parse(JSON.stringify(SEED_HIST)),
-             note: {}, bw: [], st: {}};
+             note: {}, bw: [], st: {}, q: []};
   }
+  pump();
   // absorb any seed sessions this device hasn't seen (e.g. logged elsewhere, baked in later)
   var merged = 0;
   Object.keys(SEED_HIST).forEach(function(id7){
