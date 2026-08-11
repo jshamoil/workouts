@@ -1344,7 +1344,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div><div class="bwrow"><input id="bwin" type="text" inputmode="decimal" placeholder="Today’s weight (lb)"><button id="bwadd" class="act">Log</button></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-11.b</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-11.c</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, sends it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -2201,7 +2201,9 @@ function ask(msg, yesLabel, opts){
 
 var restT = null, restStart = 0;
 function mmss(sec){ return Math.floor(sec/60) + ':' + String(sec%60).padStart(2,'0'); }
-var BW_LOG = [["2026-06-01", 192.1], ["2026-06-08", 191.5], ["2026-06-15", 191.7], ["2026-07-06", 193.8], ["2026-07-13", 193.0], ["2026-08-04", 191.4]];
+// body-comp seed, baked from Airtable Daily: [date, lb, bf%, lean lb] — short
+// rows are weight-only weigh-ins (blank means unrecorded, never zero)
+var BW_LOG = [["2026-06-01", 192.1], ["2026-06-08", 191.5], ["2026-06-15", 191.7], ["2026-07-06", 193.8], ["2026-07-13", 193.0], ["2026-07-20", 193.0, 27.9, 139.1], ["2026-08-04", 191.4, 27.1, 139.5], ["2026-08-11", 191.1, 27.0, 139.4]];
 function allDates(){
   var ds = {};
   Object.keys(state.hist || {}).forEach(function(id){
@@ -2298,22 +2300,31 @@ function renderWeek(){
   }
   var rc = document.getElementById('recomp');
   if(rc){
-    var bw3 = BW_LOG.concat(state.bw || []).sort(function(a, b2){ return a[0] < b2[0] ? -1 : 1; });
+    var bw3 = (state.bw && state.bw.length ? state.bw : BW_LOG).slice().sort(function(a, b2){ return a[0] < b2[0] ? -1 : 1; });
     var roll = bw3.map(function(p3, i3){
       var lo3 = Math.max(0, i3 - 3);
       var win = bw3.slice(lo3, i3 + 1);
       return {v: win.reduce(function(a4, b4){ return a4 + b4[1]; }, 0) / win.length};
     });
     var e1s = (state.hist.a11 || []).map(function(en){ return {v: bestE1(en)}; }).filter(function(p4){ return p4.v > 0; });
+    var leans = bw3.filter(function(p7){ return p7.length > 3 && p7[3]; }).map(function(p7){ return {v: p7[3]}; });
     var body = '';
     if(roll.length > 1) body += svgLine(roll, 300, 70, '#AEB6BC', 6);
     if(e1s.length > 1) body += svgLine(e1s, 300, 70, '#8FD3A6', 6);
+    if(leans.length > 1) body += svgLine(leans, 300, 70, '#7FB0DC', 6);
     var lastBw = bw3.length ? bw3[bw3.length - 1] : null;
     var lastE1 = e1s.length ? e1s[e1s.length - 1].v : 0;
+    var lastBc = null, i8;
+    for(i8 = bw3.length - 1; i8 >= 0; i8--){
+      if(bw3[i8].length > 2 && (bw3[i8][2] || bw3[i8][3])){ lastBc = bw3[i8]; break; }
+    }
     rc.innerHTML = '<svg viewBox="0 0 300 70">' + body + '</svg>' +
       '<p class="rc-leg"><b style="color:#AEB6BC">weight</b> ' + (lastBw ? lastBw[1] + ' lb (' + lastBw[0].slice(5) + ')' : '\u2014') +
-      ' <b style="color:#8FD3A6">flat press e1RM</b> ' + (lastE1 || '\u2014') + '</p>' +
-      '';
+      ' <b style="color:#8FD3A6">flat press e1RM</b> ' + (lastE1 || '\u2014') +
+      (leans.length ? ' <b style="color:#7FB0DC">lean</b> ' + leans[leans.length - 1].v + ' lb' : '') + '</p>' +
+      (lastBc ? '<p class="rc-leg">body comp ' + lastBc[0].slice(5).replace('-', '/') + ': ' +
+        (lastBc[2] ? lastBc[2] + '% bf' : '') + (lastBc[2] && lastBc[3] ? ' \u00b7 ' : '') +
+        (lastBc[3] ? lastBc[3] + ' lb lean' : '') + '</p>' : '');
   }
 }
 function confetti(){
@@ -2394,9 +2405,18 @@ store.load().then(function(saved){
     state.hist[id7].sort(function(a7, b7){ return a7.date < b7.date ? -1 : 1; });
     state.hist[id7] = state.hist[id7].slice(-10);
   });
+  // absorb baked weigh-ins the same way; a device-entered weigh-in wins on
+  // date collision
+  state.bw = state.bw || [];
+  var haveBw = {};
+  state.bw.forEach(function(p8){ haveBw[p8[0]] = 1; });
+  BW_LOG.forEach(function(p8){
+    if(!haveBw[p8[0]]){ state.bw.push(p8.slice()); merged++; }
+  });
+  state.bw.sort(function(a8, b8){ return a8[0] < b8[0] ? -1 : 1; });
   if(merged){
     redrawAll();
-    toast('Caught up \u00b7 merged ' + merged + ' logged sets from Claude');
+    toast('Caught up \u00b7 merged ' + merged + ' updates from Claude');
   } else {
     redrawAll();
   }

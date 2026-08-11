@@ -43,6 +43,10 @@ Exercises (`tblmBTkSo88QCDDIc`, has `App ID` = a11…b27, do not edit), Daily, E
   verify by reading the base.
 - Automation creation via MCP is approval-blocked in terminal sessions; record/field/table
   writes are fine. Josh builds automations by hand in the editor from a provided script.
+- Body-comp flow: scale → Apple Health → coach → **Daily** (has Lean Mass
+  `fldDGP3hkqObuCaaV`). The app never collects bf/lean; bake them into `BW_LOG` in
+  `index.html` as `[date, lb, bf%, lean]` rows (short rows = weight-only) — merged into
+  `state.bw` at boot, device entries win on date collision.
 
 ## Two-Claude protocol
 
