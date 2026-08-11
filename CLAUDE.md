@@ -22,6 +22,10 @@ muscles, rest targets).
   its GitHub access; Josh gives the merge word. Merging to main deploys via Pages.
 - Verify changes with headless Chromium (Playwright, executablePath
   `/opt/pw-browsers/chromium`) against a local static server before pushing.
+- **Blank means unrecorded, never zero** (Josh's rule, 2026-08-11). Untouched
+  inputs — effort, elbow, energy, weights — are omitted from the log, the webhook
+  payload, and Airtable, and no reader (app, automation, either Claude) may infer
+  a value from absence.
 
 ## Airtable (Health base `app8u132HSpchoZ5C`)
 
