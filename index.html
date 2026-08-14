@@ -46,8 +46,19 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font
 .act b{font-weight:500;color:var(--red)}
 .act.go{border-color:#2F5C41;color:#8FD3A6}
 .act.go b{color:#8FD3A6}
-#finish[data-mode="start"]{border-color:#4A4231;color:var(--amber)}
-#finish[data-mode="start"] b{color:var(--amber)}
+.acts.prestart #reset,.acts.prestart #copy{display:none}
+.acts.prestart #finish{flex:1;min-height:52px;font-size:15px;font-weight:700;
+ background:#2F5C41;border-color:#3F7A57;color:#EAF7EE;letter-spacing:.05em}
+.acts.prestart #finish b{color:#EAF7EE;font-weight:700}
+.pane.prestart .ex{display:none}
+.prelist{display:none;background:var(--surface);border:1px solid var(--line);border-radius:4px;margin-bottom:8px}
+.pane.prestart .prelist{display:block}
+.prelist summary{display:flex;align-items:center;gap:10px;padding:14px 13px;cursor:pointer;
+ font-family:var(--disp);font-weight:600;font-size:17px;min-height:56px;list-style:none;color:var(--ink)}
+.prelist summary::-webkit-details-marker{display:none}
+.prelist summary .chev{margin-left:auto}
+.prelist[open] summary .chev{transform:rotate(180deg)}
+.prelist ol{margin:0;padding:2px 16px 14px 36px;color:var(--ink);font-size:15px;line-height:1.95}
 .act.ghost{color:var(--steel);flex:0 0 auto;padding:9px 9px}
 .act.undo{border-color:#4A4231;color:var(--amber);flex:0 0 auto;padding:9px 12px}
 .savestat{width:100%;border-top:1px solid var(--line);font-family:var(--mono);font-size:10px;
@@ -1370,7 +1381,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.i</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.j</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -2124,6 +2135,29 @@ function updFinish(){
   var startMode = !sessStarted(code) && !savedToday(code);
   btn.firstChild.nodeValue = startMode ? 'Start ' : 'Finish ';
   btn.dataset.mode = startMode ? 'start' : 'finish';
+  // pre-start: one big green Start, Clear/Copy hidden, exercises folded into
+  // a single peekable list until the clock is running
+  var abar = document.querySelector('.acts');
+  if(abar) abar.classList.toggle('prestart', startMode);
+  var pane = document.getElementById('s-' + code);
+  if(pane){
+    if(startMode) renderPrelist(pane);
+    pane.classList.toggle('prestart', startMode);
+  }
+}
+function renderPrelist(pane){
+  var pl = pane.querySelector('.prelist');
+  if(!pl){
+    pl = document.createElement('details');
+    pl.className = 'prelist';
+    pane.insertBefore(pl, pane.querySelector('.ex'));
+  }
+  var names = [].slice.call(pane.querySelectorAll('.ex .nm')).map(function(n){
+    return n.textContent.replace(/\s+/g, ' ').trim();
+  });
+  pl.innerHTML = '<summary>Today · ' + names.length + ' movements' +
+    '<svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+    '</summary><ol><li>' + names.join('</li><li>') + '</li></ol>';
 }
 function sessionDur(code){
   var s = state.st && state.st[code];
