@@ -4,14 +4,24 @@
     "setup": "Anchors at height 21 (confirmed 8/14). Step back until there's tension before rep one."
   },
   "a17": {
-    "sr": "2 × 15 @ 5 lb — REHAB, NOT TRAINING",
+    "sr": "2 × 15 @ 5 lb",
     "note": "HARD LOAD CEILING: 5 lb. This is the medicine that keeps the elbow trainable — controlled, sub-maximal, never to failure. 3 seconds down, palm-down. Never tag this past Med. (Corrected 8/14: worked at 15 lb to Max — 3× the load at failure, the opposite of the intent on all three counts.) If 5×15 ever feels genuinely trivial, the next step is 7.5, and only after two clean elbow weeks.",
-    "meta": { "lo": 15, "hi": 15, "inc": 2.5, "maxw": 5 }
+    "meta": {
+      "lo": 15,
+      "hi": 15,
+      "inc": 2.5,
+      "maxw": 5
+    }
   },
   "b17": {
-    "sr": "2 × 15 @ 5 lb — REHAB, NOT TRAINING",
+    "sr": "2 × 15 @ 5 lb",
     "note": "HARD LOAD CEILING: 5 lb. This is the medicine that keeps the elbow trainable — controlled, sub-maximal, never to failure. 3 seconds down, palm-down. Never tag this past Med. (Corrected 8/14: worked at 15 lb to Max.) If 5×15 ever feels genuinely trivial, the next step is 7.5, and only after two clean elbow weeks.",
-    "meta": { "lo": 15, "hi": 15, "inc": 2.5, "maxw": 5 }
+    "meta": {
+      "lo": 15,
+      "hi": 15,
+      "inc": 2.5,
+      "maxw": 5
+    }
   },
   "a23": {
     "note": "DELOAD TO 30 lb, effective next L1 (coach override 8/10 — ignore any suggestion to climb from 35). On 8/10 the honest effort tags read 11/9/9 at Hard/Max/Max — below the rep range at max effort means 35 is premature on this station. Own 12–15 at 30 with a hard squeeze at the top before adding weight. Doubly justified since 8/11: this is the heaviest kneecap loader in the program and the right knee is a managed constraint."
