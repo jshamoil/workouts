@@ -57,6 +57,10 @@ other; shared state replaces explanation:
 1. **Read the Journal table first** (`tbl8OaW4haj9nJDq5`) — it's the shared log. Write an
    entry for every shipped feature, schema change, or notable decision. The coach does
    the same for coaching decisions and injuries.
+1a. **Division of labor (Josh, 2026-08-12): the coach owns Airtable and the program;
+   this side owns the app and repo.** Don't edit Exercises/program records — mirror
+   program changes from Journal work orders into the app, then report back via the
+   Journal. Neither side waits for the other; act in your own domain immediately.
 2. Schema semantics live in Airtable field/table descriptions — keep them current.
 3. This file is the builder-side memory. Update it when architecture or protocol changes.
 

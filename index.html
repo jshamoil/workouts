@@ -101,6 +101,12 @@ main{max-width:880px;margin:0 auto;padding:0 12px 72px}
 .setg-l{font-family:var(--mono);font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--steel)}
 .setgin{flex:1;background:none;border:0;color:var(--ink);font:inherit;font-size:13.5px;min-height:24px;padding:0}
 .setgin:focus{outline:none}
+.nextup{display:block;width:100%;appearance:none;border:0;border-top:1px solid #2A3138;
+ background:#151A1D;color:var(--steel);font:inherit;font-size:12.5px;padding:8px 14px;
+ text-align:left;cursor:pointer}
+.nextup b{color:var(--ink);font-weight:600}
+.nextup em{font-style:normal;color:var(--amber);font-size:11px;margin-left:6px}
+.nextup[hidden]{display:none}
 .bw-now{margin:0 0 6px;font-size:15px;color:var(--ink)}
 .bw-now b{font-size:26px;font-weight:600}
 .bw-now span{color:var(--steel);font-size:12px;margin-left:7px}
@@ -284,6 +290,7 @@ footer b{color:var(--ink);font-weight:500}
     <button id="finish" class="act go">Finish <b id="fs">U1</b></button>
     <button id="undo" class="act undo" hidden>Undo bank</button>
   </div>
+  <button id="nextup" class="nextup" type="button" hidden></button>
   <div id="savestat" class="savestat">—</div>
 </div>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -875,7 +882,7 @@ footer b{color:var(--ink);font-weight:500}
  </div>
 </div><div class="ex" data-ex="b13" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b13" id="b-b13">
-   <span class="n">3</span><span class="nm">High-Incline DB Press  (75°)</span>
+   <span class="n">3</span><span class="nm">High-Incline DB Press  (67.5°)</span>
    <span class="spark" data-spark aria-hidden="true"></span>
    <span class="pips" aria-hidden="true"><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
    <span class="sr">3 × 8–10</span>
@@ -902,10 +909,11 @@ footer b{color:var(--ink);font-weight:500}
      <svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none"
        stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
    <div class="art"><svg viewBox="0 0 330 210" xmlns="http://www.w3.org/2000/svg" role="img"><defs><marker id="tip" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#D42027"/></marker><radialGradient id="vig" cx="50%" cy="46%" r="72%"><stop offset="0%" stop-color="#22262A"/><stop offset="100%" stop-color="#181B1E"/></radialGradient></defs><rect width="330" height="210" fill="url(#vig)"/><line x1="0" y1="191" x2="330" y2="191" stroke="#7E858B" stroke-width="2.4" opacity="0.55"/><line x1="14" y1="191" x2="5" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="31" y1="191" x2="22" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="48" y1="191" x2="39" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="65" y1="191" x2="56" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="82" y1="191" x2="73" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="99" y1="191" x2="90" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="116" y1="191" x2="107" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="133" y1="191" x2="124" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="150" y1="191" x2="141" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="167" y1="191" x2="158" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="184" y1="191" x2="175" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="201" y1="191" x2="192" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="218" y1="191" x2="209" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="235" y1="191" x2="226" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="252" y1="191" x2="243" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="269" y1="191" x2="260" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="286" y1="191" x2="277" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="303" y1="191" x2="294" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="320" y1="191" x2="311" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><line x1="337" y1="191" x2="328" y2="200" stroke="#7E858B" stroke-width="1.4" opacity="0.22"/><g><rect x="210" y="118" width="96" height="13" rx="5" fill="#31373C"/><rect x="210" y="118" width="96" height="5.5" rx="5" fill="#3D444A"/></g><path d="M 226 131 L 219 191 M 290 131 L 299 191" stroke="#7E858B" stroke-width="6" stroke-linecap="round"/><g fill="none" stroke="#4E555B" stroke-width="3.0" stroke-linejoin="round" opacity="1"><g fill="none"><path d="M 159.0 136.5 L 193.7 165.0 A 7.4 7.4 0 1 1 203.9 154.4 L 174.2 120.7 A 11.0 11.0 0 0 1 159.0 136.5 Z"/><path d="M 191.1 160.6 L 198.4 201.8 A 4.4 4.4 0 1 1 207.2 200.9 L 205.8 159.0 A 7.4 7.4 0 0 1 191.1 160.6 Z"/><path d="M 202.8 205.6 L 219.8 205.4 A 3.2 3.2 0 1 1 220.2 199.1 L 203.5 196.5 A 4.6 4.6 0 0 1 202.8 205.6 Z"/></g><g fill="none"><path d="M 184.3 71.4 L 168.3 41.5 A 5.6 5.6 0 1 1 158.1 46.0 L 169.7 77.9 A 8.0 8.0 0 0 1 184.3 71.4 Z"/><path d="M 169.0 44.8 L 172.4 16.0 A 4.0 4.0 0 1 1 164.5 14.6 L 157.9 42.8 A 5.6 5.6 0 0 1 169.0 44.8 Z"/><path d="M 172.6 15.9 L 173.1 9.9 A 3.6 3.6 0 1 1 166.0 8.6 L 164.4 14.4 A 4.2 4.2 0 0 1 172.6 15.9 Z"/></g><g fill="none"><path d="M 178.3 130.1 L 188.3 71.0 A 10.0 10.0 0 1 1 168.8 66.8 L 153.9 124.9 A 12.5 12.5 0 0 1 178.3 130.1 Z"/><path d="M 185.4 70.2 L 187.6 52.2 A 5.4 5.4 0 1 1 177.1 49.9 L 171.8 67.3 A 7.0 7.0 0 0 1 185.4 70.2 Z"/><ellipse cx="182.3" cy="51.5" rx="9.9" ry="11.5"/></g><g fill="none"><path d="M 159.6 137.0 L 196.2 163.0 A 7.4 7.4 0 1 1 205.7 151.7 L 173.7 120.2 A 11.0 11.0 0 0 1 159.6 137.0 Z"/><path d="M 193.3 158.7 L 203.5 199.4 A 4.4 4.4 0 1 1 212.1 197.8 L 207.8 156.2 A 7.4 7.4 0 0 1 193.3 158.7 Z"/><path d="M 207.8 202.9 L 224.8 202.7 A 3.2 3.2 0 1 1 225.2 196.3 L 208.5 193.7 A 4.6 4.6 0 0 1 207.8 202.9 Z"/></g><g fill="none"><path d="M 184.0 70.9 L 166.0 42.2 A 5.6 5.6 0 1 1 156.1 47.4 L 169.9 78.4 A 8.0 8.0 0 0 1 184.0 70.9 Z"/><path d="M 166.9 45.4 L 168.3 16.5 A 4.0 4.0 0 1 1 160.3 15.7 L 155.7 44.3 A 5.6 5.6 0 0 1 166.9 45.4 Z"/><path d="M 168.5 16.3 L 168.5 10.3 A 3.6 3.6 0 1 1 161.4 9.6 L 160.2 15.5 A 4.2 4.2 0 0 1 168.5 16.3 Z"/></g></g><g stroke="#0E1012" stroke-width="1.6" stroke-linejoin="round" paint-order="stroke"><g opacity="0.92"><g fill="#8A9096"><path d="M 159.0 136.5 L 193.7 165.0 A 7.4 7.4 0 1 1 203.9 154.4 L 174.2 120.7 A 11.0 11.0 0 0 1 159.0 136.5 Z"/><path d="M 191.1 160.6 L 198.4 201.8 A 4.4 4.4 0 1 1 207.2 200.9 L 205.8 159.0 A 7.4 7.4 0 0 1 191.1 160.6 Z"/><path d="M 202.8 205.6 L 219.8 205.4 A 3.2 3.2 0 1 1 220.2 199.1 L 203.5 196.5 A 4.6 4.6 0 0 1 202.8 205.6 Z"/></g><g fill="#8A9096"><path d="M 183.4 80.3 L 205.1 54.3 A 5.6 5.6 0 1 1 197.1 46.6 L 171.9 69.2 A 8.0 8.0 0 0 1 183.4 80.3 Z"/><path d="M 206.4 50.2 L 203.8 21.4 A 4.0 4.0 0 1 1 195.8 21.7 L 195.2 50.6 A 5.6 5.6 0 0 1 206.4 50.2 Z"/><path d="M 204.0 21.2 L 203.2 15.2 A 3.6 3.6 0 1 1 196.0 15.5 L 195.6 21.5 A 4.2 4.2 0 0 1 204.0 21.2 Z"/></g></g><g fill="#DAD7D1"><path d="M 178.3 130.1 L 188.3 71.0 A 10.0 10.0 0 1 1 168.8 66.8 L 153.9 124.9 A 12.5 12.5 0 0 1 178.3 130.1 Z"/><path d="M 185.4 70.2 L 187.6 52.2 A 5.4 5.4 0 1 1 177.1 49.9 L 171.8 67.3 A 7.0 7.0 0 0 1 185.4 70.2 Z"/><ellipse cx="182.3" cy="51.5" rx="9.9" ry="11.5"/></g><g fill="#EDEBE6"><path d="M 159.6 137.0 L 196.2 163.0 A 7.4 7.4 0 1 1 205.7 151.7 L 173.7 120.2 A 11.0 11.0 0 0 1 159.6 137.0 Z"/><path d="M 193.3 158.7 L 203.5 199.4 A 4.4 4.4 0 1 1 212.1 197.8 L 207.8 156.2 A 7.4 7.4 0 0 1 193.3 158.7 Z"/><path d="M 207.8 202.9 L 224.8 202.7 A 3.2 3.2 0 1 1 225.2 196.3 L 208.5 193.7 A 4.6 4.6 0 0 1 207.8 202.9 Z"/></g><g fill="#EDEBE6"><path d="M 183.0 80.7 L 206.5 56.3 A 5.6 5.6 0 1 1 199.1 48.0 L 172.3 68.9 A 8.0 8.0 0 0 1 183.0 80.7 Z"/><path d="M 208.0 51.5 L 203.4 23.0 A 4.0 4.0 0 1 1 195.5 23.8 L 196.9 52.7 A 5.6 5.6 0 0 1 208.0 51.5 Z"/><path d="M 203.6 22.7 L 202.4 16.8 A 3.6 3.6 0 1 1 195.2 17.6 L 195.3 23.6 A 4.2 4.2 0 0 1 203.6 22.7 Z"/></g></g><g transform="rotate(0 164.92892080696998 10.301818970512999)"><rect x="162.36892080696998" y="-0.09818102948700158" width="5.120000000000001" height="20.8" rx="2" fill="#A7ADB2"/><rect x="156.12892080696997" y="-6.498181029487002" width="17.6" height="8.0" rx="4" fill="#2B2F33" stroke="#A7ADB2" stroke-width="2"/><rect x="156.12892080696997" y="19.101818970512998" width="17.6" height="8.0" rx="4" fill="#2B2F33" stroke="#A7ADB2" stroke-width="2"/></g><g transform="rotate(0 198.83043273285915 17.57159651151533)"><rect x="196.27043273285915" y="7.171596511515331" width="5.120000000000001" height="20.8" rx="2" fill="#A7ADB2"/><rect x="190.03043273285914" y="0.7715965115153303" width="17.6" height="8.0" rx="4" fill="#2B2F33" stroke="#A7ADB2" stroke-width="2"/><rect x="190.03043273285914" y="26.371596511515328" width="17.6" height="8.0" rx="4" fill="#2B2F33" stroke="#A7ADB2" stroke-width="2"/></g><path d="M 142.9 16.3 Q 154.9 2.3 142.9 -11.7" fill="none" stroke="#D42027" stroke-width="3.0" stroke-linecap="round" marker-end="url(#tip)"/><text x="258" y="52" fill="#E8A33D" font-size="11" font-family="IBM Plex Mono, ui-monospace, monospace" letter-spacing="0.6" text-anchor="middle">STOP SHORT</text><text x="258" y="66" fill="#A7ADB2" font-size="11" font-family="IBM Plex Mono, ui-monospace, monospace" letter-spacing="0.6" text-anchor="middle">OF LOCKOUT</text></svg></div></details>
-   <dl><dt>Equipment</dt><dd>Rogue bench two notches short of vertical · REP dumbbells</dd>
-       <dt>Set up</dt><dd>Back and head on the pad the whole set. Dumbbells at shoulder height, palms facing in.</dd>
+   <dl><dt>Equipment</dt><dd>Rogue bench at 67.5° — the notch between 60 and 75 · REP dumbbells</dd>
+       <dt>Set up</dt><dd>Bench locked at 67.5°, the standard — do not drift. Back and head on the pad the whole set. Dumbbells at shoulder height, palms facing in.</dd>
        <dt>Execute</dt><dd>Press up and slightly back until the arms are long — stop an inch short of locked. 3 seconds down to shoulder height. The steep bench gives an overhead stimulus while the pad protects your pressing path.</dd></dl>
    <div class="elbow"><span class="tag">Elbow</span><p>Palms-in, back supported, and stop short of lockout. Start lighter than pride wants — 35s — and let the add-a-rep rule do the rest. If anything sharp shows up, drop 10 lb; overhead is the least forgiving angle.</p></div>
+   <div class="note"><span class="tag">Note</span><p>Angle lowered from 75° on 8/14 — deliberate, for upper-chest emphasis (front delts were already well fed). Reps before 8/14 were at 75°, so fewer reps in the first 67.5° session is the angle change, not a regression.</p></div>
  </div>
 </div><div class="ex" data-ex="b14" data-pain="1">
  <button class="ex-hd" aria-expanded="false" aria-controls="p-b14" id="b-b14">
@@ -1352,7 +1360,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-11.d</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.a</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, sends it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -1696,6 +1704,7 @@ function refresh(id){
   [].slice.call(el.querySelectorAll('.pip')).forEach(function(p, i){
     if(i < done) p.setAttribute('data-done',''); else p.removeAttribute('data-done');
   });
+  updNext();
 }
 
 function redrawAll(){
@@ -1735,9 +1744,23 @@ function select(code, focus){
   var abar = document.querySelector('.acts');
   if(abar) abar.style.display = code === 'WK' ? 'none' : '';
   if(code === 'WK') renderWeek();
+  updNext();
   window.scrollTo({top: 0, behavior: 'instant'});
 }
 
+var nextupBtn = document.getElementById('nextup');
+if(nextupBtn) nextupBtn.addEventListener('click', function(){
+  var id = nextupBtn.dataset.ex;
+  if(!id) return;
+  var ex = exEl(id); if(!ex) return;
+  var hd = ex.querySelector('.ex-hd');
+  if(!ex.classList.contains('open')){ if(hd) hd.click(); }
+  else {
+    var bar0 = document.querySelector('.bar');
+    var off0 = (bar0 ? bar0.getBoundingClientRect().height : 102) + 8;
+    window.scrollTo({top: ex.getBoundingClientRect().top + window.scrollY - off0, behavior: 'smooth'});
+  }
+});
 var logBtn = document.getElementById('logbtn');
 if(logBtn) logBtn.addEventListener('click', function(){
   select(curSession() === 'WK' ? 'A1' : 'WK');
@@ -1766,7 +1789,11 @@ tabs.forEach(function(t, i){
       ex.querySelector('.ex-bd').hidden = false;
       renderPrev(ex.dataset.ex);
       requestAnimationFrame(function(){
-        window.scrollTo({top: ex.getBoundingClientRect().top + window.scrollY - 110, behavior: 'smooth'});
+        // measure the sticky bar (safe-area inset + next-up strip vary) so the
+        // exercise NAME lands right under it instead of scrolling to the inputs
+        var bar9 = document.querySelector('.bar');
+        var off9 = (bar9 ? bar9.getBoundingClientRect().height : 102) + 8;
+        window.scrollTo({top: ex.getBoundingClientRect().top + window.scrollY - off9, behavior: 'smooth'});
       });
     }
   });
@@ -1818,16 +1845,16 @@ tabs.forEach(function(t, i){
       tr.querySelector('.r').removeAttribute('data-sug');
       state.cur[id] = readEx(id); refresh(id); save();
       // all sets done -> close this card and open the next unfinished one
-      if(tk.getAttribute('aria-pressed') === 'true' &&
-         [].slice.call(ex.querySelectorAll('.tick')).every(function(t9){ return t9.getAttribute('aria-pressed') === 'true'; })){
+      if(tk.getAttribute('aria-pressed') === 'true' && exDone(ex)){
+        // earliest unfinished exercise in SESSION ORDER wins — so a skipped
+        // card (cranky elbow, busy station) becomes next, not just whatever
+        // happens to follow this one
         var pane9 = ex.closest('.pane');
         var exs9 = [].slice.call(pane9.querySelectorAll('.ex'));
-        var nxt9 = null;
-        exs9.slice(exs9.indexOf(ex) + 1).some(function(e9){
-          var fin9 = [].slice.call(e9.querySelectorAll('.tick')).every(function(t9){ return t9.getAttribute('aria-pressed') === 'true'; });
-          if(!fin9){ nxt9 = e9; return true; }
-          return false;
-        });
+        var nxt9 = null, i9;
+        for(i9 = 0; i9 < exs9.length; i9++){
+          if(exs9[i9] !== ex && !exDone(exs9[i9])){ nxt9 = exs9[i9]; break; }
+        }
         // no next unfinished card: clicking our own header just collapses it,
         // which is the cue that Finish is all that's left
         var hd9 = (nxt9 || ex).querySelector('.ex-hd');
@@ -2011,6 +2038,33 @@ function queueSend(p){
 }
 window.addEventListener('online', function(){ pump(); });
 
+function exDone(el){
+  return [].slice.call(el.querySelectorAll('.tick')).every(function(t){
+    return t.getAttribute('aria-pressed') === 'true';
+  });
+}
+function updNext(){
+  var el = document.getElementById('nextup'); if(!el) return;
+  var code = curSession();
+  if(code === 'WK'){ el.hidden = true; return; }
+  var exs = [].slice.call(document.querySelectorAll('#s-' + code + ' .ex'));
+  var next = null, nextIdx = -1, lastDoneIdx = -1, i;
+  for(i = 0; i < exs.length; i++){
+    if(exDone(exs[i])) lastDoneIdx = i;
+    else if(!next){ next = exs[i]; nextIdx = i; }
+  }
+  // banner appears once the session is underway (something ticked)
+  if(lastDoneIdx < 0){ el.hidden = true; return; }
+  el.hidden = false;
+  if(!next){
+    el.dataset.ex = '';
+    el.innerHTML = 'All exercises done — hit <b>Finish</b>';
+    return;
+  }
+  el.dataset.ex = next.dataset.ex;
+  el.innerHTML = 'Next up · <b>' + next.querySelector('.nm').textContent.replace(/\s+/g, ' ').trim() + '</b>' +
+    (nextIdx < lastDoneIdx ? ' <em>skipped earlier</em>' : '');
+}
 function markStart(id){
   var code = id.slice(0, 2).toUpperCase();
   state.st = state.st || {};
