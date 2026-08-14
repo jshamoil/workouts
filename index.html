@@ -46,6 +46,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font
 .act b{font-weight:500;color:var(--red)}
 .act.go{border-color:#2F5C41;color:#8FD3A6}
 .act.go b{color:#8FD3A6}
+#finish[data-mode="start"]{border-color:#4A4231;color:var(--amber)}
+#finish[data-mode="start"] b{color:var(--amber)}
 .act.ghost{color:var(--steel);flex:0 0 auto;padding:9px 9px}
 .act.undo{border-color:#4A4231;color:var(--amber);flex:0 0 auto;padding:9px 12px}
 .savestat{width:100%;border-top:1px solid var(--line);font-family:var(--mono);font-size:10px;
@@ -1368,7 +1370,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.h</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.i</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -2089,6 +2091,7 @@ function updNext(){
     if(exDone(exs[i])) lastDoneIdx = i;
     else if(!next){ next = exs[i]; nextIdx = i; }
   }
+  updFinish();
   // banner appears once the session is underway (something ticked)
   if(lastDoneIdx < 0){ el.hidden = true; return; }
   el.hidden = false;
@@ -2101,11 +2104,26 @@ function updNext(){
   el.innerHTML = 'Next up · <b>' + next.querySelector('.nm').textContent.replace(/\s+/g, ' ').trim() + '</b>' +
     (nextIdx < lastDoneIdx ? ' <em>skipped earlier</em>' : '');
 }
-function markStart(id){
-  var code = id.slice(0, 2).toUpperCase();
+function markStartCode(code){
   state.st = state.st || {};
   var s = state.st[code];
   if(!s || s.d !== today()) state.st[code] = {d: today(), t: Date.now()};
+}
+// fallback: first ticked set starts the clock if the Start button was skipped
+function markStart(id){ markStartCode(id.slice(0, 2).toUpperCase()); }
+function sessStarted(code){
+  var s = state.st && state.st[code];
+  return !!(s && s.d === today());
+}
+// on a fresh session the Finish button reads Start: tapping it stamps the
+// session clock so warm-up and the first set count toward duration
+function updFinish(){
+  var code = curSession();
+  var btn = document.getElementById('finish');
+  if(!btn || code === 'WK') return;
+  var startMode = !sessStarted(code) && !savedToday(code);
+  btn.firstChild.nodeValue = startMode ? 'Start ' : 'Finish ';
+  btn.dataset.mode = startMode ? 'start' : 'finish';
 }
 function sessionDur(code){
   var s = state.st && state.st[code];
@@ -2142,6 +2160,13 @@ function markSaved(code){
 document.getElementById('finish').addEventListener('click', function(){
   var code = curSession(), ids = idsIn(code);
   if(code === 'WK'){ toast('Open a session tab first'); return; }
+  if(this.dataset.mode === 'start'){
+    markStartCode(code);
+    save();
+    updFinish();
+    toast(disp(code) + ' started — the clock is running');
+    return;
+  }
   var live = ids.filter(touched);
   if(!live.length){ toast('Nothing new to save in ' + disp(code)); return; }
   var again = savedToday(code);
@@ -2223,6 +2248,7 @@ document.getElementById('reset').addEventListener('click', function(){
         refresh(id);
       });
       if(state.st) delete state.st[code];
+      updNext();
       save();
       toast(disp(code) + ' cleared');
     });
