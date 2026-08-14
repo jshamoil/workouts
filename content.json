@@ -2,5 +2,22 @@
   "_schema": "Program control file, owned by Coach Claude, edited via GitHub — the app applies it on next launch with no rebuild. Keyed by app id (a11…b27). Per-exercise fields: name (display name — history and Airtable stay keyed to the app id, so renames are safe; when SWAPPING a movement keep the same id and note the swap date in 'note'), sr (the header target label, free text), equipment / setup / execute / note (card copy), and meta {lo, hi, inc, vm, rest, pain, bw, deg, mus} — rep range, weight increment, volume multiplier, rest seconds, elbow-button flag, bodyweight flag, angle flag, muscle list for the heat map. Top-level _order: {\"U1\": [ids…], \"L1\": […], \"U2\": […], \"L2\": […]} reorders exercises within a session; listed ids come first, unlisted follow in current order. STILL BUILD-ONLY (ask terminal Claude): set counts (meta.n), moving an exercise between sessions, adding/removing exercises. Blank/omitted fields fall back to baked text. Bad JSON is ignored safely.",
   "b16": {
     "setup": "Anchors at height 21 (confirmed 8/14). Step back until there's tension before rep one."
+  },
+  "a17": {
+    "sr": "2 × 15 @ 5 lb — REHAB, NOT TRAINING",
+    "note": "HARD LOAD CEILING: 5 lb. This is the medicine that keeps the elbow trainable — controlled, sub-maximal, never to failure. 3 seconds down, palm-down. Never tag this past Med. (Corrected 8/14: worked at 15 lb to Max — 3× the load at failure, the opposite of the intent on all three counts.) If 5×15 ever feels genuinely trivial, the next step is 7.5, and only after two clean elbow weeks.",
+    "meta": { "lo": 15, "hi": 15, "inc": 2.5 }
+  },
+  "b17": {
+    "sr": "2 × 15 @ 5 lb — REHAB, NOT TRAINING",
+    "note": "HARD LOAD CEILING: 5 lb. This is the medicine that keeps the elbow trainable — controlled, sub-maximal, never to failure. 3 seconds down, palm-down. Never tag this past Med. (Corrected 8/14: worked at 15 lb to Max.) If 5×15 ever feels genuinely trivial, the next step is 7.5, and only after two clean elbow weeks.",
+    "meta": { "lo": 15, "hi": 15, "inc": 2.5 }
+  },
+  "a23": {
+    "note": "DELOAD TO 30 lb, effective next L1 (coach override 8/10 — ignore any suggestion to climb from 35). On 8/10 the honest effort tags read 11/9/9 at Hard/Max/Max — below the rep range at max effort means 35 is premature on this station. Own 12–15 at 30 with a hard squeeze at the top before adding weight. Doubly justified since 8/11: this is the heaviest kneecap loader in the program and the right knee is a managed constraint."
+  },
+  "b22": {
+    "setup": "Rear foot on a LOWER platform than before (8/11 knee flag), laces flat / tops of toes down, pad under the foot if the bench edge digs. Long stance, front shin vertical.",
+    "note": "RIGHT KNEE WATCH: pain during reps with the RIGHT foot as the REAR (elevated) leg, 8/11. Rear-leg pain is deep-flexion pressure — the platform height is the first fix. If it still talks after the lower setup, the slot swaps to lateral lunge or goblet box squat (reverse lunge already occupies b25). Report honestly rather than pushing through."
   }
 }
