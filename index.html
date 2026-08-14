@@ -107,6 +107,7 @@ main{max-width:880px;margin:0 auto;padding:0 12px 72px}
 .nextup b{color:var(--ink);font-weight:600}
 .nextup em{font-style:normal;color:var(--amber);font-size:11px;margin-left:6px}
 .nextup[hidden]{display:none}
+.log input.overcap{border-color:var(--red);color:var(--red)}
 .bw-now{margin:0 0 6px;font-size:15px;color:var(--ink)}
 .bw-now b{font-size:26px;font-weight:600}
 .bw-now span{color:var(--steel);font-size:12px;margin-left:7px}
@@ -124,7 +125,7 @@ main{max-width:880px;margin:0 auto;padding:0 12px 72px}
 .pip{width:6px;height:6px;border-radius:50%;background:#3A4146;display:block}
 .pip[data-done]{background:var(--red)}
 .sr{font-family:var(--mono);font-size:11px;background:var(--surf2);padding:3px 8px;border-radius:2px;
- white-space:nowrap;flex:none}
+ flex:0 1 auto;max-width:150px;text-align:center;line-height:1.3}
 .chev{width:19px;height:19px;flex:none;color:var(--steel);transition:transform .2s}
 .ex.open .ex-hd .chev{transform:rotate(180deg)}
 .ex.open{border-color:#3A4146}
@@ -275,7 +276,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--amber);outline-
  .ex-hd{gap:7px}
  .spark svg{width:38px;height:14px}
  .spark{margin-right:2px}
- .sr{font-size:10px;padding:3px 5px;white-space:nowrap}
+ .sr{font-size:10px;padding:3px 5px;max-width:104px}
  .nm{font-size:18px}
 }
 footer{max-width:560px;margin:26px auto 40px;padding:0 16px;color:var(--steel);font-size:12px;line-height:1.55}
@@ -1367,7 +1368,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.f</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.g</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -1816,6 +1817,16 @@ tabs.forEach(function(t, i){
     inp.addEventListener('focus', function(){ inp.select(); });
     inp.addEventListener('input', function(){
       inp.removeAttribute('data-sug');
+      // load ceiling (meta.maxw, coach-set): warn, never refuse — the record
+      // stays honest, but the app objects while you type
+      if(inp.classList.contains('w') && META[id].maxw){
+        var over = num(inp.value) > META[id].maxw;
+        if(over && !inp.classList.contains('overcap')){
+          toast(exEl(id).querySelector('.nm').textContent.replace(/\s+/g,' ').trim() +
+            ' is capped at ' + META[id].maxw + ' lb — rehab, not training');
+        }
+        inp.classList.toggle('overcap', over);
+      }
       state.cur[id] = readEx(id); refresh(id); save();
     });
   });
@@ -2317,7 +2328,7 @@ setTimeout(selfUpdate, 800);
 var CONTENT_KEY = 'workouts.content.v1';
 // META fields the coach may override per exercise; n (set count) and session
 // membership are structural and still require a build
-var META_OVR = ['lo', 'hi', 'inc', 'vm', 'rest', 'pain', 'bw', 'deg', 'mus'];
+var META_OVR = ['lo', 'hi', 'inc', 'vm', 'rest', 'pain', 'bw', 'deg', 'mus', 'maxw'];
 function applyContent(c){
   if(!c) return;
   Object.keys(c).forEach(function(id){
