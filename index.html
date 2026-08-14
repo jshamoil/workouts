@@ -1360,7 +1360,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.b</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.c</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session and copies your log — paste it to Claude and it lands in Airtable.</p>
 </footer>
@@ -1710,7 +1710,11 @@ function refresh(id){
 function redrawAll(){
   [].slice.call(document.querySelectorAll('.ex')).forEach(function(ex){
     var id = ex.dataset.ex;
-    if(state.cur[id]) writeEx(id, state.cur[id], false);
+    var cs = state.cur[id];
+    // cur made purely of untouched suggestions is a target, not data —
+    // regenerate it so META changes (e.g. via content.json) take effect
+    var pure = cs && cs.length && cs.every(function(s){ return s.sw && s.sr; });
+    if(cs && !pure) writeEx(id, cs, false);
     else { writeEx(id, [], false); applySuggestion(id); }
     renderPrev(id);
     refresh(id);
@@ -2304,12 +2308,35 @@ setTimeout(selfUpdate, 800);
 // network each launch. Names are structural (logs, payloads) and are NOT
 // overridable — those change via app builds.
 var CONTENT_KEY = 'workouts.content.v1';
+// META fields the coach may override per exercise; n (set count) and session
+// membership are structural and still require a build
+var META_OVR = ['lo', 'hi', 'inc', 'vm', 'rest', 'pain', 'bw', 'deg', 'mus'];
 function applyContent(c){
   if(!c) return;
   Object.keys(c).forEach(function(id){
     if(id.charAt(0) === '_') return;
     var el = exEl(id), o = c[id];
     if(!el || !o) return;
+    if(typeof o.name === 'string' && o.name){
+      var nmEl = el.querySelector('.nm');
+      if(nmEl) nmEl.textContent = o.name;
+    }
+    if(o.meta && META[id]){
+      META_OVR.forEach(function(k){ if(o.meta[k] !== undefined) META[id][k] = o.meta[k]; });
+    }
+    var srEl = el.querySelector('.sr');
+    if(srEl){
+      if(typeof o.sr === 'string') srEl.textContent = o.sr;
+      else if(o.meta && (o.meta.lo !== undefined || o.meta.hi !== undefined)){
+        var m = META[id];
+        srEl.textContent = m.n + ' × ' + (m.lo === m.hi ? m.lo : m.lo + '–' + m.hi) +
+          (m.unit === 'sec' ? ' sec' : '');
+      }
+    }
+    // pain flag drives whether elbow buttons show on this card
+    [].slice.call(el.querySelectorAll('.pain')).forEach(function(pb){
+      pb.style.display = (META[id] && META[id].pain) ? '' : 'none';
+    });
     [].slice.call(el.querySelectorAll('dl dt')).forEach(function(dt){
       var k = dt.textContent.trim().toLowerCase().replace(/\s+/g, '');
       k = k === 'setup' ? 'setup' : k;
@@ -2321,11 +2348,28 @@ function applyContent(c){
       if(np) np.textContent = o.note;
     }
   });
+  // _order: per-session arrays of app ids (keys U1/L1/U2/L2 or A1/A2/B1/B2).
+  // Listed ids come first in the given order; unlisted keep their relative
+  // order after them. Number badges renumber to match.
+  var ord = c._order || {};
+  Object.keys(ord).forEach(function(sc){
+    var code = ({U1: 'A1', L1: 'A2', U2: 'B1', L2: 'B2'})[sc] || sc;
+    var pane = document.getElementById('s-' + code);
+    if(!pane || !Array.isArray(ord[sc])) return;
+    var all = [].slice.call(pane.querySelectorAll('.ex'));
+    var listed = ord[sc].map(function(id){ return exEl(id); })
+      .filter(function(e){ return e && e.closest('.pane') === pane; });
+    var rest = all.filter(function(e){ return listed.indexOf(e) < 0; });
+    listed.concat(rest).forEach(function(e){ pane.appendChild(e); });
+    [].slice.call(pane.querySelectorAll('.ex .n')).forEach(function(nEl, i){
+      nEl.textContent = i + 1;
+    });
+  });
 }
 function loadContent(){
   try {
     var cached = localStorage.getItem(CONTENT_KEY);
-    if(cached) applyContent(JSON.parse(cached));
+    if(cached){ applyContent(JSON.parse(cached)); redrawAll(); renderRot(); }
   } catch(e){}
   if(location.protocol === 'file:') return;
   fetch('content.json?u=' + Date.now(), {cache: 'no-store'})
@@ -2335,6 +2379,8 @@ function loadContent(){
       var c = JSON.parse(t);
       applyContent(c);
       try { localStorage.setItem(CONTENT_KEY, t); } catch(e){}
+      redrawAll();  // re-suggest targets and re-render against updated META/order
+      renderRot();
     }).catch(function(){});
 }
 // Offline shell: sw.js is network-first for index.html, so it never serves a
