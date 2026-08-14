@@ -36,6 +36,11 @@ self.addEventListener('fetch', function(e){
   if(req.method !== 'GET') return;
   var url = new URL(req.url);
 
+  // content.json is always fetched with a cache-buster and the page keeps its
+  // own offline copy in localStorage — never cache it here (unique query
+  // strings would bloat the cache one entry per launch)
+  if(url.pathname.slice(-12) === 'content.json') return;
+
   if(isShell(url)){
     e.respondWith(
       fetch(req).then(function(res){

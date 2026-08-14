@@ -36,11 +36,19 @@ Exercises (`tblmBTkSo88QCDDIc`, has `App ID` = a11…b27, do not edit), Daily, E
 
 - Elbow vocabulary everywhere: **Fine / Twinge / Painful** (per-set tag and per-workout
   verdict). Effort: Easy / Med / Hard / Max.
-- On Finish the app POSTs the session JSON to an Airtable webhook automation
-  ("Workout app → log session") that upserts the Workout by name and replaces its Sets.
-  The hook URL is the `HOOK` constant in `index.html`. Failed sends queue in `state.q`.
-  This session's egress proxy blocks `hooks.airtable.com` — test via Josh's device and
-  verify by reading the base.
+- **Webhook PARKED (Josh, 2026-08-14): `HOOK` is an empty string** and the app drops any
+  stale queue at boot — the courier flow (Finish copies the log → Josh pastes to the
+  coach → coach writes the base) is the data path. The full send/queue machinery remains
+  in `index.html`; to re-arm, finish the Airtable automation ("Workout app → log
+  session": wire the script's `body` input to the webhook Body token, turn it ON) and
+  restore the hook URL to `HOOK`. Sync claims require a confirmed 2xx — no blind
+  fallbacks, ever (trust rule, 8/14). This session's egress proxy blocks
+  `hooks.airtable.com` — live-test via Josh's device and verify by reading the base.
+- **Live text**: `content.json` in the repo overrides exercise card copy (equipment /
+  setup / execute / note, keyed by app id). The coach edits it via GitHub; the app
+  applies its localStorage copy at boot and refreshes network-first each launch. Names
+  are NOT overridable (they're in logs/payloads) — renames go through builds. `sw.js`
+  deliberately never caches it.
 - Automation creation via MCP is approval-blocked in terminal sessions; record/field/table
   writes are fine. Josh builds automations by hand in the editor from a provided script.
 - Body-comp flow: scale → Apple Health → coach → **Daily** (has Lean Mass

@@ -1,0 +1,6 @@
+{
+  "_schema": "Per-exercise text overrides, keyed by app id (a11…b27). Fields: equipment, setup, execute, note — each replaces that card's text in the app on next launch. Coach Claude edits this file via the GitHub API (program domain); no app rebuild needed for copy changes. Exercise NAMES are structural (they appear in logs and payloads) and are deliberately not overridable — name changes go through app builds. Blank/omitted fields fall back to the baked-in text.",
+  "b16": {
+    "setup": "Anchors at height 21 (confirmed 8/14). Step back until there's tension before rep one."
+  }
+}

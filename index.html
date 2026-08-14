@@ -1360,9 +1360,9 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.a</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.b</span></div>
   <p class="ft-tip" id="sync" hidden></p>
-  <p class="ft-tip"><b>Finish</b> banks the session, sends it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
+  <p class="ft-tip"><b>Finish</b> banks the session and copies your log — paste it to Claude and it lands in Airtable.</p>
 </footer>
 
 <script>
@@ -1962,7 +1962,10 @@ document.getElementById('copy').addEventListener('click', function(){
 // Airtable webhook: on Finish the banked session is POSTed here as JSON and an
 // automation in the Health base creates the Workout + Sets records. Payloads
 // queue in state.q when offline and retry on reconnect / next launch.
-var HOOK = 'https://hooks.airtable.com/workflows/v1/genericWebhook/app8u132HSpchoZ5C/wflV3YCUd5nHrwaPY/wtrkG468jXsT4scUh';
+// webhook PARKED (Josh, 8/14) — the Airtable automation was never finished, so
+// the app stays quiet about syncing; the courier flow (paste to Claude) is the
+// data path. Re-arm by restoring the hook URL once the automation is wired+on.
+var HOOK = '';
 function effortName(ev){
   return ({easy:'Easy',med:'Med',hard:'Hard',max:'Max','7':'Easy','8':'Med','9':'Hard','10':'Max'})[ev] || null;
 }
@@ -2294,6 +2297,46 @@ function selfUpdate(){
   }).catch(function(){});
 }
 setTimeout(selfUpdate, 800);
+
+// live text: content.json in the repo is an override layer for exercise copy
+// (equipment / setup / execute / note, keyed by app id). The coach edits it via
+// GitHub; the app applies the last-seen copy instantly and refreshes from the
+// network each launch. Names are structural (logs, payloads) and are NOT
+// overridable — those change via app builds.
+var CONTENT_KEY = 'workouts.content.v1';
+function applyContent(c){
+  if(!c) return;
+  Object.keys(c).forEach(function(id){
+    if(id.charAt(0) === '_') return;
+    var el = exEl(id), o = c[id];
+    if(!el || !o) return;
+    [].slice.call(el.querySelectorAll('dl dt')).forEach(function(dt){
+      var k = dt.textContent.trim().toLowerCase().replace(/\s+/g, '');
+      k = k === 'setup' ? 'setup' : k;
+      var dd = dt.nextElementSibling;
+      if(dd && typeof o[k] === 'string') dd.textContent = o[k];
+    });
+    if(typeof o.note === 'string'){
+      var np = el.querySelector('.note p');
+      if(np) np.textContent = o.note;
+    }
+  });
+}
+function loadContent(){
+  try {
+    var cached = localStorage.getItem(CONTENT_KEY);
+    if(cached) applyContent(JSON.parse(cached));
+  } catch(e){}
+  if(location.protocol === 'file:') return;
+  fetch('content.json?u=' + Date.now(), {cache: 'no-store'})
+    .then(function(r){ return r.ok ? r.text() : null; })
+    .then(function(t){
+      if(!t) return;
+      var c = JSON.parse(t);
+      applyContent(c);
+      try { localStorage.setItem(CONTENT_KEY, t); } catch(e){}
+    }).catch(function(){});
+}
 // Offline shell: sw.js is network-first for index.html, so it never serves a
 // stale build while online and stays out of selfUpdate's way.
 if('serviceWorker' in navigator && location.protocol !== 'file:'){
@@ -2473,6 +2516,7 @@ store.load().then(function(saved){
     state = {cur: JSON.parse(JSON.stringify(SEED)), hist: JSON.parse(JSON.stringify(SEED_HIST)),
              note: {}, bw: [], st: {}, q: [], setg: {}};
   }
+  if(!HOOK && state.q.length) state.q = []; // parked: drop stale queued payloads
   pump();
   // absorb any seed sessions this device hasn't seen (e.g. logged elsewhere, baked in later)
   var merged = 0;
@@ -2505,6 +2549,7 @@ store.load().then(function(saved){
   }
   renderRot();
   select(nextSession());
+  loadContent();
   store.save(state).then(function(ok){
     setSaveStat(ok ? 'ok' : 'bad', ok ? 'Saved' : 'NOT SAVED \u2014 use Copy log');
   });
