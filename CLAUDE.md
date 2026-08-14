@@ -36,19 +36,21 @@ Exercises (`tblmBTkSo88QCDDIc`, has `App ID` = a11…b27, do not edit), Daily, E
 
 - Elbow vocabulary everywhere: **Fine / Twinge / Painful** (per-set tag and per-workout
   verdict). Effort: Easy / Med / Hard / Max.
-- **Webhook PARKED (Josh, 2026-08-14): `HOOK` is an empty string** and the app drops any
-  stale queue at boot — the courier flow (Finish copies the log → Josh pastes to the
-  coach → coach writes the base) is the data path. The full send/queue machinery remains
-  in `index.html`; to re-arm, finish the Airtable automation ("Workout app → log
-  session": wire the script's `body` input to the webhook Body token, turn it ON) and
-  restore the hook URL to `HOOK`. Sync claims require a confirmed 2xx — no blind
-  fallbacks, ever (trust rule, 8/14). This session's egress proxy blocks
-  `hooks.airtable.com` — live-test via Josh's device and verify by reading the base.
-- **Live text**: `content.json` in the repo overrides exercise card copy (equipment /
-  setup / execute / note, keyed by app id). The coach edits it via GitHub; the app
-  applies its localStorage copy at boot and refreshes network-first each launch. Names
-  are NOT overridable (they're in logs/payloads) — renames go through builds. `sw.js`
-  deliberately never caches it.
+- **Webhook LIVE (verified end-to-end 2026-08-14)**: on Finish the app POSTs the session
+  JSON to the Airtable automation "Workout app → log session", which upserts the Workout
+  by name (`YYYY-MM-DD U1`) and rebuilds its Sets. "Synced to Airtable" requires a
+  confirmed 2xx — no blind fallbacks, ever (trust rule, 8/14); failures queue in
+  `state.q` and show in the footer. Re-banks replace a day's records; churn is normal.
+  This session's egress proxy blocks `hooks.airtable.com` — live-test via Josh's device
+  and verify by reading the base. Coach no longer enters sets manually.
+- **Program control**: `content.json` in the repo is coach-owned. Per app id: name
+  (renames safe — everything keys on ids), sr label, equipment/setup/execute/note copy,
+  and meta overrides (lo/hi/inc/vm/rest/pain/bw/deg/mus/maxw — maxw is a load ceiling
+  that warns in red + toast, never blocks). `_order` reorders within a session. Applied
+  from localStorage at boot, refreshed network-first each launch; `sw.js` never caches
+  it. Still build-only: set counts, cross-session moves, adding/removing exercises.
+- Legacy-state migration (14.e): cur entries whose sets lack `sw`/`sr` markers are
+  purged at load — never remove this without understanding the 8/14 ghost-set incident.
 - Automation creation via MCP is approval-blocked in terminal sessions; record/field/table
   writes are fine. Josh builds automations by hand in the editor from a provided script.
 - Body-comp flow: scale → Apple Health → coach → **Daily** (has Lean Mass
@@ -74,10 +76,15 @@ other; shared state replaces explanation:
 
 ## Backlog (Josh-approved, not started)
 
-- **Pain-day mode**: pick a sore joint → app assembles a one-off session excluding
-  movements that load it, biased toward under-trained muscles (trailing-7-day heat map);
-  banks/syncs tagged as modified. Needs per-exercise joint-stress ratings (draft them,
-  have the coach review against Josh's injury history) and a "Custom" Session option.
+- **Pain-day mode** (build after Josh's ~8/18 trip): sore joint → one-off session
+  excluding movements that load it, biased toward the heat map's under-fed muscles;
+  banks/syncs tagged as modified (needs a "Custom" Session select option in Airtable).
+  Ratings are drafted AND coach-amended (Journal 8/14): pulldown elbow risk is
+  order-sensitive (worse after presses), straps drop grip-limited moves one level,
+  wrist-extensor stays included with its 5-lb ceiling, rear-foot-elevated work tops the
+  knee scale while reverse lunge stays knee-1, leg extension is first excluded on knee
+  days, and every generated session carries "if the joint hurts at rest, the right
+  session is none." Knee-pain buttons on knee-loading exercises: still Josh's call.
 - **Hosting move**: GitHub repo → private; serve from SiteGround at an unguessable path
   via an SFTP deploy Action on push to main (credentials as repo secrets). One-time cost:
   home-screen re-add + localStorage reset — do it right after a banked session.
