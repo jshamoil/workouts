@@ -1360,7 +1360,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.d</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.e</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -2562,6 +2562,17 @@ store.load().then(function(saved){
     state = {cur: JSON.parse(JSON.stringify(SEED)), hist: JSON.parse(JSON.stringify(SEED_HIST)),
              note: {}, bw: [], st: {}, q: [], setg: {}};
   }
+  // migration: sheets saved by builds before 2026-08-11.b lack the sw/sr
+  // suggestion markers, so their prefilled targets are indistinguishable from
+  // typed data — they leaked as ghost sets on 8/14. Drop any all-legacy entry;
+  // fresh, properly-marked suggestions regenerate on redraw. Banked history is
+  // untouched.
+  Object.keys(state.cur).forEach(function(idm){
+    var cs = state.cur[idm];
+    if(cs && cs.length && cs.every(function(s){ return s.sw === undefined; })){
+      delete state.cur[idm];
+    }
+  });
   if(!HOOK && state.q.length) state.q = []; // parked: drop stale queued payloads
   pump();
   // absorb any seed sessions this device hasn't seen (e.g. logged elsewhere, baked in later)
