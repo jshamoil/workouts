@@ -1,8 +1,13 @@
 {
   "_schema": "Program control file, owned by Coach Claude, edited via GitHub — the app applies it on next launch with no rebuild. Keyed by app id (a11…b27). Per-exercise fields: name (display name — history and Airtable stay keyed to the app id, so renames are safe; when SWAPPING a movement keep the same id and note the swap date in 'note'), sr (the header target label, free text), equipment / setup / execute / note (card copy), and meta {lo, hi, inc, vm, rest, pain, bw, deg, mus, maxw} — rep range, weight increment, volume multiplier, rest seconds, elbow-button flag, bodyweight flag, angle flag, muscle list for the heat map, and maxw = load ceiling in lb (the app warns in red + toast when a heavier weight is typed; it never blocks entry, honest records win). Keep sr labels reasonably short — they wrap at ~150px in the header. Top-level _order: {\"U1\": [ids…], \"L1\": […], \"U2\": […], \"L2\": […]} reorders exercises within a session; listed ids come first, unlisted follow in current order. Top-level _next: {code, asof} overrides the rotation pointer (which session the app suggests and opens next); it expires automatically once that session is banked on/after asof — use for deload restarts, post-trip resets, injury reroutes. STILL BUILD-ONLY (ask terminal Claude): set counts (meta.n), moving an exercise between sessions, adding/removing exercises. Blank/omitted fields fall back to baked text. Bad JSON is ignored safely.",
-  "_next": { "code": "U1", "asof": "2026-08-14", "why": "post-trip restart at the top of the cycle (Josh 8/14); expires automatically once a U1 is banked on/after asof" },
+  "_next": {
+    "code": "U1",
+    "asof": "2026-08-14",
+    "why": "post-trip restart at the top of the cycle (Josh 8/14); expires automatically once a U1 is banked on/after asof"
+  },
   "b16": {
-    "setup": "Anchors at height 21 (confirmed 8/14). Step back until there's tension before rep one."
+    "setup": "Anchors at height 21 (confirmed 8/14). Step back until there is tension before rep one.",
+    "note": "Well-suited to the Ancore: resistance rises as the cable extends, which peaks the load right at the squeeze - exactly where rear delts want it. No distance adjustment needed."
   },
   "a17": {
     "sr": "2 × 15 @ 5 lb",
@@ -30,5 +35,16 @@
   "b22": {
     "setup": "Rear foot on a LOWER platform than before (8/11 knee flag), laces flat / tops of toes down, pad under the foot if the bench edge digs. Long stance, front shin vertical.",
     "note": "RIGHT KNEE WATCH: pain during reps with the RIGHT foot as the REAR (elevated) leg, 8/11. Rear-leg pain is deep-flexion pressure — the platform height is the first fix. If it still talks after the lower setup, the slot swaps to lateral lunge or goblet box squat (reverse lunge already occupies b25). Report honestly rather than pushing through."
+  },
+  "a14": {
+    "setup": "Ancore anchors at chest height. STEP WELL FORWARD - far enough that the cables are already under real tension with your arms open wide, before rep one.",
+    "note": "DISTANCE MATTERS ON THIS ONE (8/16): Ancore resistance RISES as the cable extends, so the stretch position - arms wide, where the chest actually grows - is where tension is lowest. Standing farther from the units restores load in the stretch. If the wide position feels loose, you are standing too close, regardless of the number on the plates."
+  },
+  "a19": {
+    "setup": "One Ancore at HIP HEIGHT behind you. Face away, working arm trailing behind the body, palm forward, one arm at a time. STEP FORWARD until the cable is tight with the arm hanging back - tension must exist at the bottom.",
+    "note": "This exercise exists to load the biceps long head in the STRETCH (arm behind the body). Ancore tension rises as the cable extends, which works against that - so the step-forward distance is doing the work the weight number cannot. Set up so the stretched bottom position already feels loaded. Numbers are actual pounds. Stop 15-20 degrees short of full extension."
+  },
+  "b18": {
+    "note": "Well-suited to the Ancore: load peaks at lockout, where the triceps are shortest - the curve matches the exercise. Stop short of hard lockout for the elbow."
   }
 }
