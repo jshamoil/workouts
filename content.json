@@ -87,5 +87,45 @@
         "upper back"
       ]
     }
+  },
+  "b29": {
+    "name": "Kneeling Cable Crunch",
+    "sr": "2 × 12–15",
+    "equipment": "Rack lat tower, high pulley · rope",
+    "setup": "Kneel facing the stack, rope behind your head, hands holding it at your ears. Hips stay put — they do not travel back as you crunch.",
+    "execute": "Curl your RIBS toward your HIPS, rounding the spine — this is a short movement, not a bow. The hips stay fixed; if they hinge backward it becomes a lat pulldown with your abs along for the ride. Squeeze 1 second at the bottom, return over 3.",
+    "note": "The only spinal-FLEXION work in the program — everything else is anti-extension (ab wheel), anti-rotation (Pallof), rotation (chop), or lateral (QL raise, carry). Honest framing: visible abs come from body fat, not ab volume. This adds thickness underneath; the recomp does the rest. Numbers are relative to the lat tower carriage, not comparable to dumbbells.",
+    "meta": {
+      "n": 2,
+      "lo": 12,
+      "hi": 15,
+      "inc": 5,
+      "rest": 60,
+      "mus": [
+        "abs"
+      ]
+    }
+  },
+  "_order": {
+    "L1": [
+      "a21",
+      "a22",
+      "a23",
+      "a24",
+      "a25",
+      "a28",
+      "a26"
+    ],
+    "L2": [
+      "b21",
+      "b22",
+      "b23",
+      "b24",
+      "b25",
+      "b26",
+      "b27",
+      "b28",
+      "b29"
+    ]
   }
 }
