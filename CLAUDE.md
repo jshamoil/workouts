@@ -54,7 +54,9 @@ Exercises (`tblmBTkSo88QCDDIc`, has `App ID` = a11…b27, do not edit), Daily, E
   overrides the rotation pointer (self-expires); `_goal` {date, weight, bf, lean,
   baseline*, note} drives the Goals card atop the Log tab — lean is a floor (hold or
   gain), and the card must never use pace-judgement language ("behind", "off track",
-  red-for-slow): slower loss with lean held beats fast loss (coach safeguard, 8/23).
+  red-for-slow): slower loss with lean held beats fast loss (coach safeguard, 8/23);
+  `_weighin` {everyDays, pauseUntil} drives the weigh-in cadence line on the Bodyweight
+  card + Log-button dot — factual and dismissible only, never streaks/red/guilt (8/23).
   Applied from localStorage at boot,
   refreshed network-first each launch; `sw.js` never caches it. New ids need a matching
   Airtable Exercises record (`App ID` = the id) so webhook syncs link. Still build-only:

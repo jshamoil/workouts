@@ -209,6 +209,9 @@ tr.xr td{border-top:0 !important;padding:2px 4px 12px}
  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
  padding:7px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #logbtn.on{border-color:var(--red);color:var(--red)}
+#logbtn.due::after{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--amber);margin-left:5px;vertical-align:1px}
+.bw-due{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin:0 0 8px}
+.bw-due.due{color:var(--amber)}
 .wkcard{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px;margin-bottom:12px}
 .wkcard h3{margin:0 0 10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
  text-transform:uppercase;color:var(--steel);font-weight:600}
@@ -1392,7 +1395,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-23.b</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-23.c</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -1808,7 +1811,13 @@ if(nextupBtn) nextupBtn.addEventListener('click', function(){
 });
 var logBtn = document.getElementById('logbtn');
 if(logBtn) logBtn.addEventListener('click', function(){
-  select(curSession() === 'WK' ? 'A1' : 'WK');
+  var toWK = curSession() !== 'WK';
+  select(toWK ? 'WK' : 'A1');
+  // due dot showing → land the tap on the bodyweight card, not the tab top
+  if(toWK && logBtn.classList.contains('due')){
+    var bc0 = document.getElementById('bwcard');
+    if(bc0) setTimeout(function(){ bc0.scrollIntoView({behavior: 'smooth', block: 'start'}); }, 60);
+  }
 });
 tabs.forEach(function(t, i){
   t.addEventListener('click', function(){ select(t.dataset.s); });
@@ -2491,6 +2500,7 @@ function applyContent(c){
   if(!c) return;
   contentNext = c._next || null;
   contentGoal = c._goal || null;
+  contentWeighin = c._weighin || null;
   Object.keys(c).forEach(function(id){
     if(id.charAt(0) === '_') return;
     var o = c[id];
@@ -2590,6 +2600,7 @@ function applyContent(c){
       hd.firstChild.nodeValue = pane.querySelectorAll('.ex').length + ' movements \u00b7 run in order';
     }
   });
+  updateWeighDot();
 }
 function loadContent(){
   try {
@@ -2624,6 +2635,28 @@ var ROT = ['A1', 'A2', 'B1', 'B2'];
 // expires by itself once that session is banked on/after the asof date
 var contentNext = null;
 var contentGoal = null;
+var contentWeighin = null;
+// weigh-in cadence reminder — factual and dismissible only: no streaks, no
+// red states, no escalation for being late (coach guardrail, Journal 8/23);
+// pauseUntil lets coach silence it around travel and protocol changes
+function weighStatus(){
+  var W = contentWeighin;
+  if(!W || !W.everyDays) return null;
+  var bw = (state.bw && state.bw.length ? state.bw : BW_LOG);
+  var last = '';
+  bw.forEach(function(p){ if(p[0] > last) last = p[0]; });
+  if(!last) return null;
+  var today = daysAgo(0);
+  if(W.pauseUntil && today < W.pauseUntil) return {paused: true, until: W.pauseUntil};
+  var days = Math.round((new Date(today) - new Date(last)) / 86400000);
+  return {paused: false, days: days, due: days >= W.everyDays};
+}
+function updateWeighDot(){
+  var b = document.getElementById('logbtn');
+  if(!b) return;
+  var ws = weighStatus();
+  b.classList.toggle('due', !!(ws && !ws.paused && ws.due));
+}
 function lastSession(){
   var best = null;
   ROT.forEach(function(code){
@@ -2812,7 +2845,15 @@ function renderWeek(){
         return '<tr><td>' + p9[0].slice(5).replace('-', '/') + '</td><td>' + p9[1] + ' lb</td><td>' +
           (p9[2] ? p9[2] + '%' : '') + '</td><td>' + (p9[3] ? p9[3] + ' lb' : '') + '</td></tr>';
       }).join('');
-      bc.innerHTML =
+      var ws9 = weighStatus(), due9 = '';
+      if(ws9){
+        due9 = ws9.paused ?
+          '<p class="bw-due">weigh-in reminders paused until ' + ws9.until.slice(5).replace('-', '/') + '</p>' :
+          '<p class="bw-due' + (ws9.due ? ' due' : '') + '">last weigh-in ' +
+            (ws9.days === 0 ? 'today' : ws9.days + (ws9.days === 1 ? ' day' : ' days') + ' ago') +
+            (ws9.due ? ' · weigh-in due' : '') + '</p>';
+      }
+      bc.innerHTML = due9 +
         '<p class="bw-now"><b>' + last9[1] + '</b> lb<span>' + last9[0].slice(5).replace('-', '/') + '</span></p>' +
         '<svg viewBox="0 0 300 90"><polyline points="' + poly9 + '" fill="none" stroke="#7FB0DC" stroke-width="2"/>' + dots9 + '</svg>' +
         '<table class="bw-grid"><thead><tr><th>Date</th><th>Weight</th><th>BF</th><th>Lean</th></tr></thead><tbody>' + rows9 + '</tbody></table>';
@@ -2915,6 +2956,7 @@ store.load().then(function(saved){
     redrawAll();
   }
   loadContent();  // applies cached content first, so _next steers the boot tab
+  updateWeighDot();  // again after the bw merge — applyContent ran before it
   renderRot();
   select(nextSession());
   store.save(state).then(function(ok){
