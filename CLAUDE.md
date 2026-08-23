@@ -45,10 +45,22 @@ Exercises (`tblmBTkSo88QCDDIc`, has `App ID` = a11…b27, do not edit), Daily, E
   and verify by reading the base. Coach no longer enters sets manually.
 - **Program control**: `content.json` in the repo is coach-owned. Per app id: name
   (renames safe — everything keys on ids), sr label, equipment/setup/execute/note copy,
-  and meta overrides (lo/hi/inc/vm/rest/pain/bw/deg/mus/maxw — maxw is a load ceiling
-  that warns in red + toast, never blocks). `_order` reorders within a session. Applied
-  from localStorage at boot, refreshed network-first each launch; `sw.js` never caches
-  it. Still build-only: set counts, cross-session moves, adding/removing exercises.
+  meta overrides (n/lo/hi/inc/unit/ph/vm/rest/pain/bw/deg/bar/mus/maxw — maxw is a load
+  ceiling that warns in red + toast, never blocks), and **structural fields (23.a)**:
+  `session` moves an exercise to another pane, `removed: true` detaches it (history
+  preserved; delete the flag to restore), a NEW id (session-prefixed a1x/a2x/b1x/b2x, or
+  explicit `session`) with name + meta + setup/execute generates a full working card at
+  boot, and `meta.n` rebuilds set rows. `_order` reorders within a session; `_next`
+  overrides the rotation pointer (self-expires). Applied from localStorage at boot,
+  refreshed network-first each launch; `sw.js` never caches it. New ids need a matching
+  Airtable Exercises record (`App ID` = the id) so webhook syncs link. Still build-only:
+  new session types beyond the four, webhook/hosting changes.
+- Dynamic-card architecture (23.a): `buildExCard(id, o)` generates cards matching the
+  baked selector contract; bindings are factored into `bindHd`/`bindRows`/`bindEx`/
+  `injectSetg` so generated and rebuilt DOM gets wired identically to parsed DOM —
+  route any new per-card listener through those, never a parse-time-only loop.
+  `rebuildRows` regenerates a card's tbody + pips when `meta.n` changes. Everything
+  keys on stable ids (a11…b27 + coach-created); ids are never reused or renamed.
 - Legacy-state migration (14.e): cur entries whose sets lack `sw`/`sr` markers are
   purged at load — never remove this without understanding the 8/14 ghost-set incident.
 - Automation creation via MCP is approval-blocked in terminal sessions; record/field/table

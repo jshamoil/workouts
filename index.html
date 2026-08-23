@@ -1381,7 +1381,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-14.l</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-23.a</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -1809,7 +1809,7 @@ tabs.forEach(function(t, i){
   });
 });
 
-[].slice.call(document.querySelectorAll('.ex-hd')).forEach(function(b){
+function bindHd(b){
   b.addEventListener('click', function(){
     var ex = b.parentElement, pane = ex.closest('.pane'), open = ex.classList.contains('open');
     [].slice.call(pane.querySelectorAll('.ex.open')).forEach(function(o){
@@ -1831,9 +1831,12 @@ tabs.forEach(function(t, i){
       });
     }
   });
-});
+}
+[].slice.call(document.querySelectorAll('.ex-hd')).forEach(bindHd);
 
-[].slice.call(document.querySelectorAll('.ex')).forEach(function(ex){
+// row-level listeners live in their own binder so a set-count rebuild can
+// re-attach to a fresh tbody without double-binding anything else
+function bindRows(ex){
   var id = ex.dataset.ex;
   [].slice.call(ex.querySelectorAll('.log input')).forEach(function(inp){
     inp.addEventListener('focus', function(){ inp.select(); });
@@ -1868,18 +1871,6 @@ tabs.forEach(function(t, i){
       state.cur[id] = readEx(id); save();
     });
   });
-  var trendBtn = ex.querySelector('.trend'), chartBox = ex.querySelector('[data-chart]');
-  if(trendBtn) trendBtn.addEventListener('click', function(){
-    chartBox.hidden = !chartBox.hidden;
-    trendBtn.textContent = chartBox.hidden ? 'Trend \u25b8' : 'Trend \u25be';
-    if(!chartBox.hidden) renderChart(id);
-  });
-  var noteIn = ex.querySelector('.exnote');
-  if(noteIn) noteIn.addEventListener('input', function(){
-    state.note = state.note || {};
-    state.note[id] = {date: today(), txt: noteIn.value};
-    save();
-  });
   [].slice.call(ex.querySelectorAll('.tick')).forEach(function(tk){
     tk.addEventListener('click', function(){
       tk.setAttribute('aria-pressed', tk.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
@@ -1906,15 +1897,32 @@ tabs.forEach(function(t, i){
       }
     });
   });
-});
+}
+function bindEx(ex){
+  var id = ex.dataset.ex;
+  bindRows(ex);
+  var trendBtn = ex.querySelector('.trend'), chartBox = ex.querySelector('[data-chart]');
+  if(trendBtn) trendBtn.addEventListener('click', function(){
+    chartBox.hidden = !chartBox.hidden;
+    trendBtn.textContent = chartBox.hidden ? 'Trend \u25b8' : 'Trend \u25be';
+    if(!chartBox.hidden) renderChart(id);
+  });
+  var noteIn = ex.querySelector('.exnote');
+  if(noteIn) noteIn.addEventListener('input', function(){
+    state.note = state.note || {};
+    state.note[id] = {date: today(), txt: noteIn.value};
+    save();
+  });
+}
+[].slice.call(document.querySelectorAll('.ex')).forEach(bindEx);
 
 var SETG_SEED = {b21: '45-lb plates under the bar', b23: '35° notch', b27: '35° notch', b16: 'anchor height 21'};
 // Ancore stations whose anchor number Josh hasn't confirmed yet — prompt for
 // it in the setup box without inventing a value (blank means unrecorded)
 var SETG_ASK = {a14: 1, a19: 1, b18: 1};
-[].slice.call(document.querySelectorAll('.ex')).forEach(function(ex){
+function injectSetg(ex){
   var id = ex.dataset.ex, bd = ex.querySelector('.ex-bd');
-  if(!bd) return;
+  if(!bd || ex.querySelector('.setg')) return;
   var row = document.createElement('div');
   row.className = 'setg';
   var lb = document.createElement('span');
@@ -1930,7 +1938,8 @@ var SETG_ASK = {a14: 1, a19: 1, b18: 1};
     state.setg[id] = inp.value;
     save();
   });
-});
+}
+[].slice.call(document.querySelectorAll('.ex')).forEach(injectSetg);
 function renderSetg(){
   [].slice.call(document.querySelectorAll('.ex')).forEach(function(ex){
     var id = ex.dataset.ex, inp = ex.querySelector('.setgin');
@@ -2121,7 +2130,10 @@ function markStartCode(code){
   if(!s || s.d !== today()) state.st[code] = {d: today(), t: Date.now()};
 }
 // fallback: first ticked set starts the clock if the Start button was skipped
-function markStart(id){ markStartCode(id.slice(0, 2).toUpperCase()); }
+function markStart(id){
+  var el = exEl(id), pane = el && el.closest('.pane');
+  markStartCode(pane && pane.id !== 's-WK' ? pane.id.slice(2) : id.slice(0, 2).toUpperCase());
+}
 function sessStarted(code){
   var s = state.st && state.st[code];
   return !!(s && s.d === today());
@@ -2397,14 +2409,111 @@ setTimeout(selfUpdate, 800);
 var CONTENT_KEY = 'workouts.content.v1';
 // META fields the coach may override per exercise; n (set count) and session
 // membership are structural and still require a build
-var META_OVR = ['lo', 'hi', 'inc', 'vm', 'rest', 'pain', 'bw', 'deg', 'mus', 'maxw'];
+var META_OVR = ['n', 'lo', 'hi', 'inc', 'unit', 'ph', 'vm', 'rest', 'pain', 'bw', 'deg', 'bar', 'mus', 'maxw'];
+var SESS_MAP = {U1: 'A1', L1: 'A2', U2: 'B1', L2: 'B2'};
+// cards detached by a "removed": true entry are stashed here so a later
+// content refresh can restore them without a reload
+var stashedEx = {};
+function rowHtml(i, vm){
+  return '<tr class="mr" data-i="' + i + '"><th scope="row">' + i + '</th>' +
+    '<td><input class="w" type="text" inputmode="decimal" aria-label="Set ' + i + ' weight" placeholder="\u2013"></td>' +
+    '<td class="tot' + (vm === 2 ? ' x2' : '') + '" data-tot>\u2013</td>' +
+    '<td><input class="r" type="text" inputmode="numeric" aria-label="Set ' + i + ' reps" placeholder="\u2013"></td>' +
+    '<td><button class="tick" aria-label="Mark set ' + i + ' done" aria-pressed="false"></button></td></tr>' +
+    '<tr class="xr" data-i="' + i + '"><td colspan="5"><div class="xw">' +
+    '<button class="rpe" data-v="" aria-label="Set ' + i + ' effort RPE">\u2013</button>' +
+    '<button class="pain" data-v="0" aria-label="Set ' + i + ' elbow pain"><span class="pl">ELBOW</span><span class="pp"></span></button>' +
+    '</div></td></tr>';
+}
+function pipsHtml(n){ return new Array(n + 1).join('<i class="pip"></i>'); }
+// set-count changed (meta.n): regenerate this card's rows and pips; typed
+// values are re-applied from state.cur by the following redraw where they fit
+function rebuildRows(el, id){
+  var m = META[id], tb = el.querySelector('.log tbody');
+  if(!m || !tb) return;
+  var html = '', i;
+  for(i = 1; i <= m.n; i++) html += rowHtml(i, m.vm);
+  tb.innerHTML = html;
+  var pips = el.querySelector('.pips');
+  if(pips) pips.innerHTML = pipsHtml(m.n);
+  bindRows(el);
+}
+// a full card generated from a content.json entry — same selector contract as
+// the baked cards (log table, vol/e1, plate, trend/chart, notebox, dl, note),
+// minus the hand-drawn diagrams
+function buildExCard(id, o){
+  var m = META[id];
+  var ex = document.createElement('div');
+  ex.className = 'ex';
+  ex.setAttribute('data-ex', id);
+  if(m.pain) ex.setAttribute('data-pain', '1');
+  var rows = '', i;
+  for(i = 1; i <= m.n; i++) rows += rowHtml(i, m.vm);
+  var nm = String(o.name || id);
+  ex.innerHTML =
+    '<button class="ex-hd" aria-expanded="false" aria-controls="p-' + id + '" id="b-' + id + '">' +
+      '<span class="n">\u2022</span><span class="nm"></span>' +
+      '<span class="spark" data-spark aria-hidden="true"></span>' +
+      '<span class="pips" aria-hidden="true">' + pipsHtml(m.n) + '</span>' +
+      '<span class="sr"></span>' +
+      '<svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+    '</button>' +
+    '<div class="ex-bd" id="p-' + id + '" role="region" aria-labelledby="b-' + id + '" hidden>' +
+      '<p class="prev" data-prev hidden></p>' +
+      '<table class="log"><caption class="vis-hidden">Weight and reps by set</caption>' +
+      '<thead><tr><th scope="col">Set</th><th scope="col">Weight' + (m.ph ? ' <em>ea</em>' : '') + '</th>' +
+      '<th scope="col" class="th-tot">Total</th><th scope="col">Reps</th>' +
+      '<th scope="col"><span class="vis-hidden">Done</span></th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table>' +
+      '<p class="vol" data-vol>Volume <b>\u2014</b><span class="e1" data-e1></span></p>' +
+      '<p class="plate" data-plate hidden></p>' +
+      '<button class="trend" type="button">Trend \u25b8</button><div class="chart" data-chart hidden></div>' +
+      '<div class="notebox"><input class="exnote" type="text" maxlength="140" placeholder="Note to next-session you\u2026" aria-label="Exercise note"><p class="lastnote" data-lastnote hidden></p></div>' +
+      '<a class="vid srch" href="https://www.youtube.com/results?search_query=' + encodeURIComponent(nm + ' exercise proper form') + '" target="_blank" rel="noopener"><span class="vi">\u25b6</span> Video demos</a>' +
+      '<dl><dt>Equipment</dt><dd></dd><dt>Set up</dt><dd></dd><dt>Execute</dt><dd></dd></dl>' +
+      '<div class="note"><span class="tag">Note</span><p></p></div>' +
+    '</div>';
+  ex.querySelector('.nm').textContent = nm;
+  return ex;
+}
 function applyContent(c){
   if(!c) return;
   contentNext = c._next || null;
   Object.keys(c).forEach(function(id){
     if(id.charAt(0) === '_') return;
-    var el = exEl(id), o = c[id];
-    if(!el || !o) return;
+    var o = c[id];
+    if(!o) return;
+    // --- structure (coach-owned): remove / restore / create / move ---
+    if(o.removed){
+      var elR = exEl(id);
+      if(elR){ stashedEx[id] = elR; elR.parentNode.removeChild(elR); }
+      return;
+    }
+    if(stashedEx[id] && !exEl(id)){
+      var backPane = document.getElementById('s-' + (SESS_MAP[o.session] || o.session || id.slice(0, 2).toUpperCase()));
+      if(backPane) backPane.appendChild(stashedEx[id]);
+      delete stashedEx[id];
+    }
+    if(!exEl(id) && typeof o.name === 'string' && o.name){
+      var newCode = SESS_MAP[o.session] || o.session || id.slice(0, 2).toUpperCase();
+      var newPane = document.getElementById('s-' + newCode);
+      if(newPane && newCode !== 'WK'){
+        META[id] = {n: 3, lo: 8, hi: 12, inc: 5, unit: 'reps', ph: 0, vm: 1,
+                    bw: 0, pain: 0, bar: 0, mus: [], deg: 0, rest: 90};
+        if(o.meta) META_OVR.forEach(function(k){ if(o.meta[k] !== undefined) META[id][k] = o.meta[k]; });
+        var newCard = buildExCard(id, o);
+        newPane.appendChild(newCard);
+        bindHd(newCard.querySelector('.ex-hd'));
+        bindEx(newCard);
+        injectSetg(newCard);
+      }
+    }
+    var el = exEl(id);
+    if(!el) return;
+    if(o.session){
+      var mvPane = document.getElementById('s-' + (SESS_MAP[o.session] || o.session));
+      if(mvPane && el.closest('.pane') !== mvPane) mvPane.appendChild(el);
+    }
     if(typeof o.name === 'string' && o.name){
       var nmEl = el.querySelector('.nm');
       if(nmEl) nmEl.textContent = o.name;
@@ -2412,6 +2521,9 @@ function applyContent(c){
     if(o.meta && META[id]){
       META_OVR.forEach(function(k){ if(o.meta[k] !== undefined) META[id][k] = o.meta[k]; });
     }
+    // set count is structural: if meta.n disagrees with the card, rebuild rows
+    var haveRows = el.querySelectorAll('.log tbody tr.mr').length;
+    if(META[id] && META[id].n && haveRows && META[id].n !== haveRows) rebuildRows(el, id);
     var srEl = el.querySelector('.sr');
     if(srEl){
       if(typeof o.sr === 'string') srEl.textContent = o.sr;
@@ -2435,6 +2547,9 @@ function applyContent(c){
       var np = el.querySelector('.note p');
       if(np) np.textContent = o.note;
     }
+    // generated cards carry an empty note box until the coach fills it
+    var nd = el.querySelector('.note');
+    if(nd && nd.querySelector('p')) nd.style.display = nd.querySelector('p').textContent ? '' : 'none';
   });
   // _order: per-session arrays of app ids (keys U1/L1/U2/L2 or A1/A2/B1/B2).
   // Listed ids come first in the given order; unlisted keep their relative
@@ -2449,9 +2564,19 @@ function applyContent(c){
       .filter(function(e){ return e && e.closest('.pane') === pane; });
     var rest = all.filter(function(e){ return listed.indexOf(e) < 0; });
     listed.concat(rest).forEach(function(e){ pane.appendChild(e); });
+  });
+  // badges renumber on every apply — adds, removes and moves change them
+  // even when _order is untouched
+  ['A1', 'A2', 'B1', 'B2'].forEach(function(code){
+    var pane = document.getElementById('s-' + code);
+    if(!pane) return;
     [].slice.call(pane.querySelectorAll('.ex .n')).forEach(function(nEl, i){
       nEl.textContent = i + 1;
     });
+    var hd = pane.querySelector('.pane-hd');
+    if(hd && hd.firstChild && hd.firstChild.nodeType === 3){
+      hd.firstChild.nodeValue = pane.querySelectorAll('.ex').length + ' movements \u00b7 run in order';
+    }
   });
 }
 function loadContent(){
