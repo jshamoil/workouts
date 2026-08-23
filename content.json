@@ -46,5 +46,46 @@
   },
   "b18": {
     "note": "Well-suited to the Ancore: load peaks at lockout, where the triceps are shortest - the curve matches the exercise. Stop short of hard lockout for the elbow."
+  },
+  "a28": {
+    "name": "Pallof Press  (anti-rotation)",
+    "sr": "2 × 10–12 per side",
+    "equipment": "One Ancore at CHEST height · single handle",
+    "setup": "Stand side-on to the anchor, feet shoulder-width. Step out until the cable is already under tension before rep one. Handle at your sternum, both hands.",
+    "execute": "Press the handle straight out until your arms are extended, resisting the cable’s pull to rotate you. Hold 2 seconds at full extension, return slowly. Hips and shoulders stay square — the point is that NOTHING moves. All reps one side, then switch.",
+    "note": "The missing plane. Push, pull, squat, hinge, carry and side-bend were all covered; rotation was not — which is why twisting is where you feel tight. Anti-rotation comes first: you learn to own the range before loading it. The Ancore’s rising curve SUITS this one — tension peaks at full extension, exactly where the anti-rotation demand is highest, so no need to stand extra far back. Start at 10 lb; if your torso twists, it’s too heavy.",
+    "meta": {
+      "n": 2,
+      "lo": 10,
+      "hi": 12,
+      "inc": 5,
+      "vm": 2,
+      "rest": 60,
+      "mus": [
+        "obliques",
+        "abs"
+      ]
+    }
+  },
+  "b28": {
+    "name": "Cable Chop  (rotation)",
+    "sr": "2 × 10–12 per side",
+    "equipment": "One Ancore mounted HIGH (face height or above) · rope or single handle",
+    "setup": "Stand side-on to the anchor, feet wider than shoulders. Both hands on the attachment at your high shoulder.",
+    "execute": "Pull down and across your body toward the opposite hip, rotating through the MID-BACK. Control the return over 3 seconds — the eccentric is where the range gets built. All reps one side, then switch.",
+    "note": "Loaded rotation — the counterpart to the Pallof press. Rotation belongs in the thoracic spine (~35° per side); the lumbar spine is built to resist it (~5–13° total). If you feel this in your LOW BACK, you’re rotating from the wrong place — cut the range and the weight. Rope beats a bar here: your wrists rotate freely through the arc, which the elbow prefers. Start at 10 lb.",
+    "meta": {
+      "n": 2,
+      "lo": 10,
+      "hi": 12,
+      "inc": 5,
+      "vm": 2,
+      "rest": 60,
+      "mus": [
+        "obliques",
+        "abs",
+        "upper back"
+      ]
+    }
   }
 }
