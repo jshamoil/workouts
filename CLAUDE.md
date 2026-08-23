@@ -51,7 +51,11 @@ Exercises (`tblmBTkSo88QCDDIc`, has `App ID` = a11…b27, do not edit), Daily, E
   preserved; delete the flag to restore), a NEW id (session-prefixed a1x/a2x/b1x/b2x, or
   explicit `session`) with name + meta + setup/execute generates a full working card at
   boot, and `meta.n` rebuilds set rows. `_order` reorders within a session; `_next`
-  overrides the rotation pointer (self-expires). Applied from localStorage at boot,
+  overrides the rotation pointer (self-expires); `_goal` {date, weight, bf, lean,
+  baseline*, note} drives the Goals card atop the Log tab — lean is a floor (hold or
+  gain), and the card must never use pace-judgement language ("behind", "off track",
+  red-for-slow): slower loss with lean held beats fast loss (coach safeguard, 8/23).
+  Applied from localStorage at boot,
   refreshed network-first each launch; `sw.js` never caches it. New ids need a matching
   Airtable Exercises record (`App ID` = the id) so webhook syncs link. Still build-only:
   new session types beyond the four, webhook/hosting changes.

@@ -216,6 +216,17 @@ tr.xr td{border-top:0 !important;padding:2px 4px 12px}
 .lg{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px}
 .lg-low{background:#2A3138}.lg-ok{background:#2F5C41}.lg-hi{background:#5C2326}
 .wk-sub{font-family:var(--mono);font-size:11px;color:var(--steel);margin:8px 0 0}
+.g-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0 0 12px;flex-wrap:wrap}
+.g-days{font-family:var(--mono);font-size:11px;color:var(--steel)}
+.g-row{margin-bottom:12px}
+.g-lab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:12.5px;color:#C9CDD1;margin-bottom:4px}
+.g-lab b{color:var(--ink);font-weight:600;font-size:15px}
+.g-tgt{font-family:var(--mono);font-size:10px;color:var(--steel);white-space:nowrap}
+.g-bar{height:10px;border-radius:5px;background:#22272B;position:relative;overflow:hidden}
+.g-fill{position:absolute;left:0;top:0;bottom:0;border-radius:5px;background:#7FB0DC}
+.g-floor{border:1px solid #2F5C41;border-radius:5px;padding:7px 10px;font-size:12px;color:#8FD3A6;background:rgba(47,92,65,.12)}
+.g-floor.warn{border-color:#6B5426;color:var(--amber);background:rgba(107,84,38,.12)}
+.g-note{font-family:var(--mono);font-size:10px;color:var(--steel);margin:10px 0 0;line-height:1.5}
 #heatmap .hm-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
 #heatmap .hm-name{flex:0 0 92px;font-size:12px;color:#C9CDD1}
 #heatmap .hm-bar{flex:1;height:14px;border-radius:4px;background:#22272B;position:relative;overflow:hidden}
@@ -1378,10 +1389,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Bend sideways toward the floor under control, then raise back up to a straight line — stop there, no over-bending past straight. Do the weaker side first, match reps on the stronger side. Hold a plate at your chest once bodyweight is easy.</dd></dl>
    <div class="note"><span class="tag">Note</span><p>This is the lateral trunk work nothing else in the program covers — quadratus lumborum and obliques. Keep it smooth and slow; it is a control exercise, not a max-effort one.</p></div>
  </div>
-</div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
+</div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-23.a</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-23.b</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -2479,6 +2490,7 @@ function buildExCard(id, o){
 function applyContent(c){
   if(!c) return;
   contentNext = c._next || null;
+  contentGoal = c._goal || null;
   Object.keys(c).forEach(function(id){
     if(id.charAt(0) === '_') return;
     var o = c[id];
@@ -2611,6 +2623,7 @@ var ROT = ['A1', 'A2', 'B1', 'B2'];
 // the app at a chosen next session (e.g. restart at U1 after a trip) and
 // expires by itself once that session is banked on/after the asof date
 var contentNext = null;
+var contentGoal = null;
 function lastSession(){
   var best = null;
   ROT.forEach(function(code){
@@ -2648,6 +2661,66 @@ function daysAgo(n){
   return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
 function renderWeek(){
+  // Goals card — target values are coach-owned via content.json _goal; the
+  // card only ever states progress, never pace judgements: slower loss with
+  // lean mass held is a better outcome than fast loss, and the copy must
+  // never imply otherwise (coach safeguard, Journal 8/23)
+  var gw = document.getElementById('goalwrap'), gc = document.getElementById('goalcard');
+  if(gw && gc){
+    var G = contentGoal;
+    if(!G || !G.date){ gw.hidden = true; }
+    else {
+      gw.hidden = false;
+      var bwG = (state.bw && state.bw.length ? state.bw : BW_LOG).slice()
+        .sort(function(a, b){ return a[0] < b[0] ? -1 : 1; });
+      // 4-point rolling average, same smoothing as the recomp chart, so a
+      // single odd weigh-in (travel, creatine water) can't swing the card
+      var tailG = bwG.slice(-4);
+      var curW = tailG.length ? Math.round(tailG.reduce(function(a, p){ return a + p[1]; }, 0) / tailG.length * 10) / 10 : 0;
+      var lastWD = bwG.length ? bwG[bwG.length - 1][0] : '';
+      var curBf = null, bfD = '', curLean = null, leanD = '', gi;
+      for(gi = bwG.length - 1; gi >= 0; gi--){ if(bwG[gi][2]){ curBf = bwG[gi][2]; bfD = bwG[gi][0]; break; } }
+      for(gi = bwG.length - 1; gi >= 0; gi--){ if(bwG[gi][3]){ curLean = bwG[gi][3]; leanD = bwG[gi][0]; break; } }
+      var gmd = function(d){ return d ? String(d).slice(5).replace('-', '/') : ''; };
+      var gpct = function(base, cur, tgt){
+        if(!base || !cur || !tgt || base === tgt) return 0;
+        return Math.round(Math.max(0, Math.min(1, (base - cur) / (base - tgt))) * 100);
+      };
+      var daysLeft = Math.round((new Date(G.date + 'T12:00:00') - new Date()) / 86400000);
+      var togo = (G.weight && curW) ? Math.round((curW - G.weight) * 10) / 10 : 0;
+      var h = '<div class="g-top"><span class="g-days">' +
+        (daysLeft > 0 ? daysLeft + ' days to ' + gmd(G.date) : gmd(G.date) + ' reached — coach sets the next horizon') +
+        '</span>' + (togo > 0 ? '<span class="g-days">' + togo + ' lb to go</span>' : '') + '</div>';
+      if(G.weight){
+        h += '<div class="g-row"><div class="g-lab"><span>Weight <b>' + (curW || '—') + '</b> lb' +
+          (curW ? ' <span class="g-tgt">avg of last ' + tailG.length + ' · ' + gmd(lastWD) + '</span>' : '') +
+          '</span><span class="g-tgt">→ ' + G.weight + ' lb</span></div>' +
+          '<div class="g-bar"><i class="g-fill" style="width:' + gpct(G.baselineWeight, curW, G.weight) + '%"></i></div></div>';
+      }
+      if(G.bf){
+        h += '<div class="g-row"><div class="g-lab"><span>Body fat <b>' + (curBf !== null ? curBf : '—') + '</b>%' +
+          (curBf !== null ? ' <span class="g-tgt">' + gmd(bfD) + '</span>' : '') +
+          '</span><span class="g-tgt">→ ~' + G.bf + '%</span></div>' +
+          '<div class="g-bar"><i class="g-fill" style="width:' + gpct(G.baselineBf, curBf, G.bf) + '%"></i></div></div>';
+      }
+      if(G.lean){
+        h += '<div class="g-row"><div class="g-lab"><span>Lean mass <b>' + (curLean !== null ? curLean : '—') + '</b> lb' +
+          (curLean !== null ? ' <span class="g-tgt">' + gmd(leanD) + '</span>' : '') +
+          '</span><span class="g-tgt">floor ' + G.lean + ' lb · hold or gain</span></div>' +
+          (curLean === null ? '<div class="g-floor">no lean reading yet — judged at the next body-comp bake</div>' :
+           curLean >= G.lean ? '<div class="g-floor">✓ at the floor or above — recomposition working, whatever the scale says</div>' :
+           '<div class="g-floor warn">below the floor — tell coach; the fix is easing the deficit, not training harder</div>') +
+          '</div>';
+      }
+      gc.innerHTML = h;
+      if(G.note){
+        var gn = document.createElement('p');
+        gn.className = 'g-note';
+        gn.textContent = G.note;
+        gc.appendChild(gn);
+      }
+    }
+  }
   var hm = document.getElementById('heatmap');
   if(hm){
     // trailing 7 calendar days INCLUDING today (daysAgo(6)..today) — the old
