@@ -22,6 +22,13 @@ muscles, rest targets).
   its GitHub access; Josh gives the merge word. Merging to main deploys via Pages.
 - Verify changes with headless Chromium (Playwright, executablePath
   `/opt/pw-browsers/chromium`) against a local static server before pushing.
+- State load reconstructs `state` from an explicit field whitelist (`store.load().then`
+  near the bottom of the script) — a new top-level state field MUST be added there in
+  both branches or it silently drops on every reload (bit us with `state.sess`, 8/31).
+- Bodyweight rolling average = the NARROWER of the last 4 readings or the last 10 days
+  (Josh's spec, 8/31), same rule in the Goals card and the recomp chart; an empty
+  window falls back to the single latest reading labeled with its date — never widen
+  silently.
 - **Blank means unrecorded, never zero** (Josh's rule, 2026-08-11). Untouched
   inputs — effort, elbow, energy, weights — are omitted from the log, the webhook
   payload, and Airtable, and no reader (app, automation, either Claude) may infer
