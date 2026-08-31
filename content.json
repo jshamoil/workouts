@@ -18,7 +18,8 @@
   },
   "_weighin": {
     "everyDays": 4,
-    "pauseUntil": null
+    "pauseUntil": "2026-09-04",
+    "why": "Josh weighs 2-3x/week; nudge if no weigh-in for 4 days (his call 8/31). Paused to 9/4 so the first post-trip weigh-in lands 4-7 days after his return per the 8/23 protocol - weigh FIRST, then start creatine."
   },
   "b16": {
     "setup": "Anchors at height 21 (confirmed 8/14). Step back until there is tension before rep one.",
