@@ -212,6 +212,19 @@ tr.xr td{border-top:0 !important;padding:2px 4px 12px}
 #logbtn.due::after{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--amber);margin-left:5px;vertical-align:1px}
 .bw-due{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin:0 0 8px}
 .bw-due.due{color:var(--amber)}
+#cal i[data-d]{cursor:pointer}
+#dayd h3{display:flex;justify-content:space-between;align-items:baseline}
+#dayd-x{appearance:none;background:none;border:none;color:var(--steel);font-size:14px;padding:0 2px;cursor:pointer}
+.dd-hd{font-family:var(--mono);font-size:11px;color:var(--ink);margin:0 0 8px;letter-spacing:.06em}
+.dd-hd i{font-style:normal;color:var(--steel)}
+.dd-ex{margin:0 0 10px}
+.dd-nm{display:flex;justify-content:space-between;font-size:13px;color:#C9CDD1;margin:0 0 2px}
+.dd-nm b{font-weight:600;color:var(--ink)}
+.dd-vol{font-family:var(--mono);font-size:10px;color:var(--steel)}
+.dd-set{font-family:var(--mono);font-size:11px;color:var(--dim);margin:1px 0 0 8px}
+.dd-set em{font-style:normal;color:var(--amber)}
+.dd-note{font-size:11.5px;color:var(--amber);opacity:.85;margin:3px 0 0 8px}
+.dd-tot{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin:6px 0 12px;border-top:1px solid var(--line);padding-top:6px}
 .wkcard{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px;margin-bottom:12px}
 .wkcard h3{margin:0 0 10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
  text-transform:uppercase;color:var(--steel);font-weight:600}
@@ -1392,10 +1405,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Bend sideways toward the floor under control, then raise back up to a straight line — stop there, no over-bending past straight. Do the weaker side first, match reps on the stronger side. Hold a plate at your chest once bodyweight is easy.</dd></dl>
    <div class="note"><span class="tag">Note</span><p>This is the lateral trunk work nothing else in the program covers — quadratus lumborum and obliques. Keep it smooth and slow; it is a control exercise, not a max-effort one.</p></div>
  </div>
-</div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
+</div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-23.c</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-31.a</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -2270,6 +2283,15 @@ document.getElementById('finish').addEventListener('click', function(){
       delete state.cur[id];
     });
     ids.forEach(function(id){ if(live.indexOf(id) < 0) delete state.cur[id]; });
+    // per-session-day record so duration/energy survive the Finish dialog
+    // (blank rule: omitted keys mean unrecorded, never zero)
+    state.sess = state.sess || {};
+    var se = {}, dm = sessionDur(code);
+    if(dm) se.dur = dm;
+    if(res.energy) se.nrg = res.energy;
+    state.sess[d + '|' + code] = se;
+    var cutSess = daysAgo(55);
+    Object.keys(state.sess).forEach(function(sk){ if(sk.slice(0, 10) < cutSess) delete state.sess[sk]; });
     if(state.st) delete state.st[code];
     ids.forEach(function(id){
       writeEx(id, [], false);
@@ -2693,6 +2715,74 @@ function daysAgo(n){
   var d = new Date(); d.setDate(d.getDate() - n);
   return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
+// session detail: tap a lit consistency-calendar day to see everything that
+// was banked — sets, tags, notes, volume, and duration where recorded
+// (blank rule: unrecorded fields are omitted, never shown as zero)
+function renderDayDetail(d){
+  var card = document.getElementById('dayd'), body = document.getElementById('dayd-b');
+  if(!card || !body) return;
+  if(card.dataset.d === d && !card.hidden){ card.hidden = true; card.dataset.d = ''; return; }
+  var byCode = {};
+  Object.keys(state.hist || {}).forEach(function(id){
+    (state.hist[id] || []).forEach(function(en){
+      if(en.date !== d || !en.sets || !en.sets.length) return;
+      var el = exEl(id) || stashedEx[id];
+      var pane = el && el.closest ? el.closest('.pane') : null;
+      var code = pane && pane.id !== 's-WK' ? pane.id.slice(2) : id.slice(0, 2).toUpperCase();
+      (byCode[code] = byCode[code] || []).push({id: id, el: el, sets: en.sets});
+    });
+  });
+  var codes = Object.keys(byCode).sort();
+  if(!codes.length) return;
+  var effTxt = {easy: 'easy', med: 'med', hard: 'hard', max: 'max'};
+  var painTxt = {1: 'elbow fine', 2: 'elbow twinge', 3: '<em>ELBOW PAINFUL</em>'};
+  var h = '';
+  codes.forEach(function(code){
+    var se = (state.sess || {})[d + '|' + code] || {};
+    var meta = [];
+    if(se.dur) meta.push(se.dur + ' min');
+    if(se.nrg) meta.push('energy ' + se.nrg + '/5');
+    h += '<p class="dd-hd">' + disp(code) + (meta.length ? ' <i>· ' + meta.join(' · ') + '</i>' : '') + '</p>';
+    var tot = 0;
+    byCode[code].forEach(function(x){
+      var m = META[x.id] || {};
+      var nm = x.el && x.el.querySelector ? x.el.querySelector('.nm').textContent.replace(/\s+/g, ' ').trim() : x.id;
+      var vol = 0, lines = '';
+      x.sets.forEach(function(st, i){
+        var wlbl = m.bw ? 'BW' : m.deg ? (st.w || '-') + '°' : (st.w || '-') + (m.ph ? '/hand' : '');
+        var ann = '';
+        if(st.e && effTxt[st.e]) ann += ' · ' + effTxt[st.e];
+        if(st.p && painTxt[st.p]) ann += ' · ' + painTxt[st.p];
+        if(!st.d) ann += ' · unticked';
+        lines += '<p class="dd-set">' + (i + 1) + '. ' + wlbl + ' × ' + (st.r || '-') + ann + '</p>';
+        if(!m.bw && !m.deg) vol += num(st.w) * num(st.r) * (m.vm || 1);
+      });
+      tot += vol;
+      h += '<div class="dd-ex"><p class="dd-nm"><b>' + nm + '</b>' +
+        (vol ? '<span class="dd-vol">' + fmt(vol) + ' lb</span>' : '') + '</p>' + lines;
+      var nt = state.note && state.note[x.id];
+      if(nt && nt.txt && nt.date === d) h += '<p class="dd-note">note: ' + nt.txt.replace(/</g, '&lt;') + '</p>';
+      h += '</div>';
+    });
+    if(tot) h += '<p class="dd-tot">session volume ' + fmt(tot) + ' lb · weights per dumbbell, volume counts both sides</p>';
+  });
+  document.getElementById('dayd-h').innerHTML = d.slice(5).replace('-', '/') +
+    ' · session detail<button id="dayd-x" type="button" aria-label="Close">✕</button>';
+  body.innerHTML = h;
+  card.dataset.d = d;
+  card.hidden = false;
+  card.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+}
+document.getElementById('cal').addEventListener('click', function(e){
+  var c = e.target.closest ? e.target.closest('i[data-d]') : null;
+  if(c) renderDayDetail(c.dataset.d);
+});
+document.getElementById('dayd').addEventListener('click', function(e){
+  if(e.target.id === 'dayd-x'){
+    var card = document.getElementById('dayd');
+    card.hidden = true; card.dataset.d = '';
+  }
+});
 function renderWeek(){
   // Goals card — target values are coach-owned via content.json _goal; the
   // card only ever states progress, never pace judgements: slower loss with
@@ -2706,11 +2796,21 @@ function renderWeek(){
       gw.hidden = false;
       var bwG = (state.bw && state.bw.length ? state.bw : BW_LOG).slice()
         .sort(function(a, b){ return a[0] < b[0] ? -1 : 1; });
-      // 4-point rolling average, same smoothing as the recomp chart, so a
-      // single odd weigh-in (travel, creatine water) can't swing the card
-      var tailG = bwG.slice(-4);
-      var curW = tailG.length ? Math.round(tailG.reduce(function(a, p){ return a + p[1]; }, 0) / tailG.length * 10) / 10 : 0;
+      // rolling average = the NARROWER of the last 4 readings or the last 10
+      // days (Josh's spec, 8/31) — at his weekly-or-better cadence a plain
+      // 4-point average can span a month and lag the true trend. If the
+      // 10-day window is empty, fall back to the single most recent reading
+      // labeled with its date; never silently widen the window.
+      var winCut = daysAgo(9);
+      var tailG = bwG.filter(function(p){ return p[0] >= winCut; }).slice(-4);
       var lastWD = bwG.length ? bwG[bwG.length - 1][0] : '';
+      var avgLbl = '';
+      if(tailG.length > 1) avgLbl = 'avg of last ' + tailG.length + ' · ' + String(lastWD).slice(5).replace('-', '/');
+      else {
+        if(!tailG.length && bwG.length) tailG = [bwG[bwG.length - 1]];
+        if(tailG.length) avgLbl = 'reading of ' + String(tailG[0][0]).slice(5).replace('-', '/');
+      }
+      var curW = tailG.length ? Math.round(tailG.reduce(function(a, p){ return a + p[1]; }, 0) / tailG.length * 10) / 10 : 0;
       var curBf = null, bfD = '', curLean = null, leanD = '', gi;
       for(gi = bwG.length - 1; gi >= 0; gi--){ if(bwG[gi][2]){ curBf = bwG[gi][2]; bfD = bwG[gi][0]; break; } }
       for(gi = bwG.length - 1; gi >= 0; gi--){ if(bwG[gi][3]){ curLean = bwG[gi][3]; leanD = bwG[gi][0]; break; } }
@@ -2726,7 +2826,7 @@ function renderWeek(){
         '</span>' + (togo > 0 ? '<span class="g-days">' + togo + ' lb to go</span>' : '') + '</div>';
       if(G.weight){
         h += '<div class="g-row"><div class="g-lab"><span>Weight <b>' + (curW || '—') + '</b> lb' +
-          (curW ? ' <span class="g-tgt">avg of last ' + tailG.length + ' · ' + gmd(lastWD) + '</span>' : '') +
+          (curW ? ' <span class="g-tgt">' + avgLbl + '</span>' : '') +
           '</span><span class="g-tgt">→ ' + G.weight + ' lb</span></div>' +
           '<div class="g-bar"><i class="g-fill" style="width:' + gpct(G.baselineWeight, curW, G.weight) + '%"></i></div></div>';
       }
@@ -2783,7 +2883,8 @@ function renderWeek(){
     var ds = allDates(), cells = [], today2 = today();
     for(var i2 = 55; i2 >= 0; i2--){
       var d2 = daysAgo(i2);
-      cells.push('<i class="' + (ds[d2] ? 'on' : '') + (d2 === today2 ? ' today' : '') + '"></i>');
+      cells.push('<i class="' + (ds[d2] ? 'on' : '') + (d2 === today2 ? ' today' : '') + '"' +
+        (ds[d2] ? ' data-d="' + d2 + '"' : '') + '></i>');
     }
     cal.innerHTML = cells.join('');
     var wk = 0, mo = 0, cut7 = daysAgo(6), cut30 = daysAgo(29);
@@ -2797,10 +2898,15 @@ function renderWeek(){
   var rc = document.getElementById('recomp');
   if(rc){
     var bw3 = (state.bw && state.bw.length ? state.bw : BW_LOG).slice().sort(function(a, b2){ return a[0] < b2[0] ? -1 : 1; });
+    // same windowing rule as the Goals card: at most 4 readings, never
+    // reaching back more than 10 days from each point (Josh's spec, 8/31)
     var roll = bw3.map(function(p3, i3){
-      var lo3 = Math.max(0, i3 - 3);
-      var win = bw3.slice(lo3, i3 + 1);
-      return {v: win.reduce(function(a4, b4){ return a4 + b4[1]; }, 0) / win.length};
+      var win = [], j3;
+      for(j3 = i3; j3 >= 0 && win.length < 4; j3--){
+        if((new Date(p3[0]) - new Date(bw3[j3][0])) / 86400000 > 9) break;
+        win.push(bw3[j3][1]);
+      }
+      return {v: win.reduce(function(a4, b4){ return a4 + b4; }, 0) / win.length};
     });
     var e1s = (state.hist.a11 || []).map(function(en){ return {v: bestE1(en)}; }).filter(function(p4){ return p4.v > 0; });
     var leans = bw3.filter(function(p7){ return p7.length > 3 && p7[3]; }).map(function(p7){ return {v: p7[3]}; });
@@ -2908,10 +3014,10 @@ store.load().then(function(saved){
   if(saved && (saved.cur || saved.hist)){
     state = {cur: saved.cur || {}, hist: saved.hist || {},
              note: saved.note || {}, bw: saved.bw || [], st: saved.st || {},
-             q: saved.q || [], setg: saved.setg || {}};
+             q: saved.q || [], setg: saved.setg || {}, sess: saved.sess || {}};
   } else {
     state = {cur: JSON.parse(JSON.stringify(SEED)), hist: JSON.parse(JSON.stringify(SEED_HIST)),
-             note: {}, bw: [], st: {}, q: [], setg: {}};
+             note: {}, bw: [], st: {}, q: [], setg: {}, sess: {}};
   }
   // migration: sheets saved by builds before 2026-08-11.b lack the sw/sr
   // suggestion markers, so their prefilled targets are indistinguishable from
