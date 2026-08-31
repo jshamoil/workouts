@@ -143,5 +143,12 @@
       "b28",
       "b29"
     ]
+  },
+  "a18": {
+    "equipment": "EZ curl bar — the BARE BAR IS 35 LB. Log 35 when using it empty, then 40 with a 2.5 per side, and so on.",
+    "note": "LOG THE REAL LOAD (corrected 9/1): the bare EZ bar weighs 35 lb, so a bare-bar set is 35, not 5. Earlier sessions logged around 5 and undercounted this exercise badly in volume and e1RM. 21s = 7 bottom half, 7 top half, 7 full — that is 21 reps of continuous elbow tension, so the bar alone is a real set. Add weight only when all 21 are clean. ELBOW: EZ bar is chosen over a straight bar for the angled grip; stop 15–20° short of full extension at the bottom.",
+    "meta": {
+      "inc": 5
+    }
   }
 }
