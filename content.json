@@ -150,5 +150,8 @@
     "meta": {
       "inc": 5
     }
+  },
+  "a21": {
+    "equipment": "Barbell in the rack — log TOTAL bar weight, not per side. Bar is 45 lb. Current 65 = bar + 10 per side."
   }
 }
