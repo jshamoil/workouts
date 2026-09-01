@@ -1422,7 +1422,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-01.a</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-01.b</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -1476,7 +1476,7 @@ function makeStore(){
           m.textContent = self.kind === 'artifact'
             ? 'Saving to your Claude account storage \u2014 survives closing and reopening this artifact.'
             : self.kind === 'local'
-            ? 'WARNING: only this app view\u2019s local storage is available. Reopening the artifact may start blank \u2014 use Copy log before you close it.'
+            ? 'Saved on this phone.'
             : 'NOT SAVING \u2014 no storage available. Copy log before you close this.';
           m.className = 'mode-' + self.kind;
         }
@@ -2109,11 +2109,13 @@ function buildPayload(code, energy){
   if(notes.length) p.notes = notes.join('\n');
   return p;
 }
+var lastSyncErr = '';
 function syncStat(){
   var el = document.getElementById('sync'); if(!el) return;
   var n = (state.q || []).length;
   el.hidden = !n;
-  el.textContent = n ? n + ' workout' + (n > 1 ? 's' : '') + ' waiting to sync to Airtable — retries when online.' : '';
+  el.textContent = n ? n + ' workout' + (n > 1 ? 's' : '') + ' waiting to sync to Airtable' +
+    (lastSyncErr ? ' — last try failed: ' + lastSyncErr : '') + ' — tap here to retry.' : '';
   fsumStat();
 }
 // post-Finish summary dialog: stays up until Josh dismisses it himself (his
@@ -2148,11 +2150,21 @@ function pump(){
   var body = JSON.stringify(state.q[0]);
   function sent(){
     pumping = false;
+    lastSyncErr = '';
     state.q.shift(); save(); syncStat();
     if(state.q.length) pump();
     else toast('Synced to Airtable');
   }
-  function fail(){ pumping = false; syncStat(); }
+  // record WHY the send failed so the footer can say so (diagnosing the 9/1
+  // stuck queue), and rotate the queue so one rejected payload can't block
+  // the rest — safe because the automation upserts by workout name
+  function fail(why){
+    pumping = false;
+    lastSyncErr = (why || 'network error') + ' at ' +
+      new Date().toTimeString().slice(0, 5);
+    if(state.q.length > 1) state.q.push(state.q.shift());
+    syncStat();
+  }
   // trust rule (Josh, 8/14): the app only ever claims "synced" on a CONFIRMED
   // 2xx from the hook. No blind fallbacks — an unconfirmable send stays queued
   // and the footer says so. Retries are safe because the automation upserts
@@ -2162,7 +2174,8 @@ function pump(){
   // the confirmed-2xx trust rule is unchanged — an unconfirmed send stays
   // queued and re-sends, which is safe because the automation upserts by name
   fetch(HOOK, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: body, mode: 'cors', keepalive: true})
-    .then(function(r){ if(r.ok) sent(); else fail(); }, fail);
+    .then(function(r){ if(r.ok) sent(); else fail('HTTP ' + r.status); },
+          function(e){ fail(e && e.message ? 'network: ' + String(e.message).slice(0, 60) : 'network error'); });
 }
 function queueSend(p){
   if(!HOOK || !p) return;
@@ -2172,6 +2185,11 @@ function queueSend(p){
   pump();
 }
 window.addEventListener('online', function(){ pump(); });
+document.getElementById('sync').addEventListener('click', function(){
+  if(!(state.q && state.q.length)) return;
+  toast('Retrying sync…');
+  pump();
+});
 
 function exDone(el){
   return [].slice.call(el.querySelectorAll('.tick')).every(function(t){
