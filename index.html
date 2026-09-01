@@ -1422,7 +1422,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-01.b</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-01.c</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -2169,11 +2169,11 @@ function pump(){
   // 2xx from the hook. No blind fallbacks — an unconfirmable send stays queued
   // and the footer says so. Retries are safe because the automation upserts
   // the workout by name.
-  // keepalive lets the POST finish even if the phone is pocketed or the PWA
-  // is closed the instant Finish is tapped (likely shape of the 9/1 miss);
-  // the confirmed-2xx trust rule is unchanged — an unconfirmed send stays
-  // queued and re-sends, which is safe because the automation upserts by name
-  fetch(HOOK, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: body, mode: 'cors', keepalive: true})
+  // NO keepalive here — WebKit fails keepalive requests that need a CORS
+  // preflight (this JSON POST does) with a bare "Load failed", which is
+  // exactly what 9/1.a/.b hit on Josh's phone. Close-the-app durability
+  // comes from the queue + the visibility/pageshow re-pump instead.
+  fetch(HOOK, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: body, mode: 'cors'})
     .then(function(r){ if(r.ok) sent(); else fail('HTTP ' + r.status); },
           function(e){ fail(e && e.message ? 'network: ' + String(e.message).slice(0, 60) : 'network error'); });
 }
@@ -2185,6 +2185,12 @@ function queueSend(p){
   pump();
 }
 window.addEventListener('online', function(){ pump(); });
+// coming back to the app (reopened PWA, unlocked phone) retries promptly —
+// this, not keepalive, is the recovery path for sends cut off by pocketing
+document.addEventListener('visibilitychange', function(){
+  if(!document.hidden) pump();
+});
+window.addEventListener('pageshow', function(){ pump(); });
 document.getElementById('sync').addEventListener('click', function(){
   if(!(state.q && state.q.length)) return;
   toast('Retrying sync…');
