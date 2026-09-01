@@ -21,7 +21,13 @@ muscles, rest targets).
 - Develop on a `claude/...` branch; Josh's chat Claude ("the coach") reviews the diff via
   its GitHub access; Josh gives the merge word. Merging to main deploys via Pages.
 - Verify changes with headless Chromium (Playwright, executablePath
-  `/opt/pw-browsers/chromium`) against a local static server before pushing.
+  `/opt/pw-browsers/chromium`) against a local static server before pushing. Know the
+  harness's blind spot: route interception answers before real CORS/preflight rules
+  run, so it cannot validate cross-origin fetch behavior on Josh's iPhone.
+- **Never add `keepalive` to the webhook POST** — WebKit fails keepalive requests that
+  need a CORS preflight with a bare "Load failed"; it silently broke all sync on 9/1
+  (.a/.b, reverted in .c). Pocket-close durability = queue + visibilitychange/pageshow
+  re-pump, not keepalive.
 - State load reconstructs `state` from an explicit field whitelist (`store.load().then`
   near the bottom of the script) — a new top-level state field MUST be added there in
   both branches or it silently drops on every reload (bit us with `state.sess`, 8/31).
