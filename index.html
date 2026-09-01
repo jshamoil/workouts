@@ -1422,7 +1422,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-01.e</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-01.f</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip" id="syncclear" hidden><u>Already confirmed these landed in Airtable? Tap here to clear the queue.</u></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
@@ -2151,7 +2151,15 @@ document.getElementById('fsum-ok').addEventListener('click', function(){
   document.getElementById('fsum').hidden = true;
 });
 var pumping = false;
-var preferPlain = false;
+// automatic retries (boot / coming back to the app) are throttled so a queue
+// stuck behind the unreadable-response problem doesn't re-deliver duplicates
+// and burn automation runs on every foreground; user taps always go through
+var lastAutoPump = 0;
+function autoPump(){
+  if(Date.now() - lastAutoPump < 600000) return;
+  lastAutoPump = Date.now();
+  pump();
+}
 function pump(){
   if(!HOOK || pumping || !(state.q && state.q.length)) { syncStat(); return; }
   pumping = true;
@@ -2177,33 +2185,13 @@ function pump(){
   // 2xx from the hook. No blind fallbacks — an unconfirmable send stays queued
   // and the footer says so. Retries are safe because the automation upserts
   // the workout by name.
-  // Two transports, one trust rule (dequeue ONLY on a readable 2xx):
-  // 'json' is the classic Content-Type: application/json POST — it needs a
-  // CORS preflight, which is the hop suspected broken since 9/1. 'plain'
-  // sends the same JSON string with no content-type header — a simple
-  // request, NO preflight, but the response still carries CORS headers so
-  // r.ok stays verifiable. On a network-level failure of one, the other is
-  // tried for the same payload; whichever succeeds becomes the session's
-  // preferred transport. (No keepalive anywhere — WebKit kills
-  // keepalive+preflight with "Load failed"; see CLAUDE.md.)
-  function attempt(t){
-    return t === 'json'
-      ? fetch(HOOK, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: body, mode: 'cors'})
-      : fetch(HOOK, {method: 'POST', body: body, mode: 'cors'});
-  }
-  function emsg(e){ return e && e.message ? String(e.message).slice(0, 40) : 'network error'; }
-  var first = preferPlain ? 'plain' : 'json', second = preferPlain ? 'json' : 'plain';
-  attempt(first).then(function(r){
-    if(r.ok){ preferPlain = first === 'plain'; sent(); }
-    else fail(first + ': HTTP ' + r.status);
-  }, function(e1){
-    attempt(second).then(function(r2){
-      if(r2.ok){ preferPlain = second === 'plain'; sent(); }
-      else fail(first + ': ' + emsg(e1) + ' · ' + second + ': HTTP ' + r2.status);
-    }, function(e2){
-      fail(first + ': ' + emsg(e1) + ' · ' + second + ': ' + emsg(e2));
-    });
-  });
+  // Single classic POST, no keepalive (WebKit kills keepalive+preflight —
+  // see CLAUDE.md), no fallback transports: the 9/1 hunt proved delivery
+  // works and only the response is unreadable, so extra transports just
+  // double the duplicate automation runs. Dequeue ONLY on a readable 2xx.
+  fetch(HOOK, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: body, mode: 'cors'})
+    .then(function(r){ if(r.ok) sent(); else fail('HTTP ' + r.status); },
+          function(e){ fail(e && e.message ? 'network: ' + String(e.message).slice(0, 40) : 'network error'); });
 }
 function queueSend(p){
   if(!HOOK || !p) return;
@@ -2212,13 +2200,13 @@ function queueSend(p){
   save();
   pump();
 }
-window.addEventListener('online', function(){ pump(); });
+window.addEventListener('online', function(){ autoPump(); });
 // coming back to the app (reopened PWA, unlocked phone) retries promptly —
 // this, not keepalive, is the recovery path for sends cut off by pocketing
 document.addEventListener('visibilitychange', function(){
-  if(!document.hidden) pump();
+  if(!document.hidden) autoPump();
 });
-window.addEventListener('pageshow', function(){ pump(); });
+window.addEventListener('pageshow', function(){ autoPump(); });
 document.getElementById('sync').addEventListener('click', function(){
   if(!(state.q && state.q.length)) return;
   toast('Retrying sync…');
