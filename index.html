@@ -225,6 +225,13 @@ tr.xr td{border-top:0 !important;padding:2px 4px 12px}
 .dd-set em{font-style:normal;color:var(--amber)}
 .dd-note{font-size:11.5px;color:var(--amber);opacity:.85;margin:3px 0 0 8px}
 .dd-tot{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin:6px 0 12px;border-top:1px solid var(--line);padding-top:6px}
+.dd-acts{display:flex;gap:8px;margin:0 0 14px}
+.dd-acts .act{flex:1;min-height:38px;font-size:10px}
+.fsum-p{max-height:84vh;display:flex;flex-direction:column}
+#fsum-log{flex:1;min-height:0;overflow-y:auto;background:#151A1D;border:1px solid var(--line);border-radius:5px;
+ padding:10px 12px;margin:0 0 12px;font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--dim);white-space:pre-wrap}
+.fsum-stat{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;margin:0 0 13px!important;color:var(--steel)}
+.fsum-stat.ok{color:var(--go)}
 .wkcard{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px;margin-bottom:12px}
 .wkcard h3{margin:0 0 10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
  text-transform:uppercase;color:var(--steel);font-weight:600}
@@ -347,6 +354,13 @@ footer b{color:var(--ink);font-weight:500}
   <div class="ask-p"><p id="ask-t"></p>
     <div id="ask-nrg" class="ask-nrg" hidden><span class="nrg-l">Energy today · optional</span><div class="nrg-b"><button type="button" data-n="1">1</button><button type="button" data-n="2">2</button><button type="button" data-n="3">3</button><button type="button" data-n="4">4</button><button type="button" data-n="5">5</button></div></div>
     <div class="ask-b"><button id="ask-no" class="act">Cancel</button><button id="ask-yes" class="act go">Confirm</button></div>
+  </div>
+</div>
+<div id="fsum" class="ask" hidden role="dialog" aria-modal="true" aria-labelledby="fsum-t">
+  <div class="ask-p fsum-p"><p id="fsum-t"></p>
+    <pre id="fsum-log"></pre>
+    <p id="fsum-stat" class="fsum-stat"></p>
+    <div class="ask-b"><button id="fsum-ok" class="act go">Done</button></div>
   </div>
 </div>
 
@@ -1408,7 +1422,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-08-31.a</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-01.a</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
@@ -2100,7 +2114,33 @@ function syncStat(){
   var n = (state.q || []).length;
   el.hidden = !n;
   el.textContent = n ? n + ' workout' + (n > 1 ? 's' : '') + ' waiting to sync to Airtable — retries when online.' : '';
+  fsumStat();
 }
+// post-Finish summary dialog: stays up until Josh dismisses it himself (his
+// 9/1 request — no auto-timeout), and its status line reports the ACTUAL
+// sync result, live, under the same trust rule as the toast
+function fsumStat(){
+  var fs = document.getElementById('fsum'), el = document.getElementById('fsum-stat');
+  if(!fs || !el || fs.hidden) return;
+  var n = (state.q || []).length;
+  if(n){
+    el.className = 'fsum-stat';
+    el.textContent = 'saved on this phone · ' + n + ' workout' + (n > 1 ? 's' : '') + ' waiting to sync — retries automatically';
+  } else {
+    el.className = 'fsum-stat ok';
+    el.textContent = '✓ synced to Airtable';
+  }
+}
+function showSummary(title, logTxt){
+  var fs = document.getElementById('fsum');
+  document.getElementById('fsum-t').textContent = title;
+  document.getElementById('fsum-log').textContent = logTxt || '';
+  fs.hidden = false;
+  fsumStat();
+}
+document.getElementById('fsum-ok').addEventListener('click', function(){
+  document.getElementById('fsum').hidden = true;
+});
 var pumping = false;
 function pump(){
   if(!HOOK || pumping || !(state.q && state.q.length)) { syncStat(); return; }
@@ -2117,7 +2157,11 @@ function pump(){
   // 2xx from the hook. No blind fallbacks — an unconfirmable send stays queued
   // and the footer says so. Retries are safe because the automation upserts
   // the workout by name.
-  fetch(HOOK, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: body, mode: 'cors'})
+  // keepalive lets the POST finish even if the phone is pocketed or the PWA
+  // is closed the instant Finish is tapped (likely shape of the 9/1 miss);
+  // the confirmed-2xx trust rule is unchanged — an unconfirmed send stays
+  // queued and re-sends, which is safe because the automation upserts by name
+  fetch(HOOK, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: body, mode: 'cors', keepalive: true})
     .then(function(r){ if(r.ok) sent(); else fail(); }, fail);
 }
 function queueSend(p){
@@ -2308,7 +2352,9 @@ document.getElementById('finish').addEventListener('click', function(){
     renderRot();
     var done = (prs.length ? '\ud83c\udfc6 PR: ' + prs.join(' \u00b7 ') + ' \u2014 ' : '') +
       (again ? disp(code) + ' entry replaced' : disp(code) + ' banked');
-    function copied(ok2){ toast(done + (ok2 ? ' \u00b7 log copied \u2014 paste it to Claude' : ' \u00b7 auto-copy failed, use Copy log')); }
+    // summary stays up until dismissed (Josh, 9/1) and reports the real sync
+    // state; the log is auto-copied as before
+    function copied(ok2){ showSummary(done + (ok2 ? ' \u00b7 log copied' : ' \u00b7 auto-copy failed, use Copy log'), logTxt); }
     if(logTxt && navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(logTxt).then(function(){ copied(true); }, function(){
         var ta = document.createElement('textarea');
@@ -2718,10 +2764,7 @@ function daysAgo(n){
 // session detail: tap a lit consistency-calendar day to see everything that
 // was banked — sets, tags, notes, volume, and duration where recorded
 // (blank rule: unrecorded fields are omitted, never shown as zero)
-function renderDayDetail(d){
-  var card = document.getElementById('dayd'), body = document.getElementById('dayd-b');
-  if(!card || !body) return;
-  if(card.dataset.d === d && !card.hidden){ card.hidden = true; card.dataset.d = ''; return; }
+function dayData(d){
   var byCode = {};
   Object.keys(state.hist || {}).forEach(function(id){
     (state.hist[id] || []).forEach(function(en){
@@ -2729,9 +2772,89 @@ function renderDayDetail(d){
       var el = exEl(id) || stashedEx[id];
       var pane = el && el.closest ? el.closest('.pane') : null;
       var code = pane && pane.id !== 's-WK' ? pane.id.slice(2) : id.slice(0, 2).toUpperCase();
-      (byCode[code] = byCode[code] || []).push({id: id, el: el, sets: en.sets});
+      var nm = el && el.querySelector ? el.querySelector('.nm').textContent.replace(/\s+/g, ' ').trim() : id;
+      (byCode[code] = byCode[code] || []).push({id: id, el: el, nm: nm, sets: en.sets});
     });
   });
+  return byCode;
+}
+// full-fidelity text export of a banked day — everything the Finish summary
+// prints, rebuilt from history so any past session stays copyable (Josh, 9/1)
+function dayLog(d, code, g){
+  var out = [disp(code) + '  ·  ' + d, 'weights are per dumbbell; volume counts both sides'], grand = 0, wp = 0;
+  g.forEach(function(x){
+    var m = META[x.id] || {}, vol = 0;
+    out.push('');
+    out.push(x.nm);
+    x.sets.forEach(function(st, i){
+      var wlbl = m.bw ? 'BW' : m.deg ? (st.w || '-') + '°' : (st.w || '-') + (m.ph ? '/hand' : '');
+      var ann = '';
+      if(st.e && effortName(st.e)) ann += ' · ' + st.e;
+      if(st.p === 1) ann += ' · elbow fine';
+      if(st.p === 2) ann += ' · elbow twinge';
+      if(st.p === 3) ann += ' · ELBOW PAINFUL';
+      if(!st.d) ann += ' · unticked';
+      if(st.p > wp) wp = st.p;
+      out.push('  ' + (i + 1) + '. ' + wlbl + ' x ' + (st.r || '-') + ann);
+      if(!m.bw && !m.deg) vol += num(st.w) * num(st.r) * (m.vm || 1);
+    });
+    var nt = state.note && state.note[x.id];
+    if(nt && nt.txt && nt.date === d) out.push('  note: ' + nt.txt);
+    if(vol){ out.push('  volume ' + fmt(vol) + ' lb'); grand += vol; }
+  });
+  out.push('');
+  if(grand) out.push('session volume ' + fmt(grand) + ' lb');
+  var se = (state.sess || {})[d + '|' + code] || {};
+  if(se.dur) out.push('duration ' + se.dur + ' min');
+  if(se.nrg) out.push('energy ' + se.nrg + '/5');
+  if(wp) out.push('elbow overall: ' + (wp >= 3 ? 'Painful' : wp === 2 ? 'Twinge' : 'Fine'));
+  return out.join('\n');
+}
+// rebuild the webhook payload for a banked day so a failed sync can be
+// re-sent from the detail card — same shape as buildPayload, sourced from
+// history; the automation upserts by name so re-sends are duplicate-safe
+function payloadFromHist(d, code, g){
+  var sets = [], notes = [], wp = 0;
+  g.forEach(function(x){
+    var m = META[x.id] || {};
+    x.sets.forEach(function(st, i){
+      var s = {id: x.id, name: x.nm, n: i + 1, done: st.d ? 1 : 0};
+      if(num(st.r)) s.reps = num(st.r);
+      if(!m.bw && st.w){
+        s.weight = num(st.w);
+        if(!m.deg){
+          s.total = num(st.w) * (m.vm || 1);
+          if(num(st.r)) s.volume = num(st.w) * num(st.r) * (m.vm || 1);
+        }
+      }
+      var ef = effortName(st.e);
+      if(ef) s.effort = ef;
+      if(st.p) s.pain = st.p >= 3 ? 'Painful' : st.p === 2 ? 'Twinge' : 'Fine';
+      if(st.p > wp) wp = st.p;
+      sets.push(s);
+    });
+    var nt = state.note && state.note[x.id];
+    if(nt && nt.txt && nt.date === d) notes.push(x.nm + ': ' + nt.txt);
+  });
+  if(!sets.length) return null;
+  var p = {date: d, session: disp(code), sets: sets};
+  var se = (state.sess || {})[d + '|' + code] || {};
+  if(se.dur) p.duration = se.dur;
+  if(se.nrg) p.energy = se.nrg;
+  if(wp) p.elbow = wp >= 3 ? 'Painful' : wp === 2 ? 'Twinge' : 'Fine';
+  if(notes.length) p.notes = notes.join('\n');
+  return p;
+}
+function copyText(txt, done){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){ done(true); }, function(){ done(false); });
+  } else done(false);
+}
+function renderDayDetail(d){
+  var card = document.getElementById('dayd'), body = document.getElementById('dayd-b');
+  if(!card || !body) return;
+  if(card.dataset.d === d && !card.hidden){ card.hidden = true; card.dataset.d = ''; return; }
+  var byCode = dayData(d);
   var codes = Object.keys(byCode).sort();
   if(!codes.length) return;
   var effTxt = {easy: 'easy', med: 'med', hard: 'hard', max: 'max'};
@@ -2746,7 +2869,7 @@ function renderDayDetail(d){
     var tot = 0;
     byCode[code].forEach(function(x){
       var m = META[x.id] || {};
-      var nm = x.el && x.el.querySelector ? x.el.querySelector('.nm').textContent.replace(/\s+/g, ' ').trim() : x.id;
+      var nm = x.nm;
       var vol = 0, lines = '';
       x.sets.forEach(function(st, i){
         var wlbl = m.bw ? 'BW' : m.deg ? (st.w || '-') + '°' : (st.w || '-') + (m.ph ? '/hand' : '');
@@ -2765,6 +2888,8 @@ function renderDayDetail(d){
       h += '</div>';
     });
     if(tot) h += '<p class="dd-tot">session volume ' + fmt(tot) + ' lb · weights per dumbbell, volume counts both sides</p>';
+    h += '<div class="dd-acts"><button class="act" type="button" data-cp="' + code + '">Copy ' + disp(code) + ' log</button>' +
+      '<button class="act" type="button" data-rs="' + code + '">Re-sync to Airtable</button></div>';
   });
   document.getElementById('dayd-h').innerHTML = d.slice(5).replace('-', '/') +
     ' · session detail<button id="dayd-x" type="button" aria-label="Close">✕</button>';
@@ -2778,9 +2903,25 @@ document.getElementById('cal').addEventListener('click', function(e){
   if(c) renderDayDetail(c.dataset.d);
 });
 document.getElementById('dayd').addEventListener('click', function(e){
+  var card = document.getElementById('dayd'), d = card.dataset.d;
   if(e.target.id === 'dayd-x'){
-    var card = document.getElementById('dayd');
     card.hidden = true; card.dataset.d = '';
+    return;
+  }
+  var cp = e.target.dataset && e.target.dataset.cp;
+  var rs = e.target.dataset && e.target.dataset.rs;
+  if(!d || (!cp && !rs)) return;
+  var g = dayData(d)[cp || rs];
+  if(!g || !g.length) return;
+  if(cp){
+    copyText(dayLog(d, cp, g), function(ok){
+      toast(ok ? disp(cp) + ' log copied — paste it anywhere' : 'Copy failed — try again');
+    });
+  } else {
+    var p = payloadFromHist(d, rs, g);
+    if(!p){ toast('Nothing to send for ' + disp(rs)); return; }
+    queueSend(p);
+    toast(disp(rs) + ' queued — footer clears when Airtable confirms');
   }
 });
 function renderWeek(){
@@ -3055,6 +3196,14 @@ store.load().then(function(saved){
     if(!haveBw[p8[0]]){ state.bw.push(p8.slice()); merged++; }
   });
   state.bw.sort(function(a8, b8){ return a8[0] < b8[0] ? -1 : 1; });
+  // backfill durations for sessions banked before 2026-08-31.a kept them
+  // locally (values read from Airtable's Duration field); device data wins
+  var SESS_SEED = {'2026-08-31|A1': {dur: 93}, '2026-09-01|A2': {dur: 85}};
+  state.sess = state.sess || {};
+  Object.keys(SESS_SEED).forEach(function(k9){
+    if(!state.sess[k9]) state.sess[k9] = JSON.parse(JSON.stringify(SESS_SEED[k9]));
+    else if(!state.sess[k9].dur && SESS_SEED[k9].dur) state.sess[k9].dur = SESS_SEED[k9].dur;
+  });
   if(merged){
     redrawAll();
     toast('Caught up \u00b7 merged ' + merged + ' updates from Claude');
