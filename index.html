@@ -1422,8 +1422,9 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-01.d</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-01.e</span></div>
   <p class="ft-tip" id="sync" hidden></p>
+  <p class="ft-tip" id="syncclear" hidden><u>Already confirmed these landed in Airtable? Tap here to clear the queue.</u></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
 </footer>
 
@@ -2116,6 +2117,12 @@ function syncStat(){
   el.hidden = !n;
   el.textContent = n ? n + ' workout' + (n > 1 ? 's' : '') + ' waiting to sync to Airtable' +
     (lastSyncErr ? ' — last try failed: ' + lastSyncErr : '') + ' — tap here to retry.' : '';
+  // manual-confirmation escape hatch (9/1): when Airtable processes sends but
+  // the response never reaches Safari readably, the queue can only be cleared
+  // by a HUMAN who verified the records in the base — the app itself still
+  // never claims synced without a confirmed 2xx (trust rule, 8/14)
+  var cl = document.getElementById('syncclear');
+  if(cl) cl.hidden = !(n && lastSyncErr);
   fsumStat();
 }
 // post-Finish summary dialog: stays up until Josh dismisses it himself (his
@@ -2216,6 +2223,21 @@ document.getElementById('sync').addEventListener('click', function(){
   if(!(state.q && state.q.length)) return;
   toast('Retrying sync…');
   pump();
+});
+document.getElementById('syncclear').addEventListener('click', function(){
+  var n = (state.q || []).length;
+  if(!n) return;
+  ask('Remove ' + n + ' queued workout' + (n > 1 ? 's' : '') + ' without a sync confirmation? ' +
+      'Only do this after you or coach checked that the records really are in Airtable — ' +
+      'the app could not confirm delivery itself.', 'They’re in Airtable — clear it')
+    .then(function(ok){
+      if(!ok) return;
+      state.q = [];
+      lastSyncErr = '';
+      save();
+      syncStat();
+      toast('Queue cleared — nothing was deleted from Airtable');
+    });
 });
 
 function exDone(el){
