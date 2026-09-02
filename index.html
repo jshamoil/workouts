@@ -28,7 +28,13 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font
 .brand{display:flex;align-items:baseline;gap:9px;padding:11px 16px 8px}
 .brand b{font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:.05em;text-transform:uppercase}
 .brand span{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
-[role=tablist]{display:grid;grid-template-columns:repeat(4,1fr)}
+[role=tablist]{display:grid;grid-template-columns:repeat(6,1fr)}
+#t-R1 .tc,#t-R2 .tc{font-size:20px}
+#t-R1.due::after,#t-R2.due::after{content:'';display:block;width:6px;height:6px;border-radius:50%;background:var(--amber);margin-top:2px}
+.armtog{display:flex;align-items:center;gap:8px;margin:0 4px 12px;padding:10px 12px;border:1px dashed #33393E;border-radius:6px;
+ font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);cursor:pointer}
+.armtog input{width:16px;height:16px;accent-color:var(--go)}
+.pend{color:var(--amber)}
 .tab{appearance:none;background:none;border:0;border-top:1px solid var(--line);
  border-bottom:3px solid transparent;color:var(--dim);cursor:pointer;padding:9px 4px 8px;
  display:flex;flex-direction:column;align-items:center;gap:1px;font-family:inherit;
@@ -338,7 +344,7 @@ footer b{color:var(--ink);font-weight:500}
 
 <div class="bar">
   <div class="brand"><svg class="logo" viewBox="0 0 60 34" aria-label="Workouts"><rect x="13" y="14" width="34" height="6" rx="3" fill="#D42027"/><rect x="16" y="4" width="5" height="26" rx="2.5" fill="#C9CDD1"/><rect x="9" y="9" width="5" height="16" rx="2.5" fill="#C9CDD1"/><rect x="39" y="4" width="5" height="26" rx="2.5" fill="#C9CDD1"/><rect x="46" y="9" width="5" height="16" rx="2.5" fill="#C9CDD1"/></svg><span id="rotline"></span><button id="logbtn" type="button">Log</button></div>
-  <div role="tablist" aria-label="Workout sessions"><button role="tab" class="tab" id="t-A1" aria-controls="s-A1" aria-selected="true" tabindex="0" data-s="A1"><span class="tc">U1</span><span class="tl">Upper</span><span class="tf">Push</span></button><button role="tab" class="tab" id="t-A2" aria-controls="s-A2" aria-selected="false" tabindex="-1" data-s="A2"><span class="tc">L1</span><span class="tl">Lower</span><span class="tf">Squat &amp; hinge</span></button><button role="tab" class="tab" id="t-B1" aria-controls="s-B1" aria-selected="false" tabindex="-1" data-s="B1"><span class="tc">U2</span><span class="tl">Upper</span><span class="tf">Pull</span></button><button role="tab" class="tab" id="t-B2" aria-controls="s-B2" aria-selected="false" tabindex="-1" data-s="B2"><span class="tc">L2</span><span class="tl">Lower</span><span class="tf">Carry</span></button></div>
+  <div role="tablist" aria-label="Workout sessions"><button role="tab" class="tab" id="t-A1" aria-controls="s-A1" aria-selected="true" tabindex="0" data-s="A1"><span class="tc">U1</span><span class="tl">Upper</span><span class="tf">Push</span></button><button role="tab" class="tab" id="t-A2" aria-controls="s-A2" aria-selected="false" tabindex="-1" data-s="A2"><span class="tc">L1</span><span class="tl">Lower</span><span class="tf">Squat &amp; hinge</span></button><button role="tab" class="tab" id="t-B1" aria-controls="s-B1" aria-selected="false" tabindex="-1" data-s="B1"><span class="tc">U2</span><span class="tl">Upper</span><span class="tf">Pull</span></button><button role="tab" class="tab" id="t-B2" aria-controls="s-B2" aria-selected="false" tabindex="-1" data-s="B2"><span class="tc">L2</span><span class="tl">Lower</span><span class="tf">Carry</span></button><button role="tab" class="tab" id="t-R1" aria-controls="s-R1" aria-selected="false" tabindex="-1" data-s="R1"><span class="tc">A1</span><span class="tl">Arms</span><span class="tf">U1's</span></button><button role="tab" class="tab" id="t-R2" aria-controls="s-R2" aria-selected="false" tabindex="-1" data-s="R2"><span class="tc">A2</span><span class="tl">Arms</span><span class="tf">U2's</span></button></div>
   <div class="acts">
     <button id="reset" class="act">Clear <b id="rs">U1</b></button>
     <button id="copy" class="act">Copy log</button>
@@ -1419,10 +1425,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Bend sideways toward the floor under control, then raise back up to a straight line — stop there, no over-bending past straight. Do the weaker side first, match reps on the stronger side. Hold a plate at your chest once bodyweight is easy.</dd></dl>
    <div class="note"><span class="tag">Note</span><p>This is the lateral trunk work nothing else in the program covers — quadratus lumborum and obliques. Keep it smooth and slow; it is a control exercise, not a max-effort one.</p></div>
  </div>
-</div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
+</div></section><section role="tabpanel" id="s-R1" aria-labelledby="t-R1" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p></section><section role="tabpanel" id="s-R2" aria-labelledby="t-R2" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-02.a</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-02.b</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip" id="syncclear" hidden><u>Already confirmed these landed in Airtable? Tap here to clear the queue.</u></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
@@ -1432,7 +1438,7 @@ footer b{color:var(--ink);font-weight:500}
 (function(){
 'use strict';
 var META = {"a11": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["chest", "front delts", "triceps"], "deg": 0, "rest": 180}, "a12": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["chest", "front delts", "triceps"], "deg": 0, "rest": 180}, "a13": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 0, "mus": ["lats", "biceps"], "deg": 0, "rest": 180}, "a14": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["chest"], "deg": 0, "rest": 90}, "a15": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["side delts"], "deg": 0, "rest": 90}, "a18": {"n": 2, "lo": 21, "hi": 21, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 20, "mus": ["biceps"], "deg": 0, "rest": 90}, "a19": {"n": 2, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["biceps"], "deg": 0, "rest": 90}, "a16": {"n": 2, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 0, "mus": ["triceps"], "deg": 0, "rest": 90}, "a17": {"n": 2, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["forearms"], "deg": 0, "rest": 90}, "a21": {"n": 3, "lo": 6, "hi": 8, "inc": 10, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["quads", "glutes"], "deg": 0, "rest": 180}, "a22": {"n": 3, "lo": 8, "hi": 10, "inc": 10, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["hamstrings", "glutes", "low back"], "deg": 0, "rest": 180}, "a23": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["quads"], "deg": 0, "rest": 90}, "a24": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["hamstrings"], "deg": 0, "rest": 90}, "a25": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 1, "pain": 0, "bar": 0, "mus": ["calves"], "deg": 0, "rest": 90}, "a26": {"n": 3, "lo": 8, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["abs"], "deg": 0, "rest": 90}, "b11": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 0, "mus": ["lats", "biceps"], "deg": 0, "rest": 180}, "b12": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["upper back", "rear delts", "lats"], "deg": 0, "rest": 180}, "b13": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["front delts", "triceps"], "deg": 0, "rest": 180}, "b14": {"n": 3, "lo": 12, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 0, "mus": ["upper back", "lats"], "deg": 0, "rest": 90}, "b15": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["biceps"], "deg": 0, "rest": 90}, "b19": {"n": 2, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["biceps", "forearms"], "deg": 0, "rest": 90}, "b16": {"n": 3, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["rear delts", "upper back"], "deg": 0, "rest": 90}, "b18": {"n": 2, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["triceps"], "deg": 0, "rest": 90}, "b17": {"n": 2, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["forearms"], "deg": 0, "rest": 90}, "b21": {"n": 3, "lo": 8, "hi": 10, "inc": 10, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 45, "mus": ["glutes", "hamstrings"], "deg": 0, "rest": 180}, "b22": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["quads", "glutes"], "deg": 0, "rest": 180}, "b23": {"n": 3, "lo": 12, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["low back", "glutes", "hamstrings"], "deg": 0, "rest": 90}, "b24": {"n": 3, "lo": 5, "hi": 8, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["hamstrings"], "deg": 1, "rest": 180}, "b25": {"n": 2, "lo": 10, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["quads", "glutes"], "deg": 0, "rest": 90}, "b26": {"n": 3, "lo": 45, "hi": 45, "inc": 5, "unit": "sec", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["forearms", "abs"], "deg": 0, "rest": 90}, "b27": {"n": 2, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["obliques"], "deg": 0, "rest": 90}}, SEED = {}, SEED_HIST = {"a11": [{"date": "2026-07-27", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "40", "r": "10", "d": 1}, {"w": "40", "r": "10", "d": 1}]}, {"date": "2026-08-04", "sets": [{"w": "45", "r": "8", "d": 1}, {"w": "45", "r": "8", "d": 1}, {"w": "45", "r": "8", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "45", "r": "8", "d": 1}, {"w": "45", "r": "8", "d": 1}, {"w": "45", "r": "8", "d": 1}]}], "a12": [{"date": "2026-07-27", "sets": [{"w": "35", "r": "10", "d": 1}, {"w": "35", "r": "10", "d": 1}, {"w": "35", "r": "10", "d": 1}]}, {"date": "2026-08-04", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "12", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "40", "r": "10", "d": 1}, {"w": "40", "r": "10", "d": 1}]}], "a13": [{"date": "2026-07-27", "sets": [{"w": "75", "r": "12", "d": 1}, {"w": "75", "r": "15", "d": 1}, {"w": "75", "r": "15", "d": 1}]}, {"date": "2026-08-04", "sets": [{"w": "80", "r": "12", "d": 1}, {"w": "80", "r": "12", "d": 1}, {"w": "80", "r": "8", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "80", "r": "12", "d": 1}, {"w": "80", "r": "12", "d": 1}, {"w": "80", "r": "12", "d": 1}]}], "a14": [{"date": "2026-08-04", "sets": [{"w": "20", "r": "10", "d": 1}, {"w": "20", "r": "12", "d": 1}, {"w": "20", "r": "10", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "20", "r": "12", "d": 1}, {"w": "20", "r": "12", "d": 1}, {"w": "20", "r": "12", "d": 1}]}], "a15": [{"date": "2026-08-04", "sets": [{"w": "10", "r": "12", "d": 1}, {"w": "10", "r": "10", "d": 1}, {"w": "10", "r": "12", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "5", "r": "15", "d": 1}, {"w": "5", "r": "15", "d": 1}, {"w": "5", "r": "15", "d": 1}]}], "a16": [{"date": "2026-08-04", "sets": [{"w": "35", "r": "8", "d": 1}, {"w": "35", "r": "7", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "25", "r": "10", "d": 1}, {"w": "15", "r": "15", "d": 1}]}], "a17": [{"date": "2026-08-04", "sets": [{"w": "5", "r": "15", "d": 1}, {"w": "5", "r": "15", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "5", "r": "15", "d": 1}, {"w": "5", "r": "15", "d": 1}]}], "a21": [{"date": "2026-07-29", "sets": [{"w": "45", "r": "10", "d": 1}, {"w": "55", "r": "10", "d": 1}, {"w": "55", "r": "10", "d": 1}]}], "a22": [{"date": "2026-07-29", "sets": [{"w": "55", "r": "8", "d": 1}, {"w": "55", "r": "8", "d": 1}, {"w": "55", "r": "7", "d": 1}]}], "a23": [{"date": "2026-07-29", "sets": [{"w": "25", "r": "14", "d": 1}, {"w": "35", "r": "10", "d": 1}, {"w": "35", "r": "12", "d": 1}]}], "a24": [{"date": "2026-07-29", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "10", "d": 1}]}], "a25": [{"date": "2026-07-29", "sets": [{"w": "BW", "r": "12", "d": 1}, {"w": "BW", "r": "12", "d": 1}, {"w": "BW", "r": "12", "d": 1}]}], "b11": [{"date": "2026-07-30", "sets": [{"w": "50", "r": "15", "d": 1}, {"w": "75", "r": "8", "d": 1}]}], "b12": [{"date": "2026-07-30", "sets": [{"w": "25", "r": "10", "d": 1}, {"w": "25", "r": "10", "d": 1}]}], "b13": [{"date": "2026-07-30", "sets": [{"w": "25", "r": "10", "d": 1}, {"w": "25", "r": "10", "d": 1}]}], "b14": [{"date": "2026-07-30", "sets": [{"w": "75", "r": "12", "d": 1}, {"w": "75", "r": "15", "d": 1}]}], "b15": [{"date": "2026-07-30", "sets": [{"w": "20", "r": "12", "d": 1}, {"w": "20", "r": "10", "d": 1}]}], "b16": [{"date": "2026-07-30", "sets": [{"w": "15", "r": "10", "d": 1}, {"w": "15", "r": "11", "d": 1}]}], "b17": [{"date": "2026-07-30", "sets": [{"w": "10", "r": "15", "d": 1}, {"w": "10", "r": "15", "d": 1}]}], "b18": [{"date": "2026-07-30", "sets": [{"w": "15", "r": "10", "d": 1}, {"w": "15", "r": "8", "d": 1}]}], "b21": [{"date": "2026-08-03", "sets": [{"w": "95", "r": "8", "d": 1}, {"w": "95", "r": "8", "d": 1}]}], "b22": [{"date": "2026-08-03", "sets": [{"w": "0", "r": "8", "d": 1}, {"w": "0", "r": "9", "d": 1}]}], "b23": [{"date": "2026-08-03", "sets": [{"w": "", "r": "8", "d": 1}, {"w": "", "r": "8", "d": 1}]}], "b24": [{"date": "2026-08-03", "sets": [{"w": "35", "r": "5", "d": 1}]}], "b27": [{"date": "2026-08-03", "sets": [{"w": "", "r": "8", "d": 1}]}], "a18": [{"date": "2026-08-07", "sets": [{"w": "0", "r": "21", "d": 1}, {"w": "0", "r": "21", "d": 1}]}], "a19": [{"date": "2026-08-07", "sets": [{"w": "10", "r": "8", "d": 1}, {"w": "10", "r": "12", "d": 1}]}]}, KEY = 'workouts.v1';
-var DISP = {A1:'U1', A2:'L1', B1:'U2', B2:'L2'};
+var DISP = {A1:'U1', A2:'L1', B1:'U2', B2:'L2', R1:'A1', R2:'A2'};
 function disp(c){ return DISP[c] || c; }
 var tabs = [].slice.call(document.querySelectorAll('[role=tab]'));
 var state = {cur:{}, hist:{}};
@@ -2572,7 +2578,90 @@ var CONTENT_KEY = 'workouts.content.v1';
 // META fields the coach may override per exercise; n (set count) and session
 // membership are structural and still require a build
 var META_OVR = ['n', 'lo', 'hi', 'inc', 'unit', 'ph', 'vm', 'rest', 'pain', 'bw', 'deg', 'bar', 'mus', 'maxw'];
-var SESS_MAP = {U1: 'A1', L1: 'A2', U2: 'B1', L2: 'B2'};
+var SESS_MAP = {U1: 'A1', L1: 'A2', U2: 'B1', L2: 'B2', A1: 'R1', A2: 'R2'};
+// ---- flexible arms days (Josh's design, 9/2) ----
+// the arm work from U1/U2 lives in its own A1/A2 panes (internal R1/R2) and
+// can be folded back into the parent session for the day with a toggle;
+// history keys on exercise ids, so progression never forks on WHERE the
+// work happened. Wrist extensors (a17/b17) stay on U1/U2 always — rehab
+// needs frequency, so they are deliberately not part of these blocks.
+var ARMS_DEF = {R1: ['a18', 'a19', 'a16'], R2: ['b15', 'b19', 'b18']};
+var contentArms = null;
+function armsIds(rc){
+  var src = contentArms || {};
+  var list = Array.isArray(src[disp(rc)]) ? src[disp(rc)] : ARMS_DEF[rc];
+  // the wrist extensors never join an arms block, whatever the config says
+  return list.filter(function(id){ return id !== 'a17' && id !== 'b17'; });
+}
+function armParent(rc){ return rc === 'R1' ? 'A1' : 'B1'; }
+// place every arms exercise: home is its R pane, unless today's toggle has
+// folded it into the parent session
+function applyArms(){
+  ['R1', 'R2'].forEach(function(rc){
+    var home = document.getElementById('s-' + rc);
+    if(!home) return;
+    // return anything from a previous config back to its prefix pane first
+    [].slice.call(home.querySelectorAll('.ex')).forEach(function(el){
+      if(armsIds(rc).indexOf(el.dataset.ex) < 0){
+        var pp = document.getElementById('s-' + el.dataset.ex.slice(0, 2).toUpperCase());
+        if(pp) pp.appendChild(el);
+      }
+    });
+    var folded = state.armin && state.armin[rc] === today();
+    var dest = folded ? document.getElementById('s-' + armParent(rc)) : home;
+    armsIds(rc).forEach(function(id){
+      var el = exEl(id);
+      if(el && el.closest('.pane') !== dest) dest.appendChild(el);
+    });
+    var tog = document.querySelector('#s-' + armParent(rc) + ' .armtog input');
+    if(tog) tog.checked = !!folded;
+  });
+}
+function foldArms(rc, on){
+  state.armin = state.armin || {};
+  if(on) state.armin[rc] = today();
+  else delete state.armin[rc];
+  applyArms();
+  renumberPanes();
+  save();
+}
+// A-block pending = the parent session banked more recently than its arm
+// work (inline or standalone — history is the single source of truth)
+function lastDateFor(ids){
+  var b = '';
+  ids.forEach(function(id){
+    (state.hist[id] || []).forEach(function(en){ if(en.date > b) b = en.date; });
+  });
+  return b;
+}
+function armPending(rc){
+  var arms = armsIds(rc);
+  var core = idsIn(armParent(rc)).filter(function(id){ return arms.indexOf(id) < 0; });
+  var uLast = lastDateFor(core), aLast = lastDateFor(arms);
+  return !!(uLast && uLast > aLast);
+}
+// "include arms today" toggle on U1 and U2 — available pre-start AND
+// mid-session; folding is per-day and per-cycle, never permanent
+['R1', 'R2'].forEach(function(rc){
+  var pane = document.getElementById('s-' + armParent(rc));
+  var hd = pane && pane.querySelector('.pane-hd');
+  if(!hd) return;
+  var lab = document.createElement('label');
+  lab.className = 'armtog';
+  var cb = document.createElement('input');
+  cb.type = 'checkbox';
+  lab.appendChild(cb);
+  lab.appendChild(document.createTextNode(' Include arms (' + disp(rc) + ') today'));
+  hd.parentNode.insertBefore(lab, hd.nextSibling);
+  cb.addEventListener('change', function(){
+    foldArms(rc, cb.checked);
+    updFinish();
+    updNext();
+    renderRot();
+    toast(cb.checked ? disp(rc) + ' folded into ' + disp(armParent(rc)) + ' for today'
+                     : disp(rc) + ' back to its own session');
+  });
+});
 // cards detached by a "removed": true entry are stashed here so a later
 // content refresh can restore them without a reload
 var stashedEx = {};
@@ -2731,9 +2820,15 @@ function applyContent(c){
     var rest = all.filter(function(e){ return listed.indexOf(e) < 0; });
     listed.concat(rest).forEach(function(e){ pane.appendChild(e); });
   });
-  // badges renumber on every apply — adds, removes and moves change them
-  // even when _order is untouched
-  ['A1', 'A2', 'B1', 'B2'].forEach(function(code){
+  contentArms = c._arms || null;
+  applyArms();
+  renumberPanes();
+  updateWeighDot();
+}
+// badges renumber on every apply and every arms fold — adds, removes and
+// moves change them even when _order is untouched
+function renumberPanes(){
+  ['A1', 'A2', 'B1', 'B2', 'R1', 'R2'].forEach(function(code){
     var pane = document.getElementById('s-' + code);
     if(!pane) return;
     [].slice.call(pane.querySelectorAll('.ex .n')).forEach(function(nEl, i){
@@ -2744,7 +2839,6 @@ function applyContent(c){
       hd.firstChild.nodeValue = pane.querySelectorAll('.ex').length + ' movements \u00b7 run in order';
     }
   });
-  updateWeighDot();
 }
 function loadContent(){
   try {
@@ -2829,10 +2923,20 @@ function nextSession(){
 }
 function renderRot(){
   var el = document.getElementById('rotline'); if(!el) return;
+  // arms blocks never steer the rotation pointer; a pending block just gets
+  // a factual mention and a quiet tab dot \u2014 no streaks, no red, no nagging
+  var pends = [];
+  ['R1', 'R2'].forEach(function(rc){
+    var p = armPending(rc);
+    var t = document.getElementById('t-' + rc);
+    if(t) t.classList.toggle('due', p);
+    if(p) pends.push(disp(rc));
+  });
   var best = lastSession();
   if(!best){ el.textContent = 'First session: ' + disp('A1'); return; }
   el.innerHTML = 'Last <b>' + disp(best.code) + '</b> ' + best.date.slice(5).replace('-', '/') +
-    ' \u2192 next <b>' + disp(nextSession()) + '</b>';
+    ' \u2192 next <b>' + disp(nextSession()) + '</b>' +
+    (pends.length ? ' <span class="pend">\u00b7 ' + pends.join(' + ') + ' pending</span>' : '');
 }
 function daysAgo(n){
   var d = new Date(); d.setDate(d.getDate() - n);
@@ -3232,10 +3336,11 @@ store.load().then(function(saved){
   if(saved && (saved.cur || saved.hist)){
     state = {cur: saved.cur || {}, hist: saved.hist || {},
              note: saved.note || {}, bw: saved.bw || [], st: saved.st || {},
-             q: saved.q || [], setg: saved.setg || {}, sess: saved.sess || {}};
+             q: saved.q || [], setg: saved.setg || {}, sess: saved.sess || {},
+             armin: saved.armin || {}};
   } else {
     state = {cur: JSON.parse(JSON.stringify(SEED)), hist: JSON.parse(JSON.stringify(SEED_HIST)),
-             note: {}, bw: [], st: {}, q: [], setg: {}, sess: {}};
+             note: {}, bw: [], st: {}, q: [], setg: {}, sess: {}, armin: {}};
   }
   // migration: sheets saved by builds before 2026-08-11.b lack the sw/sr
   // suggestion markers, so their prefilled targets are indistinguishable from
@@ -3288,6 +3393,8 @@ store.load().then(function(saved){
     redrawAll();
   }
   loadContent();  // applies cached content first, so _next steers the boot tab
+  applyArms();     // even with no cached content, arms split to their panes
+  renumberPanes();
   updateWeighDot();  // again after the bw merge — applyContent ran before it
   renderRot();
   select(nextSession());
