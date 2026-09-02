@@ -63,7 +63,11 @@ Exercises (`tblmBTkSo88QCDDIc`, has `App ID` = a11…b27, do not edit), Daily, E
   `session` moves an exercise to another pane, `removed: true` detaches it (history
   preserved; delete the flag to restore), a NEW id (session-prefixed a1x/a2x/b1x/b2x, or
   explicit `session`) with name + meta + setup/execute generates a full working card at
-  boot, and `meta.n` rebuilds set rows. `_order` reorders within a session; `_next`
+  boot, and `meta.n` rebuilds set rows. Per-id `next` {w, r, asof, why} pins the
+  next-session target over the computed suggestion (shows as "coach: <why>", requires
+  asof, expires once banked on/after it, maxw-capped, 9/2). `_order` reorders within a
+  session; `_arms` {A1: [ids], A2: [ids]} sets the optional arms blocks (9/2, see
+  below); `_next`
   overrides the rotation pointer (self-expires); `_goal` {date, weight, bf, lean,
   baseline*, note} drives the Goals card atop the Log tab — lean is a floor (hold or
   gain), and the card must never use pace-judgement language ("behind", "off track",
@@ -74,6 +78,16 @@ Exercises (`tblmBTkSo88QCDDIc`, has `App ID` = a11…b27, do not edit), Daily, E
   refreshed network-first each launch; `sw.js` never caches it. New ids need a matching
   Airtable Exercises record (`App ID` = the id) so webhook syncs link. Still build-only:
   new session types beyond the four, webhook/hosting changes.
+- **Flexible arms days (9/2, Josh's design)**: the U1/U2 arm work lives in its own
+  A1/A2 sessions (internal codes R1/R2, display A1/A2; ids default a18/a19/a16 and
+  b15/b19/b18, coach-tunable via `_arms`). An "Include arms today" toggle on U1/U2
+  folds the block back in for the day (`state.armin`, per-day, works pre-start or
+  mid-session); history keys on exercise ids so progression never forks on where the
+  work ran. Pending = parent session banked more recently than its arm ids → quiet
+  amber dot on the A-tab + "A1 pending" on the rotline, never nagging; standalone runs
+  always allowed. R codes never steer the rotation pointer. Wrist extensors (a17/b17)
+  are hard-excluded from arms blocks — rehab needs frequency. Airtable
+  Workouts.Session carries A1/A2 options (seeded 9/2 via typecast records).
 - Dynamic-card architecture (23.a): `buildExCard(id, o)` generates cards matching the
   baked selector contract; bindings are factored into `bindHd`/`bindRows`/`bindEx`/
   `injectSetg` so generated and rebuilt DOM gets wired identically to parsed DOM —
