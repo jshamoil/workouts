@@ -1422,7 +1422,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-01.f</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-02.a</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip" id="syncclear" hidden><u>Already confirmed these landed in Airtable? Tap here to clear the queue.</u></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
@@ -1648,6 +1648,25 @@ function renderChart(id){
 function lastFor(id){ var h = state.hist[id]; return (h && h.length) ? h[h.length-1] : null; }
 
 function suggest(id){
+  // coach override (9/2): content.json per-id next {w, r, asof, why} pins the
+  // target ahead of the computed suggestion — for the calls arithmetic can't
+  // know (elbow holds, deliberate deloads, post-layoff weeks). Requires asof
+  // and expires once the exercise is banked on/after it, so a stale override
+  // can never govern silently. maxw still caps it. Everything else falls
+  // through to the computed suggestion, which stays the default.
+  var ovr = NEXT_OVR[id] || null;
+  if(ovr && !ovr.asof) ovr = null;
+  if(ovr){
+    var hOv = state.hist[id];
+    if(hOv && hOv.length && hOv[hOv.length - 1].date >= ovr.asof) ovr = null;
+  }
+  if(ovr && (ovr.w != null || ovr.r != null)){
+    var mOv = META[id] || {};
+    var wOv = mOv.bw ? 'BW' : num(ovr.w);
+    if(mOv.maxw && num(wOv) > mOv.maxw) wOv = mOv.maxw;
+    return {w: wOv, r: ovr.r != null ? num(ovr.r) : (mOv.lo || 0),
+            why: 'coach: ' + (ovr.why || 'set by coach')};
+  }
   var last = lastFor(id); if(!last) return null;
   var m = META[id];
   if(m.deg){
@@ -2624,10 +2643,12 @@ function applyContent(c){
   contentNext = c._next || null;
   contentGoal = c._goal || null;
   contentWeighin = c._weighin || null;
+  NEXT_OVR = {};
   Object.keys(c).forEach(function(id){
     if(id.charAt(0) === '_') return;
     var o = c[id];
     if(!o) return;
+    if(o.next) NEXT_OVR[id] = o.next;
     // --- structure (coach-owned): remove / restore / create / move ---
     if(o.removed){
       var elR = exEl(id);
@@ -2759,6 +2780,7 @@ var ROT = ['A1', 'A2', 'B1', 'B2'];
 var contentNext = null;
 var contentGoal = null;
 var contentWeighin = null;
+var NEXT_OVR = {};
 // weigh-in cadence reminder — factual and dismissible only: no streaks, no
 // red states, no escalation for being late (coach guardrail, Journal 8/23);
 // pauseUntil lets coach silence it around travel and protocol changes
