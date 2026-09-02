@@ -1430,7 +1430,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-AR" aria-labelledby="t-AR" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p><p class="armnote" id="armnote" hidden></p></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-02.c</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-02.d</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip" id="syncclear" hidden><u>Already confirmed these landed in Airtable? Tap here to clear the queue.</u></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
@@ -2605,6 +2605,15 @@ function armParent(rc){ return rc === 'R1' ? 'A1' : 'B1'; }
 // everything when nothing is pending (voluntary runs always allowed). A
 // done-this-cycle block is hidden, not removed; "show anyway" reveals it.
 var armShowAll = false;
+var contentArmOrder = {};
+// order a shown-id list by the coach's block order when she gave one
+function armOrdered(ids, key){
+  var o = contentArmOrder[key];
+  if(!Array.isArray(o)) return null;
+  var out = o.filter(function(id){ return ids.indexOf(id) >= 0; });
+  ids.forEach(function(id){ if(out.indexOf(id) < 0) out.push(id); });
+  return out;
+}
 function applyArms(){
   var pane = document.getElementById('s-AR');
   if(!pane) return;
@@ -2644,19 +2653,23 @@ function renderArmsPane(){
   var show2 = p2 || nonePending || armShowAll;
   var shown = [], hidden = [];
   if(show1 && show2 && r1.length && r2.length){
-    // both blocks in one day: alternate biceps and triceps work instead of
-    // clustering four consecutive curls — spreads the elbow load
-    // (coach safeguard, 9/2)
+    // both blocks in one day: coach's _order.Arms wins when present;
+    // otherwise alternate biceps and triceps work instead of clustering
+    // four consecutive curls — spreads the elbow load (coach safeguard, 9/2)
     var all = r1.concat(r2);
-    var tri = all.filter(function(id){ return ((META[id] || {}).mus || []).indexOf('triceps') >= 0; });
-    var bi = all.filter(function(id){ return tri.indexOf(id) < 0; });
-    while(bi.length || tri.length){
-      if(bi.length) shown.push(bi.shift());
-      if(tri.length) shown.push(tri.shift());
+    shown = armOrdered(all, 'Arms');
+    if(!shown){
+      shown = [];
+      var tri = all.filter(function(id){ return ((META[id] || {}).mus || []).indexOf('triceps') >= 0; });
+      var bi = all.filter(function(id){ return tri.indexOf(id) < 0; });
+      while(bi.length || tri.length){
+        if(bi.length) shown.push(bi.shift());
+        if(tri.length) shown.push(tri.shift());
+      }
     }
   } else {
-    if(show1) shown = shown.concat(r1); else hidden = hidden.concat(r1);
-    if(show2) shown = shown.concat(r2); else hidden = hidden.concat(r2);
+    if(show1) shown = shown.concat(armOrdered(r1, 'A1') || r1); else hidden = hidden.concat(r1);
+    if(show2) shown = shown.concat(armOrdered(r2, 'A2') || r2); else hidden = hidden.concat(r2);
   }
   shown.forEach(function(id){
     var el = exEl(id);
@@ -2884,7 +2897,12 @@ function applyContent(c){
   // Listed ids come first in the given order; unlisted keep their relative
   // order after them. Number badges renumber to match.
   var ord = c._order || {};
+  // "A1"/"A2"/"Arms" keys are BLOCK orders for the arms renderer, not pane
+  // orders — routing them through the pane loop would reorder U1/U2 when a
+  // block is folded in
+  contentArmOrder = {A1: ord.A1, A2: ord.A2, Arms: ord.Arms};
   Object.keys(ord).forEach(function(sc){
+    if(sc === 'A1' || sc === 'A2' || sc === 'Arms') return;
     var code = ({U1: 'A1', L1: 'A2', U2: 'B1', L2: 'B2'})[sc] || sc;
     var pane = document.getElementById('s-' + code);
     if(!pane || !Array.isArray(ord[sc])) return;
