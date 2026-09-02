@@ -28,9 +28,11 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font
 .brand{display:flex;align-items:baseline;gap:9px;padding:11px 16px 8px}
 .brand b{font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:.05em;text-transform:uppercase}
 .brand span{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
-[role=tablist]{display:grid;grid-template-columns:repeat(6,1fr)}
-#t-R1 .tc,#t-R2 .tc{font-size:20px}
-#t-R1.due::after,#t-R2.due::after{content:'';display:block;width:6px;height:6px;border-radius:50%;background:var(--amber);margin-top:2px}
+[role=tablist]{display:grid;grid-template-columns:repeat(5,1fr)}
+#t-AR.due::after{content:'';display:block;width:6px;height:6px;border-radius:50%;background:var(--amber);margin-top:2px}
+.armhide{display:none!important}
+.armnote{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin:0 4px 12px;line-height:1.5}
+.armnote u{cursor:pointer}
 .armtog{display:flex;align-items:center;gap:8px;margin:0 4px 12px;padding:10px 12px;border:1px dashed #33393E;border-radius:6px;
  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);cursor:pointer}
 .armtog input{width:16px;height:16px;accent-color:var(--go)}
@@ -344,7 +346,7 @@ footer b{color:var(--ink);font-weight:500}
 
 <div class="bar">
   <div class="brand"><svg class="logo" viewBox="0 0 60 34" aria-label="Workouts"><rect x="13" y="14" width="34" height="6" rx="3" fill="#D42027"/><rect x="16" y="4" width="5" height="26" rx="2.5" fill="#C9CDD1"/><rect x="9" y="9" width="5" height="16" rx="2.5" fill="#C9CDD1"/><rect x="39" y="4" width="5" height="26" rx="2.5" fill="#C9CDD1"/><rect x="46" y="9" width="5" height="16" rx="2.5" fill="#C9CDD1"/></svg><span id="rotline"></span><button id="logbtn" type="button">Log</button></div>
-  <div role="tablist" aria-label="Workout sessions"><button role="tab" class="tab" id="t-A1" aria-controls="s-A1" aria-selected="true" tabindex="0" data-s="A1"><span class="tc">U1</span><span class="tl">Upper</span><span class="tf">Push</span></button><button role="tab" class="tab" id="t-A2" aria-controls="s-A2" aria-selected="false" tabindex="-1" data-s="A2"><span class="tc">L1</span><span class="tl">Lower</span><span class="tf">Squat &amp; hinge</span></button><button role="tab" class="tab" id="t-B1" aria-controls="s-B1" aria-selected="false" tabindex="-1" data-s="B1"><span class="tc">U2</span><span class="tl">Upper</span><span class="tf">Pull</span></button><button role="tab" class="tab" id="t-B2" aria-controls="s-B2" aria-selected="false" tabindex="-1" data-s="B2"><span class="tc">L2</span><span class="tl">Lower</span><span class="tf">Carry</span></button><button role="tab" class="tab" id="t-R1" aria-controls="s-R1" aria-selected="false" tabindex="-1" data-s="R1"><span class="tc">A1</span><span class="tl">Arms</span><span class="tf">U1's</span></button><button role="tab" class="tab" id="t-R2" aria-controls="s-R2" aria-selected="false" tabindex="-1" data-s="R2"><span class="tc">A2</span><span class="tl">Arms</span><span class="tf">U2's</span></button></div>
+  <div role="tablist" aria-label="Workout sessions"><button role="tab" class="tab" id="t-A1" aria-controls="s-A1" aria-selected="true" tabindex="0" data-s="A1"><span class="tc">U1</span><span class="tl">Upper</span><span class="tf">Push</span></button><button role="tab" class="tab" id="t-A2" aria-controls="s-A2" aria-selected="false" tabindex="-1" data-s="A2"><span class="tc">L1</span><span class="tl">Lower</span><span class="tf">Squat &amp; hinge</span></button><button role="tab" class="tab" id="t-B1" aria-controls="s-B1" aria-selected="false" tabindex="-1" data-s="B1"><span class="tc">U2</span><span class="tl">Upper</span><span class="tf">Pull</span></button><button role="tab" class="tab" id="t-B2" aria-controls="s-B2" aria-selected="false" tabindex="-1" data-s="B2"><span class="tc">L2</span><span class="tl">Lower</span><span class="tf">Carry</span></button><button role="tab" class="tab" id="t-AR" aria-controls="s-AR" aria-selected="false" tabindex="-1" data-s="AR"><span class="tc">A</span><span class="tl">Arms</span><span class="tf">Bi &amp; tri</span></button></div>
   <div class="acts">
     <button id="reset" class="act">Clear <b id="rs">U1</b></button>
     <button id="copy" class="act">Copy log</button>
@@ -1425,10 +1427,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Bend sideways toward the floor under control, then raise back up to a straight line — stop there, no over-bending past straight. Do the weaker side first, match reps on the stronger side. Hold a plate at your chest once bodyweight is easy.</dd></dl>
    <div class="note"><span class="tag">Note</span><p>This is the lateral trunk work nothing else in the program covers — quadratus lumborum and obliques. Keep it smooth and slow; it is a control exercise, not a max-effort one.</p></div>
  </div>
-</div></section><section role="tabpanel" id="s-R1" aria-labelledby="t-R1" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p></section><section role="tabpanel" id="s-R2" aria-labelledby="t-R2" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
+</div></section><section role="tabpanel" id="s-AR" aria-labelledby="t-AR" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p><p class="armnote" id="armnote" hidden></p></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-02.b</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-02.c</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip" id="syncclear" hidden><u>Already confirmed these landed in Airtable? Tap here to clear the queue.</u></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
@@ -1438,7 +1440,7 @@ footer b{color:var(--ink);font-weight:500}
 (function(){
 'use strict';
 var META = {"a11": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["chest", "front delts", "triceps"], "deg": 0, "rest": 180}, "a12": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["chest", "front delts", "triceps"], "deg": 0, "rest": 180}, "a13": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 0, "mus": ["lats", "biceps"], "deg": 0, "rest": 180}, "a14": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["chest"], "deg": 0, "rest": 90}, "a15": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["side delts"], "deg": 0, "rest": 90}, "a18": {"n": 2, "lo": 21, "hi": 21, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 20, "mus": ["biceps"], "deg": 0, "rest": 90}, "a19": {"n": 2, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["biceps"], "deg": 0, "rest": 90}, "a16": {"n": 2, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 0, "mus": ["triceps"], "deg": 0, "rest": 90}, "a17": {"n": 2, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["forearms"], "deg": 0, "rest": 90}, "a21": {"n": 3, "lo": 6, "hi": 8, "inc": 10, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["quads", "glutes"], "deg": 0, "rest": 180}, "a22": {"n": 3, "lo": 8, "hi": 10, "inc": 10, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["hamstrings", "glutes", "low back"], "deg": 0, "rest": 180}, "a23": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["quads"], "deg": 0, "rest": 90}, "a24": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["hamstrings"], "deg": 0, "rest": 90}, "a25": {"n": 3, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 1, "pain": 0, "bar": 0, "mus": ["calves"], "deg": 0, "rest": 90}, "a26": {"n": 3, "lo": 8, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["abs"], "deg": 0, "rest": 90}, "b11": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 0, "mus": ["lats", "biceps"], "deg": 0, "rest": 180}, "b12": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["upper back", "rear delts", "lats"], "deg": 0, "rest": 180}, "b13": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["front delts", "triceps"], "deg": 0, "rest": 180}, "b14": {"n": 3, "lo": 12, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 1, "bar": 0, "mus": ["upper back", "lats"], "deg": 0, "rest": 90}, "b15": {"n": 3, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["biceps"], "deg": 0, "rest": 90}, "b19": {"n": 2, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["biceps", "forearms"], "deg": 0, "rest": 90}, "b16": {"n": 3, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["rear delts", "upper back"], "deg": 0, "rest": 90}, "b18": {"n": 2, "lo": 12, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 1, "bar": 0, "mus": ["triceps"], "deg": 0, "rest": 90}, "b17": {"n": 2, "lo": 15, "hi": 15, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["forearms"], "deg": 0, "rest": 90}, "b21": {"n": 3, "lo": 8, "hi": 10, "inc": 10, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 45, "mus": ["glutes", "hamstrings"], "deg": 0, "rest": 180}, "b22": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["quads", "glutes"], "deg": 0, "rest": 180}, "b23": {"n": 3, "lo": 12, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["low back", "glutes", "hamstrings"], "deg": 0, "rest": 90}, "b24": {"n": 3, "lo": 5, "hi": 8, "inc": 5, "unit": "reps", "ph": 0, "vm": 1, "bw": 0, "pain": 0, "bar": 0, "mus": ["hamstrings"], "deg": 1, "rest": 180}, "b25": {"n": 2, "lo": 10, "hi": 10, "inc": 5, "unit": "reps", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["quads", "glutes"], "deg": 0, "rest": 90}, "b26": {"n": 3, "lo": 45, "hi": 45, "inc": 5, "unit": "sec", "ph": 1, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["forearms", "abs"], "deg": 0, "rest": 90}, "b27": {"n": 2, "lo": 10, "hi": 12, "inc": 5, "unit": "reps", "ph": 0, "vm": 2, "bw": 0, "pain": 0, "bar": 0, "mus": ["obliques"], "deg": 0, "rest": 90}}, SEED = {}, SEED_HIST = {"a11": [{"date": "2026-07-27", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "40", "r": "10", "d": 1}, {"w": "40", "r": "10", "d": 1}]}, {"date": "2026-08-04", "sets": [{"w": "45", "r": "8", "d": 1}, {"w": "45", "r": "8", "d": 1}, {"w": "45", "r": "8", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "45", "r": "8", "d": 1}, {"w": "45", "r": "8", "d": 1}, {"w": "45", "r": "8", "d": 1}]}], "a12": [{"date": "2026-07-27", "sets": [{"w": "35", "r": "10", "d": 1}, {"w": "35", "r": "10", "d": 1}, {"w": "35", "r": "10", "d": 1}]}, {"date": "2026-08-04", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "12", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "40", "r": "10", "d": 1}, {"w": "40", "r": "10", "d": 1}]}], "a13": [{"date": "2026-07-27", "sets": [{"w": "75", "r": "12", "d": 1}, {"w": "75", "r": "15", "d": 1}, {"w": "75", "r": "15", "d": 1}]}, {"date": "2026-08-04", "sets": [{"w": "80", "r": "12", "d": 1}, {"w": "80", "r": "12", "d": 1}, {"w": "80", "r": "8", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "80", "r": "12", "d": 1}, {"w": "80", "r": "12", "d": 1}, {"w": "80", "r": "12", "d": 1}]}], "a14": [{"date": "2026-08-04", "sets": [{"w": "20", "r": "10", "d": 1}, {"w": "20", "r": "12", "d": 1}, {"w": "20", "r": "10", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "20", "r": "12", "d": 1}, {"w": "20", "r": "12", "d": 1}, {"w": "20", "r": "12", "d": 1}]}], "a15": [{"date": "2026-08-04", "sets": [{"w": "10", "r": "12", "d": 1}, {"w": "10", "r": "10", "d": 1}, {"w": "10", "r": "12", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "5", "r": "15", "d": 1}, {"w": "5", "r": "15", "d": 1}, {"w": "5", "r": "15", "d": 1}]}], "a16": [{"date": "2026-08-04", "sets": [{"w": "35", "r": "8", "d": 1}, {"w": "35", "r": "7", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "25", "r": "10", "d": 1}, {"w": "15", "r": "15", "d": 1}]}], "a17": [{"date": "2026-08-04", "sets": [{"w": "5", "r": "15", "d": 1}, {"w": "5", "r": "15", "d": 1}]}, {"date": "2026-08-07", "sets": [{"w": "5", "r": "15", "d": 1}, {"w": "5", "r": "15", "d": 1}]}], "a21": [{"date": "2026-07-29", "sets": [{"w": "45", "r": "10", "d": 1}, {"w": "55", "r": "10", "d": 1}, {"w": "55", "r": "10", "d": 1}]}], "a22": [{"date": "2026-07-29", "sets": [{"w": "55", "r": "8", "d": 1}, {"w": "55", "r": "8", "d": 1}, {"w": "55", "r": "7", "d": 1}]}], "a23": [{"date": "2026-07-29", "sets": [{"w": "25", "r": "14", "d": 1}, {"w": "35", "r": "10", "d": 1}, {"w": "35", "r": "12", "d": 1}]}], "a24": [{"date": "2026-07-29", "sets": [{"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "12", "d": 1}, {"w": "35", "r": "10", "d": 1}]}], "a25": [{"date": "2026-07-29", "sets": [{"w": "BW", "r": "12", "d": 1}, {"w": "BW", "r": "12", "d": 1}, {"w": "BW", "r": "12", "d": 1}]}], "b11": [{"date": "2026-07-30", "sets": [{"w": "50", "r": "15", "d": 1}, {"w": "75", "r": "8", "d": 1}]}], "b12": [{"date": "2026-07-30", "sets": [{"w": "25", "r": "10", "d": 1}, {"w": "25", "r": "10", "d": 1}]}], "b13": [{"date": "2026-07-30", "sets": [{"w": "25", "r": "10", "d": 1}, {"w": "25", "r": "10", "d": 1}]}], "b14": [{"date": "2026-07-30", "sets": [{"w": "75", "r": "12", "d": 1}, {"w": "75", "r": "15", "d": 1}]}], "b15": [{"date": "2026-07-30", "sets": [{"w": "20", "r": "12", "d": 1}, {"w": "20", "r": "10", "d": 1}]}], "b16": [{"date": "2026-07-30", "sets": [{"w": "15", "r": "10", "d": 1}, {"w": "15", "r": "11", "d": 1}]}], "b17": [{"date": "2026-07-30", "sets": [{"w": "10", "r": "15", "d": 1}, {"w": "10", "r": "15", "d": 1}]}], "b18": [{"date": "2026-07-30", "sets": [{"w": "15", "r": "10", "d": 1}, {"w": "15", "r": "8", "d": 1}]}], "b21": [{"date": "2026-08-03", "sets": [{"w": "95", "r": "8", "d": 1}, {"w": "95", "r": "8", "d": 1}]}], "b22": [{"date": "2026-08-03", "sets": [{"w": "0", "r": "8", "d": 1}, {"w": "0", "r": "9", "d": 1}]}], "b23": [{"date": "2026-08-03", "sets": [{"w": "", "r": "8", "d": 1}, {"w": "", "r": "8", "d": 1}]}], "b24": [{"date": "2026-08-03", "sets": [{"w": "35", "r": "5", "d": 1}]}], "b27": [{"date": "2026-08-03", "sets": [{"w": "", "r": "8", "d": 1}]}], "a18": [{"date": "2026-08-07", "sets": [{"w": "0", "r": "21", "d": 1}, {"w": "0", "r": "21", "d": 1}]}], "a19": [{"date": "2026-08-07", "sets": [{"w": "10", "r": "8", "d": 1}, {"w": "10", "r": "12", "d": 1}]}]}, KEY = 'workouts.v1';
-var DISP = {A1:'U1', A2:'L1', B1:'U2', B2:'L2', R1:'A1', R2:'A2'};
+var DISP = {A1:'U1', A2:'L1', B1:'U2', B2:'L2', R1:'A1', R2:'A2', AR:'Arms'};
 function disp(c){ return DISP[c] || c; }
 var tabs = [].slice.call(document.querySelectorAll('[role=tab]'));
 var state = {cur:{}, hist:{}};
@@ -2262,7 +2264,9 @@ function updNext(){
   var el = document.getElementById('nextup'); if(!el) return;
   var code = curSession();
   if(code === 'WK'){ el.hidden = true; return; }
-  var exs = [].slice.call(document.querySelectorAll('#s-' + code + ' .ex'));
+  var exs = [].slice.call(document.querySelectorAll('#s-' + code + ' .ex')).filter(function(e){
+    return !e.classList.contains('armhide');
+  });
   var next = null, nextIdx = -1, lastDoneIdx = -1, i;
   for(i = 0; i < exs.length; i++){
     if(exDone(exs[i])) lastDoneIdx = i;
@@ -2321,8 +2325,10 @@ function renderPrelist(pane){
     pl.className = 'prelist';
     pane.insertBefore(pl, pane.querySelector('.ex'));
   }
-  var names = [].slice.call(pane.querySelectorAll('.ex .nm')).map(function(n){
-    return n.textContent.replace(/\s+/g, ' ').trim();
+  var names = [].slice.call(pane.querySelectorAll('.ex')).filter(function(e){
+    return !e.classList.contains('armhide');
+  }).map(function(e){
+    return e.querySelector('.nm').textContent.replace(/\s+/g, ' ').trim();
   });
   pl.innerHTML = '<summary>Today · ' + names.length + ' movements' +
     '<svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
@@ -2594,21 +2600,24 @@ function armsIds(rc){
   return list.filter(function(id){ return id !== 'a17' && id !== 'b17'; });
 }
 function armParent(rc){ return rc === 'R1' ? 'A1' : 'B1'; }
-// place every arms exercise: home is its R pane, unless today's toggle has
-// folded it into the parent session
+// one merged Arms pane (Josh's 9/2 refinement): it renders whatever is
+// PENDING — one block, the other, or both as a single full arms day — and
+// everything when nothing is pending (voluntary runs always allowed). A
+// done-this-cycle block is hidden, not removed; "show anyway" reveals it.
+var armShowAll = false;
 function applyArms(){
+  var pane = document.getElementById('s-AR');
+  if(!pane) return;
+  // return anything from a previous config back to its prefix pane first
+  [].slice.call(pane.querySelectorAll('.ex')).forEach(function(el){
+    if(armsIds('R1').indexOf(el.dataset.ex) < 0 && armsIds('R2').indexOf(el.dataset.ex) < 0){
+      var pp = document.getElementById('s-' + el.dataset.ex.slice(0, 2).toUpperCase());
+      if(pp) pp.appendChild(el);
+    }
+  });
   ['R1', 'R2'].forEach(function(rc){
-    var home = document.getElementById('s-' + rc);
-    if(!home) return;
-    // return anything from a previous config back to its prefix pane first
-    [].slice.call(home.querySelectorAll('.ex')).forEach(function(el){
-      if(armsIds(rc).indexOf(el.dataset.ex) < 0){
-        var pp = document.getElementById('s-' + el.dataset.ex.slice(0, 2).toUpperCase());
-        if(pp) pp.appendChild(el);
-      }
-    });
     var folded = state.armin && state.armin[rc] === today();
-    var dest = folded ? document.getElementById('s-' + armParent(rc)) : home;
+    var dest = folded ? document.getElementById('s-' + armParent(rc)) : pane;
     armsIds(rc).forEach(function(id){
       var el = exEl(id);
       if(el && el.closest('.pane') !== dest) dest.appendChild(el);
@@ -2616,6 +2625,71 @@ function applyArms(){
     var tog = document.querySelector('#s-' + armParent(rc) + ' .armtog input');
     if(tog) tog.checked = !!folded;
   });
+  renderArmsPane();
+}
+// decide which blocks the Arms pane shows and in what order
+function renderArmsPane(){
+  var pane = document.getElementById('s-AR');
+  if(!pane) return;
+  var inPane = function(rc){
+    return armsIds(rc).filter(function(id){
+      var el = exEl(id);
+      return el && el.closest('.pane') === pane;
+    });
+  };
+  var r1 = inPane('R1'), r2 = inPane('R2');
+  var p1 = armPending('R1'), p2 = armPending('R2');
+  var nonePending = !p1 && !p2;
+  var show1 = p1 || nonePending || armShowAll;
+  var show2 = p2 || nonePending || armShowAll;
+  var shown = [], hidden = [];
+  if(show1 && show2 && r1.length && r2.length){
+    // both blocks in one day: alternate biceps and triceps work instead of
+    // clustering four consecutive curls — spreads the elbow load
+    // (coach safeguard, 9/2)
+    var all = r1.concat(r2);
+    var tri = all.filter(function(id){ return ((META[id] || {}).mus || []).indexOf('triceps') >= 0; });
+    var bi = all.filter(function(id){ return tri.indexOf(id) < 0; });
+    while(bi.length || tri.length){
+      if(bi.length) shown.push(bi.shift());
+      if(tri.length) shown.push(tri.shift());
+    }
+  } else {
+    if(show1) shown = shown.concat(r1); else hidden = hidden.concat(r1);
+    if(show2) shown = shown.concat(r2); else hidden = hidden.concat(r2);
+  }
+  shown.forEach(function(id){
+    var el = exEl(id);
+    el.classList.remove('armhide');
+    pane.appendChild(el);
+  });
+  hidden.forEach(function(id){
+    var el = exEl(id);
+    el.classList.add('armhide');
+    pane.appendChild(el);
+  });
+  var note = document.getElementById('armnote');
+  if(note){
+    if(p1 && p2 && shown.length){
+      note.innerHTML = 'both blocks pending · ' + shown.length +
+        ' movements today — fine to split across two days if the elbow is talking';
+      note.hidden = false;
+    } else if(hidden.length && !armShowAll){
+      var doneBlocks = [];
+      if(!show1 && r1.length) doneBlocks.push(disp('R1'));
+      if(!show2 && r2.length) doneBlocks.push(disp('R2'));
+      note.innerHTML = doneBlocks.join(' + ') + ' not due right now · <u id="armshow">show anyway</u>';
+      note.hidden = false;
+      var link = document.getElementById('armshow');
+      if(link) link.addEventListener('click', function(){
+        armShowAll = true;
+        renderArmsPane();
+        renumberPanes();
+      });
+    } else {
+      note.hidden = true;
+    }
+  }
 }
 function foldArms(rc, on){
   state.armin = state.armin || {};
@@ -2828,15 +2902,19 @@ function applyContent(c){
 // badges renumber on every apply and every arms fold — adds, removes and
 // moves change them even when _order is untouched
 function renumberPanes(){
-  ['A1', 'A2', 'B1', 'B2', 'R1', 'R2'].forEach(function(code){
+  ['A1', 'A2', 'B1', 'B2', 'AR'].forEach(function(code){
     var pane = document.getElementById('s-' + code);
     if(!pane) return;
-    [].slice.call(pane.querySelectorAll('.ex .n')).forEach(function(nEl, i){
-      nEl.textContent = i + 1;
+    var vis = [].slice.call(pane.querySelectorAll('.ex')).filter(function(e){
+      return !e.classList.contains('armhide');
+    });
+    vis.forEach(function(e, i){
+      var nEl = e.querySelector('.n');
+      if(nEl) nEl.textContent = i + 1;
     });
     var hd = pane.querySelector('.pane-hd');
     if(hd && hd.firstChild && hd.firstChild.nodeType === 3){
-      hd.firstChild.nodeValue = pane.querySelectorAll('.ex').length + ' movements \u00b7 run in order';
+      hd.firstChild.nodeValue = vis.length + ' movements \u00b7 run in order';
     }
   });
 }
@@ -2927,11 +3005,13 @@ function renderRot(){
   // a factual mention and a quiet tab dot \u2014 no streaks, no red, no nagging
   var pends = [];
   ['R1', 'R2'].forEach(function(rc){
-    var p = armPending(rc);
-    var t = document.getElementById('t-' + rc);
-    if(t) t.classList.toggle('due', p);
-    if(p) pends.push(disp(rc));
+    if(armPending(rc)) pends.push(disp(rc));
   });
+  var tAr = document.getElementById('t-AR');
+  if(tAr) tAr.classList.toggle('due', pends.length > 0);
+  // pending state changed with the latest bank — refilter the Arms pane
+  renderArmsPane();
+  renumberPanes();
   var best = lastSession();
   if(!best){ el.textContent = 'First session: ' + disp('A1'); return; }
   el.innerHTML = 'Last <b>' + disp(best.code) + '</b> ' + best.date.slice(5).replace('-', '/') +

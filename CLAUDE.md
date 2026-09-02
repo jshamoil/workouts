@@ -78,16 +78,21 @@ Exercises (`tblmBTkSo88QCDDIc`, has `App ID` = a11…b27, do not edit), Daily, E
   refreshed network-first each launch; `sw.js` never caches it. New ids need a matching
   Airtable Exercises record (`App ID` = the id) so webhook syncs link. Still build-only:
   new session types beyond the four, webhook/hosting changes.
-- **Flexible arms days (9/2, Josh's design)**: the U1/U2 arm work lives in its own
-  A1/A2 sessions (internal codes R1/R2, display A1/A2; ids default a18/a19/a16 and
-  b15/b19/b18, coach-tunable via `_arms`). An "Include arms today" toggle on U1/U2
-  folds the block back in for the day (`state.armin`, per-day, works pre-start or
-  mid-session); history keys on exercise ids so progression never forks on where the
-  work ran. Pending = parent session banked more recently than its arm ids → quiet
-  amber dot on the A-tab + "A1 pending" on the rotline, never nagging; standalone runs
-  always allowed. R codes never steer the rotation pointer. Wrist extensors (a17/b17)
-  are hard-excluded from arms blocks — rehab needs frequency. Airtable
-  Workouts.Session carries A1/A2 options (seeded 9/2 via typecast records).
+- **Flexible arms days (9/2, Josh's design + same-day merge refinement)**: the U1/U2
+  arm work lives in blocks A1/A2 (internal R1/R2; ids default a18/a19/a16 and
+  b15/b19/b18, coach-tunable via `_arms`) shown in ONE merged Arms tab (internal
+  session code AR, banks as Session "Arms") that renders whatever is PENDING — one
+  block, the other, or both interleaved bi/tri as a single arms day (elbow-load
+  spread, coach safeguard) — and everything when nothing is pending; a not-due block
+  hides behind a "show anyway" link, so voluntary runs are always possible. An
+  "Include arms today" toggle on U1/U2 folds a block into its parent for the day
+  (`state.armin`, per-day, works pre-start or mid-session); history keys on exercise
+  ids so progression never forks on where the work ran. Pending = parent banked more
+  recently than its arm ids → quiet amber tab dot + "A1 pending" on the rotline, never
+  nagging. AR never steers the rotation pointer. Wrist extensors (a17/b17) are
+  hard-excluded from arms blocks — rehab needs frequency. renderArmsPane refilters
+  from renderRot after every bank. Airtable Workouts.Session carries an "Arms" option
+  (A1/A2 options exist but are unused, 9/2).
 - Dynamic-card architecture (23.a): `buildExCard(id, o)` generates cards matching the
   baked selector contract; bindings are factored into `bindHd`/`bindRows`/`bindEx`/
   `injectSetg` so generated and rebuilt DOM gets wired identically to parsed DOM —
