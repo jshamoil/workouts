@@ -24,7 +24,12 @@
   "b16": {
     "setup": "Anchors at height 21 (confirmed 8/14). Step back until there is tension before rep one.",
     "note": "Well-suited to the Ancore: resistance rises as the cable extends, which peaks the load right at the squeeze - exactly where rear delts want it. No distance adjustment needed.",
-    "sr": "3 × 12–15  ·  coach: 12.5 × 15"
+    "next": {
+      "w": 15,
+      "r": 15,
+      "asof": "2026-09-04",
+      "why": "hold — big jump already"
+    }
   },
   "a17": {
     "sr": "2 × 15 @ 5 lb",
@@ -56,16 +61,30 @@
   "a14": {
     "setup": "Ancore anchors at chest height. STEP WELL FORWARD - far enough that the cables are already under real tension with your arms open wide, before rep one.",
     "note": "DISTANCE MATTERS ON THIS ONE (8/16): Ancore resistance RISES as the cable extends, so the stretch position - arms wide, where the chest actually grows - is where tension is lowest. Standing farther from the units restores load in the stretch. If the wide position feels loose, you are standing too close, regardless of the number on the plates.",
-    "sr": "3 × 10–15  ·  coach: 20 × 14"
+    "next": {
+      "w": 20,
+      "r": 14,
+      "asof": "2026-09-04",
+      "why": "same standing distance as last time"
+    }
   },
   "a19": {
     "setup": "One Ancore at HIP HEIGHT behind you. Face away, working arm trailing behind the body, palm forward, one arm at a time. STEP FORWARD until the cable is tight with the arm hanging back - tension must exist at the bottom.",
     "note": "This exercise exists to load the biceps long head in the STRETCH (arm behind the body). Ancore tension rises as the cable extends, which works against that - so the step-forward distance is doing the work the weight number cannot. Set up so the stretched bottom position already feels loaded. Numbers are actual pounds. Stop 15-20 degrees short of full extension.",
-    "sr": "2 × 10–12  ·  coach: 10 × 10"
+    "next": {
+      "w": 10,
+      "r": 10,
+      "asof": "2026-09-04",
+      "why": "rebuilding at the new distance"
+    }
   },
   "b18": {
     "note": "Well-suited to the Ancore: load peaks at lockout, where the triceps are shortest - the curve matches the exercise. Stop short of hard lockout for the elbow.",
-    "sr": "2 × 10–12  ·  coach: 10 × 12"
+    "next": {
+      "w": 10,
+      "r": 12,
+      "asof": "2026-09-04"
+    }
   },
   "a28": {
     "name": "Pallof Press  (anti-rotation)",
@@ -172,42 +191,96 @@
     "meta": {
       "inc": 5
     },
-    "sr": "2 × 21  ·  coach: 35 (bare bar), hold"
+    "next": {
+      "w": 35,
+      "r": 21,
+      "asof": "2026-09-04",
+      "why": "bare bar, hold"
+    }
   },
   "a21": {
     "equipment": "Barbell in the rack — log TOTAL bar weight, not per side. Bar is 45 lb. Current 65 = bar + 10 per side."
   },
   "a11": {
-    "sr": "3 × 8–12  ·  coach: 45 × 10"
+    "next": {
+      "w": 45,
+      "r": 10,
+      "asof": "2026-09-04",
+      "why": "hold 45, climb the range — elbow call, not a plateau"
+    }
   },
   "a12": {
-    "sr": "3 × 8–12  ·  coach: 40 × 12"
+    "next": {
+      "w": 40,
+      "r": 12,
+      "asof": "2026-09-04",
+      "why": "top the range before 45s"
+    }
   },
   "a13": {
-    "sr": "3 × 8–12  ·  coach: 85 × 11"
+    "next": {
+      "w": 85,
+      "r": 11,
+      "asof": "2026-09-04"
+    }
   },
   "a15": {
-    "sr": "3 × 12–15  ·  coach: 10 × 13"
+    "next": {
+      "w": 10,
+      "r": 13,
+      "asof": "2026-09-04"
+    }
   },
   "a16": {
-    "sr": "3 × 12–15  ·  coach: 25 × 15"
+    "next": {
+      "w": 25,
+      "r": 15,
+      "asof": "2026-09-04"
+    }
   },
   "b11": {
-    "sr": "3 × 8–12  ·  coach: build to 95 × 10"
+    "next": {
+      "w": 95,
+      "r": 10,
+      "asof": "2026-09-04",
+      "why": "95 is your working weight now, not a peak"
+    }
   },
   "b12": {
-    "sr": "3 × 10–12  ·  coach: 30/hand"
+    "next": {
+      "w": 35,
+      "r": 10,
+      "asof": "2026-09-04",
+      "why": "you topped the range at 30"
+    }
   },
   "b13": {
-    "sr": "3 × 8–12  ·  coach: ~30 at 67.5°"
+    "next": {
+      "w": 30,
+      "r": 11,
+      "asof": "2026-09-04",
+      "why": "hold 30 — learn the 67.5° angle before adding"
+    }
   },
   "b14": {
-    "sr": "3 × 10–12  ·  coach: 85 × 10"
+    "next": {
+      "w": 85,
+      "r": 10,
+      "asof": "2026-09-04"
+    }
   },
   "b15": {
-    "sr": "3 × 10–12  ·  coach: 20 × 12"
+    "next": {
+      "w": 20,
+      "r": 12,
+      "asof": "2026-09-04"
+    }
   },
   "b19": {
-    "sr": "2 × 10–12  ·  coach: 20 × 10"
+    "next": {
+      "w": 20,
+      "r": 10,
+      "asof": "2026-09-04"
+    }
   }
 }
