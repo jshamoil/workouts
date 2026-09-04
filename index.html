@@ -1430,7 +1430,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-AR" aria-labelledby="t-AR" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p><p class="armnote" id="armnote" hidden></p></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-02.d</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-04.a</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip" id="syncclear" hidden><u>Already confirmed these landed in Airtable? Tap here to clear the queue.</u></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
@@ -2913,6 +2913,29 @@ function applyContent(c){
     listed.concat(rest).forEach(function(e){ pane.appendChild(e); });
   });
   contentArms = c._arms || null;
+  // _bw: coach-pushed body-comp readings (scale → Apple Health → coach →
+  // here), merged into the bodyweight log with the coach's value winning on
+  // a duplicate date — the app itself never collects weight in any form
+  // (permanent ruling, 8/23). Feeds the Goals card, recomp chart, rolling
+  // average and weigh-in reminder without a build.
+  if(Array.isArray(c._bw)){
+    state.bw = state.bw || [];
+    c._bw.forEach(function(rw){
+      if(!rw || !rw.d || rw.w == null) return;
+      var row = [String(rw.d), num(rw.w)];
+      if(rw.bf != null || rw.lean != null){
+        row.push(rw.bf != null ? num(rw.bf) : null);
+        row.push(rw.lean != null ? num(rw.lean) : null);
+      }
+      var hit = -1, bi;
+      for(bi = 0; bi < state.bw.length; bi++){
+        if(state.bw[bi][0] === row[0]){ hit = bi; break; }
+      }
+      if(hit >= 0) state.bw[hit] = row;
+      else state.bw.push(row);
+    });
+    state.bw.sort(function(ab, bb){ return ab[0] < bb[0] ? -1 : 1; });
+  }
   applyArms();
   renumberPanes();
   updateWeighDot();
