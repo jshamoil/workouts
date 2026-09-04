@@ -56,6 +56,15 @@ Exercises (`tblmBTkSo88QCDDIc`, has `App ID` = a11…b27, do not edit), Daily, E
   `state.q` and show in the footer. Re-banks replace a day's records; churn is normal.
   This session's egress proxy blocks `hooks.airtable.com` — live-test via Josh's device
   and verify by reading the base. Coach no longer enters sets manually.
+- **Delivery receipts (9/4)**: Airtable's webhook RESPONSE is unreadable from iOS
+  Safari since ~9/1 (requests deliver; the reply dies in transit), so the automation
+  writes a receipt into `sync.json` in this repo via the GitHub API (fine-grained
+  token lives server-side in the automation script only — never in the client) and
+  the app confirms by reading it back via `api.github.com` (CORS-open, unauthenticated
+  on a public repo; the payload carries a per-send `sid` the receipt must echo). The
+  readable-2xx path stays first-class if Airtable heals. `sw.js` never intercepts
+  api.github.com. NOTE: the backlogged hosting move to a private repo breaks the
+  unauthenticated receipt read — solve that before flipping the repo private.
 - **Program control**: `content.json` in the repo is coach-owned. Per app id: name
   (renames safe — everything keys on ids), sr label, equipment/setup/execute/note copy,
   meta overrides (n/lo/hi/inc/unit/ph/vm/rest/pain/bw/deg/bar/mus/maxw — maxw is a load

@@ -41,6 +41,10 @@ self.addEventListener('fetch', function(e){
   // strings would bloat the cache one entry per launch)
   if(url.pathname.slice(-12) === 'content.json') return;
 
+  // sync receipts must always be live — a cache-first read would confirm
+  // (or miss) deliveries against a stale copy
+  if(url.hostname === 'api.github.com') return;
+
   if(isShell(url)){
     e.respondWith(
       fetch(req).then(function(res){

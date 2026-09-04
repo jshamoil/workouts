@@ -1436,7 +1436,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-AR" aria-labelledby="t-AR" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p><p class="armnote" id="armnote" hidden></p></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-04.b</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-04.c</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip" id="syncclear" hidden><u>Already confirmed these landed in Airtable? Tap here to clear the queue.</u></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
@@ -2216,6 +2216,7 @@ var pumping = false;
 // and burn automation runs on every foreground; user taps always go through
 var lastAutoPump = 0;
 function autoPump(){
+  checkReceipts();  // cheap read; confirms anything delivered while away
   if(Date.now() - lastAutoPump < 600000) return;
   lastAutoPump = Date.now();
   pump();
@@ -2240,6 +2241,9 @@ function pump(){
       new Date().toTimeString().slice(0, 5);
     if(state.q.length > 1) state.q.push(state.q.shift());
     syncStat();
+    // the POST may well have DELIVERED despite the unreadable reply — the
+    // receipt checks will confirm and clear the queue if so
+    scheduleReceiptChecks();
   }
   // trust rule (Josh, 8/14): the app only ever claims "synced" on a CONFIRMED
   // 2xx from the hook. No blind fallbacks — an unconfirmable send stays queued
@@ -2255,10 +2259,54 @@ function pump(){
 }
 function queueSend(p){
   if(!HOOK || !p) return;
+  // per-send id: the automation echoes it into the delivery receipt, so a
+  // receipt can be matched to THIS send and not an earlier bank of the same
+  // workout name
+  p.sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
   state.q = state.q || [];
   state.q.push(p);
   save();
   pump();
+  scheduleReceiptChecks();
+}
+// --- delivery receipts (9/4) ---
+// Airtable's webhook response has been unreadable from iOS Safari since 9/1
+// (requests deliver; the reply dies in transit), so confirmation comes from a
+// second channel that needs no new accounts: after logging a session the
+// automation writes a receipt into sync.json in this repo via the GitHub API
+// (token lives server-side in the automation script, never in this client),
+// and the app reads it back through api.github.com — CORS-open and
+// credential-free for a public repo. Trust rule intact and then some: a
+// receipt proves the automation actually PROCESSED the send (a bare 2xx
+// never did). The readable-2xx path stays first-class if it ever heals.
+var RECEIPT_URL = 'https://api.github.com/repos/jshamoil/workouts/contents/sync.json';
+function checkReceipts(){
+  if(!(state.q && state.q.length)) return;
+  fetch(RECEIPT_URL, {headers: {Accept: 'application/vnd.github.raw+json'}, cache: 'no-store'})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(rec){
+      if(!rec || !(state.q && state.q.length)) return;
+      var before = state.q.length;
+      state.q = state.q.filter(function(p){
+        var rcpt = rec[p.date + ' ' + p.session];
+        return !(rcpt && p.sid && rcpt.sid === p.sid);
+      });
+      if(state.q.length < before){
+        lastSyncErr = '';
+        save();
+        syncStat();
+        if(!state.q.length) toast('Synced to Airtable');
+        else pump();
+      }
+    })
+    .catch(function(){});
+}
+var receiptTimers = [];
+function scheduleReceiptChecks(){
+  receiptTimers.forEach(clearTimeout);
+  receiptTimers = [5000, 20000, 60000].map(function(ms){
+    return setTimeout(checkReceipts, ms);
+  });
 }
 window.addEventListener('online', function(){ autoPump(); });
 // coming back to the app (reopened PWA, unlocked phone) retries promptly —
@@ -3519,6 +3567,7 @@ store.load().then(function(saved){
   });
   if(!HOOK && state.q.length) state.q = []; // parked: drop stale queued payloads
   pump();
+  checkReceipts();
   // absorb any seed sessions this device hasn't seen (e.g. logged elsewhere, baked in later)
   var merged = 0;
   Object.keys(SEED_HIST).forEach(function(id7){
