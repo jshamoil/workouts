@@ -260,7 +260,8 @@
       "r": 10,
       "asof": "2026-09-04",
       "why": "you topped the range at 30"
-    }
+    },
+    "note": "Now the ONLY horizontal row in the program (cable row retired 9/4). Chest-supported so the lower back stays out of it, neutral grip for the elbow. Worth an extra set here if U2 ever feels light: 4 sets rather than 3."
   },
   "b13": {
     "next": {
@@ -271,11 +272,8 @@
     }
   },
   "b14": {
-    "next": {
-      "w": 85,
-      "r": 10,
-      "asof": "2026-09-04"
-    }
+    "removed": true,
+    "note": "RETIRED 9/4 to shorten U2. Redundant with the chest-supported row - two horizontal pulls back to back in the same plane. History kept; can be restored by deleting the removed flag. Last performed 9/2 at 80x12x3."
   },
   "b15": {
     "next": {
