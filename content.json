@@ -168,7 +168,6 @@
       "b22",
       "b23",
       "b24",
-      "b25",
       "b27",
       "b28",
       "b29"
@@ -301,5 +300,9 @@
       "n": 2
     },
     "note": "TWO SETS from 9/4 (was 3) — Nordics are highly fatiguing and quality beats count on eccentrics. Progression unchanged: cap 8 reps, then drop 5° and reset to 5. Hamstrings stay well covered by RDL, leg curl and back extension."
+  },
+  "b25": {
+    "removed": true,
+    "note": "RETIRED 9/4 — redundant with the Bulgarian split squat (same pattern, same muscles, one leg at a time) and never once performed since being added in July. KEPT ON THE SHELF DELIBERATELY: this is the KNEE-FRIENDLY version — front foot flat, shallower flexion, no rear-foot elevation, which is the exact position that flagged the right knee on 8/11. If Bulgarians keep bothering the knee after the lower-platform fix, RESTORE THIS rather than inventing a replacement. Delete the removed flag to bring it back."
   }
 }
