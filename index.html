@@ -295,6 +295,12 @@ tr.xr td{border-top:0 !important;padding:2px 4px 12px}
  border-radius:50%;background:var(--red);color:#fff;font-size:10px;flex:none;padding-left:2px}
 .vid.srch .vi{background:#3A4146}
 .vid:active{background:#20262A}
+.xtra{border-top:1px solid var(--line);margin-top:4px}
+.xtra > summary{display:flex;align-items:center;gap:8px;padding:11px 14px;cursor:pointer;list-style:none;
+ font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel)}
+.xtra > summary::-webkit-details-marker{display:none}
+.xtra > summary .chev{width:16px;height:16px;color:var(--steel);transition:transform .2s;margin-left:auto}
+.xtra[open] > summary .chev{transform:rotate(180deg)}
 .artbox{border-bottom:1px solid var(--line)}
 .artbox summary{display:flex;align-items:center;gap:8px;padding:11px 14px;cursor:pointer;list-style:none;
  font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel)}
@@ -1430,7 +1436,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-AR" aria-labelledby="t-AR" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p><p class="armnote" id="armnote" hidden></p></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-04.a</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-04.b</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip" id="syncclear" hidden><u>Already confirmed these landed in Airtable? Tap here to clear the queue.</u></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
@@ -1884,30 +1890,53 @@ tabs.forEach(function(t, i){
   });
 });
 
+function setOpen(ex, on, scroll){
+  var b = ex.querySelector('.ex-hd'), bd = ex.querySelector('.ex-bd');
+  ex.classList.toggle('open', !!on);
+  if(b) b.setAttribute('aria-expanded', on ? 'true' : 'false');
+  if(bd) bd.hidden = !on;
+  if(on){
+    renderPrev(ex.dataset.ex);
+    if(scroll) requestAnimationFrame(function(){
+      // measure the sticky bar (safe-area inset + next-up strip vary) so the
+      // exercise NAME lands right under it instead of scrolling to the inputs
+      var bar9 = document.querySelector('.bar');
+      var off9 = (bar9 ? bar9.getBoundingClientRect().height : 102) + 8;
+      window.scrollTo({top: ex.getBoundingClientRect().top + window.scrollY - off9, behavior: 'smooth'});
+    });
+  }
+}
 function bindHd(b){
   b.addEventListener('click', function(){
-    var ex = b.parentElement, pane = ex.closest('.pane'), open = ex.classList.contains('open');
-    [].slice.call(pane.querySelectorAll('.ex.open')).forEach(function(o){
-      o.classList.remove('open');
-      o.querySelector('.ex-hd').setAttribute('aria-expanded','false');
-      o.querySelector('.ex-bd').hidden = true;
-    });
-    if(!open){
-      ex.classList.add('open');
-      b.setAttribute('aria-expanded','true');
-      ex.querySelector('.ex-bd').hidden = false;
-      renderPrev(ex.dataset.ex);
-      requestAnimationFrame(function(){
-        // measure the sticky bar (safe-area inset + next-up strip vary) so the
-        // exercise NAME lands right under it instead of scrolling to the inputs
-        var bar9 = document.querySelector('.bar');
-        var off9 = (bar9 ? bar9.getBoundingClientRect().height : 102) + 8;
-        window.scrollTo({top: ex.getBoundingClientRect().top + window.scrollY - off9, behavior: 'smooth'});
-      });
-    }
+    // a manual tap only toggles THIS card — other open cards stay open
+    // (Josh, 9/4); the close-old/open-next choreography belongs to the
+    // auto-advance in the tick handler alone
+    var ex = b.parentElement;
+    setOpen(ex, !ex.classList.contains('open'), true);
   });
 }
 [].slice.call(document.querySelectorAll('.ex-hd')).forEach(bindHd);
+// the long tail of each card — trend, video, diagram, equipment/setup/execute
+// copy, coach note — folds behind one "Setup & info" disclosure so the card
+// ends near the rep rows (Josh, 9/4). The setup-memory box, last-time/target
+// line, log table, volume and the note input stay visible.
+function wrapXtra(ex){
+  var bd = ex.querySelector('.ex-bd');
+  if(!bd || bd.querySelector('.xtra')) return;
+  var d = document.createElement('details');
+  d.className = 'xtra';
+  d.innerHTML = '<summary>Setup &amp; info<svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>';
+  var moved = false;
+  // generated cards have a bare trend button + chart instead of .trendbox
+  var picks = ['.trendbox', '.vid', '.artbox', 'dl', '.note'];
+  if(!bd.querySelector('.trendbox')) picks = ['.trend', '[data-chart]'].concat(picks);
+  picks.forEach(function(sel){
+    var el = bd.querySelector(sel);
+    if(el){ d.appendChild(el); moved = true; }
+  });
+  if(moved) bd.appendChild(d);
+}
+[].slice.call(document.querySelectorAll('.ex')).forEach(wrapXtra);
 
 // row-level listeners live in their own binder so a set-count rebuild can
 // re-attach to a fresh tbody without double-binding anything else
@@ -1965,10 +1994,13 @@ function bindRows(ex){
         for(i9 = 0; i9 < exs9.length; i9++){
           if(exs9[i9] !== ex && !exDone(exs9[i9])){ nxt9 = exs9[i9]; break; }
         }
-        // no next unfinished card: clicking our own header just collapses it,
-        // which is the cue that Finish is all that's left
-        var hd9 = (nxt9 || ex).querySelector('.ex-hd');
-        if(hd9) setTimeout(function(){ hd9.click(); }, 350);
+        // close only the finished card and open the next — cards Josh opened
+        // by hand stay open (manual opens are non-exclusive, 9/4). No next
+        // unfinished card: collapsing this one is the cue Finish is left.
+        setTimeout(function(){
+          setOpen(ex, false);
+          if(nxt9) setOpen(nxt9, true, true);
+        }, 350);
       }
     });
   });
@@ -1976,6 +2008,7 @@ function bindRows(ex){
 function bindEx(ex){
   var id = ex.dataset.ex;
   bindRows(ex);
+  wrapXtra(ex);
   var trendBtn = ex.querySelector('.trend'), chartBox = ex.querySelector('[data-chart]');
   if(trendBtn) trendBtn.addEventListener('click', function(){
     chartBox.hidden = !chartBox.hidden;
@@ -2887,6 +2920,16 @@ function applyContent(c){
     });
     if(typeof o.note === 'string'){
       var np = el.querySelector('.note p');
+      if(!np && o.note){
+        // most baked cards ship without a note div — coach notes on those
+        // were silently dropped until 9/4; create the div on demand
+        var ndNew = document.createElement('div');
+        ndNew.className = 'note';
+        ndNew.innerHTML = '<span class="tag">Note</span><p></p>';
+        var xz = el.querySelector('.xtra');
+        (xz || el.querySelector('.ex-bd') || el).appendChild(ndNew);
+        np = ndNew.querySelector('p');
+      }
       if(np) np.textContent = o.note;
     }
     // generated cards carry an empty note box until the coach fills it
