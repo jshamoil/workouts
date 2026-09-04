@@ -169,7 +169,6 @@
       "b23",
       "b24",
       "b25",
-      "b26",
       "b27",
       "b28",
       "b29"
@@ -292,5 +291,15 @@
       "r": 10,
       "asof": "2026-09-04"
     }
+  },
+  "b26": {
+    "removed": true,
+    "note": "RETIRED 9/4 (Josh’s call) to shorten L2. It was also the one L2 movement feeding the elbow: grip fatigue on loaded extensor tendons is the documented trigger. QL raise still covers lateral core. History kept — restorable by deleting the removed flag."
+  },
+  "b24": {
+    "meta": {
+      "n": 2
+    },
+    "note": "TWO SETS from 9/4 (was 3) — Nordics are highly fatiguing and quality beats count on eccentrics. Progression unchanged: cap 8 reps, then drop 5° and reset to 5. Hamstrings stay well covered by RDL, leg curl and back extension."
   }
 }
