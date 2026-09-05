@@ -242,7 +242,9 @@
       "w": 25,
       "r": 15,
       "asof": "2026-09-04"
-    }
+    },
+    "equipment": "Rack pulley, high · ROTATING V-GRIP (new 9/4)",
+    "note": "NEW ATTACHMENT 9/4 — rotating V-grip replaces the fixed Rogue bar. The swivel lets your wrists find their own angle through the rep instead of being locked pronated, which is the single cheapest elbow upgrade available on this movement. Keep 25 lb for the first session and judge the FEEL, not the number: if the elbow is quieter, that is the attachment doing its job. Elbows stay pinned to your sides; stop just short of hard lockout."
   },
   "b11": {
     "next": {
@@ -304,5 +306,9 @@
   "b25": {
     "removed": true,
     "note": "RETIRED 9/4 — redundant with the Bulgarian split squat (same pattern, same muscles, one leg at a time) and never once performed since being added in July. KEPT ON THE SHELF DELIBERATELY: this is the KNEE-FRIENDLY version — front foot flat, shallower flexion, no rear-foot elevation, which is the exact position that flagged the right knee on 8/11. If Bulgarians keep bothering the knee after the lower-platform fix, RESTORE THIS rather than inventing a replacement. Delete the removed flag to bring it back."
+  },
+  "b21": {
+    "equipment": "Barbell (45 lb) + HIP THRUST PAD (new 9/4) · log TOTAL bar weight",
+    "note": "PAD ADDED 9/4. At 135 the bar on the hips was the limiting factor well before the glutes were, so expect the load to move once the discomfort is gone. IMPORTANT FOR READING THE LOG: a jump next session is the PAD, not a strength change — do not treat it as a new baseline until it holds for two sessions. Chin tucked, ribs down, drive through the heels, squeeze at the top rather than hyperextending the low back."
   }
 }
