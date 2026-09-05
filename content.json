@@ -89,9 +89,10 @@
   "b18": {
     "note": "Well-suited to the Ancore: load peaks at lockout, where the triceps are shortest - the curve matches the exercise. Stop short of hard lockout for the elbow.",
     "next": {
-      "w": 10,
-      "r": 12,
-      "asof": "2026-09-04"
+      "w": 15,
+      "r": 10,
+      "asof": "2026-09-12",
+      "why": "range topped at 10"
     }
   },
   "a28": {
@@ -281,16 +282,18 @@
   },
   "b15": {
     "next": {
-      "w": 20,
-      "r": 12,
-      "asof": "2026-09-04"
+      "w": 25,
+      "r": 10,
+      "asof": "2026-09-12",
+      "why": "earned it — 12x3 at 20. Reps will drop, that is fine"
     }
   },
   "b19": {
     "next": {
       "w": 20,
-      "r": 10,
-      "asof": "2026-09-04"
+      "r": 12,
+      "asof": "2026-09-12",
+      "why": "hold 20 — set 2 was Max at 10. Get 12/12 clean first"
     }
   },
   "b26": {
