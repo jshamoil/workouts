@@ -72,12 +72,12 @@
     }
   },
   "a23": {
-    "note": "DELOAD TO 30 lb, effective next L1 (coach override 8/10 — ignore any suggestion to climb from 35). On 8/10 the honest effort tags read 11/9/9 at Hard/Max/Max — below the rep range at max effort means 35 is premature on this station. Own 12–15 at 30 with a hard squeeze at the top before adding weight. Doubly justified since 8/11: this is the heaviest kneecap loader in the program and the right knee is a managed constraint.",
+    "note": "RIGHT KNEE WATCH. Josh reported knee pressure at 30 lb on 9/8 and said do not add weight — that call stands and outranks the completed rep range. This is the heaviest kneecap loader in the program and the knee is a managed constraint, so it does not climb on rep count alone. Progress with reps and a hard squeeze at the top. If pressure persists at 30, we drop to 25 or cut the exercise — tell me either way.",
     "next": {
-      "w": 35,
-      "r": 10,
+      "w": 30,
+      "r": 13,
       "asof": "2026-09-15",
-      "why": "deload done — 13x3 at 30 earns 35 back"
+      "why": "STAY at 30 — you reported knee pressure 9/8. Reps only"
     }
   },
   "b22": {
