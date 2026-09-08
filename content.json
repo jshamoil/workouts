@@ -60,7 +60,13 @@
     }
   },
   "a23": {
-    "note": "DELOAD TO 30 lb, effective next L1 (coach override 8/10 — ignore any suggestion to climb from 35). On 8/10 the honest effort tags read 11/9/9 at Hard/Max/Max — below the rep range at max effort means 35 is premature on this station. Own 12–15 at 30 with a hard squeeze at the top before adding weight. Doubly justified since 8/11: this is the heaviest kneecap loader in the program and the right knee is a managed constraint."
+    "note": "DELOAD TO 30 lb, effective next L1 (coach override 8/10 — ignore any suggestion to climb from 35). On 8/10 the honest effort tags read 11/9/9 at Hard/Max/Max — below the rep range at max effort means 35 is premature on this station. Own 12–15 at 30 with a hard squeeze at the top before adding weight. Doubly justified since 8/11: this is the heaviest kneecap loader in the program and the right knee is a managed constraint.",
+    "next": {
+      "w": 35,
+      "r": 10,
+      "asof": "2026-09-15",
+      "why": "deload done — 13x3 at 30 earns 35 back"
+    }
   },
   "b22": {
     "setup": "Rear foot on a LOWER platform than before (8/11 knee flag), laces flat / tops of toes down, pad under the foot if the bench edge digs. Long stance, front shin vertical.",
@@ -113,6 +119,12 @@
         "obliques",
         "abs"
       ]
+    },
+    "next": {
+      "w": 25,
+      "r": 12,
+      "asof": "2026-09-15",
+      "why": "hold 25 — set 2 was Hard. Own 12 first"
     }
   },
   "b28": {
@@ -206,7 +218,13 @@
     }
   },
   "a21": {
-    "equipment": "Barbell in the rack — log TOTAL bar weight, not per side. Bar is 45 lb. Current 65 = bar + 10 per side."
+    "equipment": "Barbell in the rack — log TOTAL bar weight, not per side. Bar is 45 lb. Current 65 = bar + 10 per side.",
+    "next": {
+      "w": 80,
+      "r": 8,
+      "asof": "2026-09-15",
+      "why": "build a base at 80 across all 3 — 95 was a big jump"
+    }
   },
   "a11": {
     "next": {
@@ -315,5 +333,21 @@
   "b21": {
     "equipment": "Barbell (45 lb) + HIP THRUST PAD (new 9/4) · log TOTAL bar weight",
     "note": "PAD ADDED 9/4. At 135 the bar on the hips was the limiting factor well before the glutes were, so expect the load to move once the discomfort is gone. IMPORTANT FOR READING THE LOG: a jump next session is the PAD, not a strength change — do not treat it as a new baseline until it holds for two sessions. Chin tucked, ribs down, drive through the heels, squeeze at the top rather than hyperextending the low back."
+  },
+  "a22": {
+    "next": {
+      "w": 60,
+      "r": 8,
+      "asof": "2026-09-15",
+      "why": "10x3 clean at 55"
+    }
+  },
+  "a24": {
+    "next": {
+      "w": 35,
+      "r": 10,
+      "asof": "2026-09-15",
+      "why": "range topped at 30"
+    }
   }
 }
