@@ -104,10 +104,10 @@
     "setup": "One Ancore at HIP HEIGHT behind you. Face away, working arm trailing behind the body, palm forward, one arm at a time. STEP FORWARD until the cable is tight with the arm hanging back - tension must exist at the bottom.",
     "note": "This exercise exists to load the biceps long head in the STRETCH (arm behind the body). Ancore tension rises as the cable extends, which works against that - so the step-forward distance is doing the work the weight number cannot. Set up so the stretched bottom position already feels loaded. Numbers are actual pounds. Stop 15-20 degrees short of full extension.",
     "next": {
-      "w": 10,
-      "r": 10,
-      "asof": "2026-09-04",
-      "why": "rebuilding at the new distance"
+      "w": 15,
+      "r": 12,
+      "asof": "2026-09-16",
+      "why": "15x15 after 10 felt Easy — 15 is the right load"
     },
     "meta": {
       "n": 2
@@ -117,8 +117,8 @@
     "note": "Well-suited to the Ancore: load peaks at lockout, where the triceps are shortest - the curve matches the exercise. Stop short of hard lockout for the elbow.",
     "next": {
       "w": 15,
-      "r": 10,
-      "asof": "2026-09-12",
+      "r": 12,
+      "asof": "2026-09-16",
       "why": "range topped at 10"
     },
     "meta": {
@@ -250,8 +250,8 @@
     "next": {
       "w": 35,
       "r": 21,
-      "asof": "2026-09-04",
-      "why": "bare bar, hold"
+      "asof": "2026-09-16",
+      "why": "hold 35 — set 2 was Max"
     }
   },
   "a21": {
@@ -297,9 +297,10 @@
   },
   "a16": {
     "next": {
-      "w": 25,
-      "r": 15,
-      "asof": "2026-09-04"
+      "w": 30,
+      "r": 12,
+      "asof": "2026-09-16",
+      "why": "range topped at 25 — V-grip is working"
     },
     "equipment": "Rack pulley, high · ROTATING V-GRIP (new 9/4)",
     "note": "NEW ATTACHMENT 9/4 — rotating V-grip replaces the fixed Rogue bar. The swivel lets your wrists find their own angle through the rep instead of being locked pronated, which is the single cheapest elbow upgrade available on this movement. Keep 25 lb for the first session and judge the FEEL, not the number: if the elbow is quieter, that is the attachment doing its job. Elbows stay pinned to your sides; stop just short of hard lockout.",
@@ -343,9 +344,9 @@
   "b15": {
     "next": {
       "w": 25,
-      "r": 10,
-      "asof": "2026-09-12",
-      "why": "earned it — 12x3 at 20. Reps will drop, that is fine"
+      "r": 12,
+      "asof": "2026-09-16",
+      "why": "hold 25 — set 3 was Max. Own 12 first"
     },
     "meta": {
       "n": 3
@@ -355,8 +356,8 @@
     "next": {
       "w": 20,
       "r": 12,
-      "asof": "2026-09-12",
-      "why": "hold 20 — set 2 was Max at 10. Get 12/12 clean first"
+      "asof": "2026-09-16",
+      "why": "hold 20 — second set Max twice running"
     },
     "meta": {
       "n": 2
