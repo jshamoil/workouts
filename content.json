@@ -102,6 +102,9 @@
       "r": 10,
       "asof": "2026-09-04",
       "why": "rebuilding at the new distance"
+    },
+    "meta": {
+      "n": 2
     }
   },
   "b18": {
@@ -111,6 +114,9 @@
       "r": 10,
       "asof": "2026-09-12",
       "why": "range topped at 10"
+    },
+    "meta": {
+      "n": 2
     }
   },
   "a28": {
@@ -230,9 +236,10 @@
   },
   "a18": {
     "equipment": "EZ curl bar — the BARE BAR IS 35 LB. Log 35 when using it empty, then 40 with a 2.5 per side, and so on.",
-    "note": "LOG THE REAL LOAD (corrected 9/1): the bare EZ bar weighs 35 lb, so a bare-bar set is 35, not 5. Earlier sessions logged around 5 and undercounted this exercise badly in volume and e1RM. 21s = 7 bottom half, 7 top half, 7 full — that is 21 reps of continuous elbow tension, so the bar alone is a real set. Add weight only when all 21 are clean. ELBOW: EZ bar is chosen over a straight bar for the angled grip; stop 15–20° short of full extension at the bottom.",
+    "note": "STAYS AT 2 SETS deliberately. Each set is 21 continuous reps under tension on a straight-ish bar - this is the highest elbow-stress movement in the program, and a third set is where trouble would show up first. Bare bar is 35 lb.",
     "meta": {
-      "inc": 5
+      "inc": 5,
+      "n": 2
     },
     "next": {
       "w": 35,
@@ -289,7 +296,10 @@
       "asof": "2026-09-04"
     },
     "equipment": "Rack pulley, high · ROTATING V-GRIP (new 9/4)",
-    "note": "NEW ATTACHMENT 9/4 — rotating V-grip replaces the fixed Rogue bar. The swivel lets your wrists find their own angle through the rep instead of being locked pronated, which is the single cheapest elbow upgrade available on this movement. Keep 25 lb for the first session and judge the FEEL, not the number: if the elbow is quieter, that is the attachment doing its job. Elbows stay pinned to your sides; stop just short of hard lockout."
+    "note": "NEW ATTACHMENT 9/4 — rotating V-grip replaces the fixed Rogue bar. The swivel lets your wrists find their own angle through the rep instead of being locked pronated, which is the single cheapest elbow upgrade available on this movement. Keep 25 lb for the first session and judge the FEEL, not the number: if the elbow is quieter, that is the attachment doing its job. Elbows stay pinned to your sides; stop just short of hard lockout.",
+    "meta": {
+      "n": 3
+    }
   },
   "b11": {
     "next": {
@@ -330,6 +340,9 @@
       "r": 10,
       "asof": "2026-09-12",
       "why": "earned it — 12x3 at 20. Reps will drop, that is fine"
+    },
+    "meta": {
+      "n": 3
     }
   },
   "b19": {
@@ -338,6 +351,9 @@
       "r": 12,
       "asof": "2026-09-12",
       "why": "hold 20 — set 2 was Max at 10. Get 12/12 clean first"
+    },
+    "meta": {
+      "n": 2
     }
   },
   "b26": {
