@@ -47,8 +47,8 @@
     "next": {
       "w": 15,
       "r": 15,
-      "asof": "2026-09-04",
-      "why": "hold — big jump already"
+      "asof": "2026-09-18",
+      "why": "hold — rear delts do not need more load"
     }
   },
   "a17": {
@@ -79,7 +79,7 @@
     "next": {
       "w": 5,
       "r": 15,
-      "asof": "2026-09-20",
+      "asof": "2026-09-18",
       "why": "ceiling — rehab, never past Med"
     }
   },
@@ -321,10 +321,10 @@
   },
   "b11": {
     "next": {
-      "w": 105,
+      "w": 115,
       "r": 7,
-      "asof": "2026-09-16",
-      "why": "actually heavy — 6-8 reps. Drop to 100 if 105 is too much"
+      "asof": "2026-09-18",
+      "why": "105 gave you 10 and 9 — still not heavy. TAG YOUR EFFORT on set 1"
     },
     "meta": {
       "lo": 6,
@@ -335,26 +335,27 @@
   "b12": {
     "next": {
       "w": 35,
-      "r": 10,
-      "asof": "2026-09-04",
-      "why": "you topped the range at 30"
+      "r": 12,
+      "asof": "2026-09-18",
+      "why": "own 12 across before 40"
     },
     "note": ""
   },
   "b13": {
     "next": {
-      "w": 30,
-      "r": 11,
-      "asof": "2026-09-04",
-      "why": "hold 30 — learn the 67.5° angle before adding"
+      "w": 35,
+      "r": 10,
+      "asof": "2026-09-18",
+      "why": "12/10/10 at 30 — range topped"
     }
   },
   "b14": {
     "note": "",
     "next": {
-      "w": 85,
+      "w": 90,
       "r": 10,
-      "asof": "2026-09-04"
+      "asof": "2026-09-18",
+      "why": "12x3 at 85"
     }
   },
   "b15": {
