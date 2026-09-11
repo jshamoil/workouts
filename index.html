@@ -1433,10 +1433,10 @@ footer b{color:var(--ink);font-weight:500}
        <dt>Execute</dt><dd>Bend sideways toward the floor under control, then raise back up to a straight line — stop there, no over-bending past straight. Do the weaker side first, match reps on the stronger side. Hold a plate at your chest once bodyweight is easy.</dd></dl>
    <div class="note"><span class="tag">Note</span><p>This is the lateral trunk work nothing else in the program covers — quadratus lumborum and obliques. Keep it smooth and slow; it is a control exercise, not a max-effort one.</p></div>
  </div>
-</div></section><section role="tabpanel" id="s-AR" aria-labelledby="t-AR" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p><p class="armnote" id="armnote" hidden></p></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div></section></main>
+</div></section><section role="tabpanel" id="s-AR" aria-labelledby="t-AR" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p><p class="armnote" id="armnote" hidden></p></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div><div class="wkcard"><h3>Sync log · last attempts</h3><div id="synclog"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-05.a</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-11.a</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip" id="syncclear" hidden><u>Already confirmed these landed in Airtable? Tap here to clear the queue.</u></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
@@ -1961,7 +1961,10 @@ function bindRows(ex){
   });
   [].slice.call(ex.querySelectorAll('.rpe')).forEach(function(bt){
     bt.addEventListener('click', function(){
-      var order = ['', 'easy', 'med', 'hard', 'max'];
+      // Med removed 9/11 (Josh): untagged now MEANS the load was right, so
+      // Med carried no information. Stored 'med' tags stay valid and still
+      // render; tapping one just cycles it to blank.
+      var order = ['', 'easy', 'hard', 'max'];
       var lbl = {easy: 'Easy', med: 'Med', hard: 'Hard', max: 'MAX'};
       var next = order[(order.indexOf(bt.dataset.v || '') + 1) % order.length];
       bt.dataset.v = next; bt.textContent = lbl[next] || '\u2013';
@@ -2219,27 +2222,51 @@ function autoPump(){
   checkReceipts();  // cheap read; confirms anything delivered while away
   if(Date.now() - lastAutoPump < 600000) return;
   lastAutoPump = Date.now();
-  pump();
+  pump('foreground');
 }
-function pump(){
+// first POSTs sometimes never deliver (9/5, 9/7, 9/11) and a 10-minute
+// throttle made the recovery slow — retry early at 30s / 2m / 5m while the
+// payload is still queued; upsert-by-name keeps the extras harmless
+var retryTimers = [];
+function scheduleRetries(){
+  retryTimers.forEach(clearTimeout);
+  retryTimers = [30000, 120000, 300000].map(function(ms){
+    return setTimeout(function(){ if(state.q && state.q.length) pump('auto ' + Math.round(ms / 1000) + 's'); }, ms);
+  });
+}
+// sync attempt log (coach's 9/11 ask): the last 30 attempts with trigger,
+// outcome and ELAPSED ms — a rejection in tens of ms means the request was
+// blocked before it left the phone (preflight/network); one after seconds
+// means it was sent and the reply died. Evidence instead of guesswork.
+function logSync(sess, why, out, ms){
+  state.synclog = state.synclog || [];
+  state.synclog.push({t: new Date().toISOString(), s: sess, w: why, o: out, ms: ms});
+  while(state.synclog.length > 30) state.synclog.shift();
+}
+function pump(why){
   if(!HOOK || pumping || !(state.q && state.q.length)) { syncStat(); return; }
   pumping = true;
-  var body = JSON.stringify(state.q[0]);
+  var head = state.q[0], body = JSON.stringify(head);
+  var sessName = head.date + ' ' + head.session, t0 = Date.now();
+  why = why || 'retry';
   function sent(){
     pumping = false;
     lastSyncErr = '';
+    logSync(sessName, why, 'ok 2xx', Date.now() - t0);
     state.q.shift(); save(); syncStat();
-    if(state.q.length) pump();
+    if(state.q.length) pump('chain');
     else toast('Synced to Airtable');
   }
   // record WHY the send failed so the footer can say so (diagnosing the 9/1
   // stuck queue), and rotate the queue so one rejected payload can't block
   // the rest — safe because the automation upserts by workout name
-  function fail(why){
+  function fail(reason){
     pumping = false;
-    lastSyncErr = (why || 'network error') + ' at ' +
+    lastSyncErr = (reason || 'network error') + ' at ' +
       new Date().toTimeString().slice(0, 5);
+    logSync(sessName, why, reason || 'network error', Date.now() - t0);
     if(state.q.length > 1) state.q.push(state.q.shift());
+    save();
     syncStat();
     // the POST may well have DELIVERED despite the unreadable reply — the
     // receipt checks will confirm and clear the queue if so
@@ -2266,7 +2293,8 @@ function queueSend(p){
   state.q = state.q || [];
   state.q.push(p);
   save();
-  pump();
+  pump(p.resend ? 'resync' : 'finish');
+  scheduleRetries();
   scheduleReceiptChecks();
 }
 // --- delivery receipts (9/4) ---
@@ -2293,6 +2321,7 @@ function checkReceipts(){
       });
       if(state.q.length < before){
         lastSyncErr = '';
+        logSync('receipt', 'receipt', 'confirmed ' + (before - state.q.length), 0);
         save();
         syncStat();
         if(!state.q.length) toast('Synced to Airtable');
@@ -2318,7 +2347,7 @@ window.addEventListener('pageshow', function(){ autoPump(); });
 document.getElementById('sync').addEventListener('click', function(){
   if(!(state.q && state.q.length)) return;
   toast('Retrying sync…');
-  pump();
+  pump('tap');
 });
 document.getElementById('syncclear').addEventListener('click', function(){
   var n = (state.q || []).length;
@@ -3333,6 +3362,7 @@ document.getElementById('dayd').addEventListener('click', function(e){
   } else {
     var p = payloadFromHist(d, rs, g);
     if(!p){ toast('Nothing to send for ' + disp(rs)); return; }
+    p.resend = 1;
     queueSend(p);
     toast(disp(rs) + ' queued — footer clears when Airtable confirms');
   }
@@ -3482,6 +3512,19 @@ function renderWeek(){
         (lastBc[2] ? lastBc[2] + '% bf' : '') + (lastBc[2] && lastBc[3] ? ' \u00b7 ' : '') +
         (lastBc[3] ? lastBc[3] + ' lb lean' : '') + '</p>' : '');
   }
+  var sl = document.getElementById('synclog');
+  if(sl){
+    var rowsL = (state.synclog || []).slice(-12).reverse();
+    sl.innerHTML = rowsL.length ? '<table class="bw-grid"><thead><tr><th>When</th><th>Session</th><th>Trigger</th><th>Result</th></tr></thead><tbody>' +
+      rowsL.map(function(e){
+        var d = new Date(e.t);
+        var when = String(d.getMonth() + 1) + '/' + d.getDate() + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+        var res = String(e.o) + (e.ms ? ' · ' + (e.ms >= 1000 ? (e.ms / 1000).toFixed(1) + 's' : e.ms + 'ms') : '');
+        return '<tr><td>' + when + '</td><td>' + String(e.s).replace(/^\d{4}-/, '') + '</td><td>' + e.w + '</td><td>' + res.replace(/</g, '&lt;') + '</td></tr>';
+      }).join('') + '</tbody></table>' +
+      '<p class="wk-sub">a failure in tens of ms never left the phone; one after seconds was sent and the reply was lost</p>'
+      : '<p class="wk-sub">no sync attempts recorded yet</p>';
+  }
   var bc = document.getElementById('bwcard');
   if(bc){
     var ws = (state.bw && state.bw.length ? state.bw : BW_LOG).slice()
@@ -3569,10 +3612,10 @@ store.load().then(function(saved){
     state = {cur: saved.cur || {}, hist: saved.hist || {},
              note: saved.note || {}, bw: saved.bw || [], st: saved.st || {},
              q: saved.q || [], setg: saved.setg || {}, sess: saved.sess || {},
-             armin: saved.armin || {}};
+             armin: saved.armin || {}, synclog: saved.synclog || []};
   } else {
     state = {cur: JSON.parse(JSON.stringify(SEED)), hist: JSON.parse(JSON.stringify(SEED_HIST)),
-             note: {}, bw: [], st: {}, q: [], setg: {}, sess: {}, armin: {}};
+             note: {}, bw: [], st: {}, q: [], setg: {}, sess: {}, armin: {}, synclog: []};
   }
   // migration: sheets saved by builds before 2026-08-11.b lack the sw/sr
   // suggestion markers, so their prefilled targets are indistinguishable from
@@ -3586,7 +3629,7 @@ store.load().then(function(saved){
     }
   });
   if(!HOOK && state.q.length) state.q = []; // parked: drop stale queued payloads
-  pump();
+  pump('launch');
   checkReceipts();
   // absorb any seed sessions this device hasn't seen (e.g. logged elsewhere, baked in later)
   var merged = 0;

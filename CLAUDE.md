@@ -38,7 +38,16 @@ muscles, rest targets).
 - **Blank means unrecorded, never zero** (Josh's rule, 2026-08-11). Untouched
   inputs — effort, elbow, energy, weights — are omitted from the log, the webhook
   payload, and Airtable, and no reader (app, automation, either Claude) may infer
-  a value from absence.
+  a value from absence. ONE carve-out from 9/11: an untagged EFFORT now means "the
+  load was right" (coach reads it as med-to-hard) — the Med button is gone
+  (Easy/Hard/Max only), stored `med` tags stay valid and still render, and the UI
+  never shows a default/dimmed Med (Josh declined it). Sessions before 9/11 keep the
+  old meaning: untagged = unrecorded.
+- Sync attempt log (9/11): `state.synclog` (whitelisted) keeps the last 30 attempts
+  {t, s, w=trigger, o=outcome, ms}; rendered in the Log tab. Elapsed ms is the
+  diagnostic: tens of ms = blocked before leaving the phone, seconds = sent and the
+  reply was lost. Retries after a Finish run at 30s/2m/5m (idempotent upserts), then
+  the 10-minute foreground throttle.
 
 ## Airtable (Health base `app8u132HSpchoZ5C`)
 
