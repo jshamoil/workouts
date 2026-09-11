@@ -1436,7 +1436,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-AR" aria-labelledby="t-AR" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p><p class="armnote" id="armnote" hidden></p></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div><div class="wkcard"><h3>Sync log · last attempts</h3><div id="synclog"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-11.a</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-11.b</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip" id="syncclear" hidden><u>Already confirmed these landed in Airtable? Tap here to clear the queue.</u></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
@@ -2244,16 +2244,24 @@ function logSync(sess, why, out, ms){
   while(state.synclog.length > 30) state.synclog.shift();
 }
 function pump(why){
+  why = why || 'retry';
+  if(pumping && state.q && state.q.length && /^(finish|resync|tap)$/.test(why)){
+    // Josh's 9/11 observation: a stale item whose request hangs blocked every
+    // later send behind it. Make that visible in the log; the timeout below
+    // guarantees the block is bounded.
+    logSync(state.q[0].date + ' ' + state.q[0].session, why, 'blocked: previous send still in flight', 0);
+  }
   if(!HOOK || pumping || !(state.q && state.q.length)) { syncStat(); return; }
   pumping = true;
   var head = state.q[0], body = JSON.stringify(head);
   var sessName = head.date + ' ' + head.session, t0 = Date.now();
-  why = why || 'retry';
   function sent(){
     pumping = false;
     lastSyncErr = '';
     logSync(sessName, why, 'ok 2xx', Date.now() - t0);
-    state.q.shift(); save(); syncStat();
+    var di = state.q.indexOf(head);
+    if(di >= 0) state.q.splice(di, 1);
+    save(); syncStat();
     if(state.q.length) pump('chain');
     else toast('Synced to Airtable');
   }
@@ -2265,7 +2273,8 @@ function pump(why){
     lastSyncErr = (reason || 'network error') + ' at ' +
       new Date().toTimeString().slice(0, 5);
     logSync(sessName, why, reason || 'network error', Date.now() - t0);
-    if(state.q.length > 1) state.q.push(state.q.shift());
+    var fi = state.q.indexOf(head);
+    if(fi >= 0 && state.q.length > 1){ state.q.splice(fi, 1); state.q.push(head); }
     save();
     syncStat();
     // the POST may well have DELIVERED despite the unreadable reply — the
@@ -2280,9 +2289,20 @@ function pump(why){
   // see CLAUDE.md), no fallback transports: the 9/1 hunt proved delivery
   // works and only the response is unreadable, so extra transports just
   // double the duplicate automation runs. Dequeue ONLY on a readable 2xx.
-  fetch(HOOK, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: body, mode: 'cors'})
-    .then(function(r){ if(r.ok) sent(); else fail('HTTP ' + r.status); },
-          function(e){ fail(e && e.message ? 'network: ' + String(e.message).slice(0, 40) : 'network error'); });
+  // 20-second cap: a request that never settles must not hold the queue
+  // hostage (the head-of-line block Josh hit) — abort it, log it, move on;
+  // the automation upserts by name so a late-landing duplicate is harmless
+  var ctl = (typeof AbortController === 'function') ? new AbortController() : null;
+  var tmr = ctl ? setTimeout(function(){ ctl.abort(); }, 20000) : null;
+  var opts = {method: 'POST', headers: {'Content-Type': 'application/json'}, body: body, mode: 'cors'};
+  if(ctl) opts.signal = ctl.signal;
+  fetch(HOOK, opts)
+    .then(function(r){ clearTimeout(tmr); if(r.ok) sent(); else fail('HTTP ' + r.status); },
+          function(e){
+            clearTimeout(tmr);
+            if(e && e.name === 'AbortError') fail('timeout 20s (no reply)');
+            else fail(e && e.message ? 'network: ' + String(e.message).slice(0, 40) : 'network error');
+          });
 }
 function queueSend(p){
   if(!HOOK || !p) return;
@@ -2291,7 +2311,9 @@ function queueSend(p){
   // workout name
   p.sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
   state.q = state.q || [];
-  state.q.push(p);
+  // newest first: a fresh session must never queue behind a stale item
+  // that is only waiting on confirmation (9/11)
+  state.q.unshift(p);
   save();
   pump(p.resend ? 'resync' : 'finish');
   scheduleRetries();
