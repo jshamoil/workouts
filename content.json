@@ -281,11 +281,16 @@
   },
   "a13": {
     "next": {
-      "w": 90,
-      "r": 10,
-      "asof": "2026-09-14",
-      "why": "12x3 at Med — 85 is too light now"
-    }
+      "w": 80,
+      "r": 13,
+      "asof": "2026-09-16",
+      "why": "lighter + higher reps — this is the volume day, not the strength day"
+    },
+    "meta": {
+      "lo": 12,
+      "hi": 15
+    },
+    "note": "THE LIGHT PULL. Deliberately separated from the U2 heavy pulldown on 9/9 — they had converged to within 5 lb and become the same exercise twice a week. This one is moderate load for 12–15 reps, on the day you also press three times. It also sits on the day your elbow historically complained (8/4 twinge came from pulldowns after pressing), so keeping load off it here is deliberate."
   },
   "a15": {
     "next": {
@@ -310,11 +315,16 @@
   },
   "b11": {
     "next": {
-      "w": 95,
-      "r": 10,
-      "asof": "2026-09-04",
-      "why": "95 is your working weight now, not a peak"
-    }
+      "w": 105,
+      "r": 7,
+      "asof": "2026-09-16",
+      "why": "actually heavy — 6-8 reps. Drop to 100 if 105 is too much"
+    },
+    "meta": {
+      "lo": 6,
+      "hi": 8
+    },
+    "note": "THE HEAVY PULL — 6–8 reps, and it should be a weight you cannot get 9 of. On 9/2 you did 95x9x3, which is not heavy; hence 105. This is the strength stimulus for vertical pulling. If 105 feels wrong on set 1, take 100 rather than grinding."
   },
   "b12": {
     "next": {
