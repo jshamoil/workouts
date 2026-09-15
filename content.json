@@ -94,7 +94,13 @@
   },
   "b22": {
     "setup": "Rear foot on a LOWER platform than before (8/11 knee flag), laces flat / tops of toes down, pad under the foot if the bench edge digs. Long stance, front shin vertical.",
-    "note": "RIGHT KNEE WATCH: pain during reps with the RIGHT foot as the REAR (elevated) leg, 8/11. Rear-leg pain is deep-flexion pressure — the platform height is the first fix. If it still talks after the lower setup, the slot swaps to lateral lunge or goblet box squat (reverse lunge already occupies b25). Report honestly rather than pushing through."
+    "note": "RIGHT KNEE WATCH: pain during reps with the RIGHT foot as the REAR (elevated) leg, 8/11. Rear-leg pain is deep-flexion pressure — the platform height is the first fix. If it still talks after the lower setup, the slot swaps to lateral lunge or goblet box squat (reverse lunge already occupies b25). Report honestly rather than pushing through.",
+    "next": {
+      "w": 5,
+      "r": 10,
+      "asof": "2026-09-22",
+      "why": "first loaded session went 10 → 8 reps. Rebuild to 10 at 5 lb"
+    }
   },
   "a14": {
     "setup": "Ancore anchors at chest height. STEP WELL FORWARD - far enough that the cables are already under real tension with your arms open wide, before rep one.",
@@ -178,10 +184,10 @@
       ]
     },
     "next": {
-      "w": 10,
+      "w": 15,
       "r": 12,
-      "asof": "2026-09-20",
-      "why": "hold 10 — own the rotation before loading it"
+      "asof": "2026-09-22",
+      "why": "10 was Easy — 15 both sides now"
     }
   },
   "b29": {
@@ -203,9 +209,9 @@
     },
     "next": {
       "w": 30,
-      "r": 12,
-      "asof": "2026-09-20",
-      "why": "own 12-15 at 30 first"
+      "r": 15,
+      "asof": "2026-09-22",
+      "why": "top the range at 30 before adding"
     }
   },
   "_order": {
@@ -398,10 +404,10 @@
     "equipment": "Barbell (45 lb) + HIP THRUST PAD (new 9/4) · log TOTAL bar weight",
     "note": "PAD ADDED 9/4. At 135 the bar on the hips was the limiting factor well before the glutes were, so expect the load to move once the discomfort is gone. IMPORTANT FOR READING THE LOG: a jump next session is the PAD, not a strength change — do not treat it as a new baseline until it holds for two sessions. Chin tucked, ribs down, drive through the heels, squeeze at the top rather than hyperextending the low back.",
     "next": {
-      "w": 135,
-      "r": 12,
-      "asof": "2026-09-20",
-      "why": "hold 135 with the new pad — a jump would be the pad, not you"
+      "w": 145,
+      "r": 10,
+      "asof": "2026-09-22",
+      "why": "12x3 at 135 with the pad — the hips were the limit, not the glutes"
     }
   },
   "a22": {
