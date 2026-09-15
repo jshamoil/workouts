@@ -404,10 +404,10 @@
     "equipment": "Barbell (45 lb) + HIP THRUST PAD (new 9/4) · log TOTAL bar weight",
     "note": "PAD ADDED 9/4. At 135 the bar on the hips was the limiting factor well before the glutes were, so expect the load to move once the discomfort is gone. IMPORTANT FOR READING THE LOG: a jump next session is the PAD, not a strength change — do not treat it as a new baseline until it holds for two sessions. Chin tucked, ribs down, drive through the heels, squeeze at the top rather than hyperextending the low back.",
     "next": {
-      "w": 145,
-      "r": 10,
+      "w": 135,
+      "r": 12,
       "asof": "2026-09-22",
-      "why": "12x3 at 135 with the pad — the hips were the limit, not the glutes"
+      "why": "HOLD 135 — your call 9/15, weight felt good"
     }
   },
   "a22": {
