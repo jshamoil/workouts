@@ -278,9 +278,9 @@
   "a11": {
     "next": {
       "w": 50,
-      "r": 8,
-      "asof": "2026-09-14",
-      "why": "50s — you earned these three sessions ago"
+      "r": 10,
+      "asof": "2026-09-24",
+      "why": "hold 50 — clean 8x3. Climb reps, no new weight while the elbow is talking"
     },
     "meta": {
       "inc": 5
@@ -288,14 +288,15 @@
   },
   "a12": {
     "next": {
-      "w": 45,
-      "r": 8,
-      "asof": "2026-09-14",
-      "why": "45s — range topped at 40"
+      "w": 40,
+      "r": 12,
+      "asof": "2026-09-24",
+      "why": "BACK TO 40 — elbow twinged at 45 on 9/17. Own 12 again before retrying"
     },
     "meta": {
       "inc": 5
-    }
+    },
+    "note": "ELBOW FLAG 9/17: twinge on set 2 at 45 lb, first flag since 8/4. Josh stopped the exercise, which was the right call. Back to 40 and rebuild. CONTEXT THAT MATTERS - flat press went 45->50 and incline went 40->45 in the SAME session; the flat press was clean across 3 sets and the elbow spoke on the incline afterwards. Cumulative pressing load, not this exercise alone. RULE FROM HERE: never raise both presses in the same session. One variable at a time on a managed tendon."
   },
   "a13": {
     "next": {
