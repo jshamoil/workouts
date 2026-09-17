@@ -281,6 +281,9 @@
       "r": 8,
       "asof": "2026-09-14",
       "why": "50s — you earned these three sessions ago"
+    },
+    "meta": {
+      "inc": 5
     }
   },
   "a12": {
@@ -289,6 +292,9 @@
       "r": 8,
       "asof": "2026-09-14",
       "why": "45s — range topped at 40"
+    },
+    "meta": {
+      "inc": 5
     }
   },
   "a13": {
@@ -350,7 +356,10 @@
       "asof": "2026-09-18",
       "why": "own 12 across before 40"
     },
-    "note": ""
+    "note": "",
+    "meta": {
+      "inc": 5
+    }
   },
   "b13": {
     "next": {
@@ -358,6 +367,9 @@
       "r": 10,
       "asof": "2026-09-18",
       "why": "12/10/10 at 30 — range topped"
+    },
+    "meta": {
+      "inc": 5
     }
   },
   "b14": {
@@ -377,7 +389,8 @@
       "why": "hold 25 — set 3 was Max. Own 12 first"
     },
     "meta": {
-      "n": 3
+      "n": 3,
+      "inc": 5
     }
   },
   "b19": {
@@ -388,7 +401,8 @@
       "why": "hold 20 — second set Max twice running"
     },
     "meta": {
-      "n": 2
+      "n": 2,
+      "inc": 5
     }
   },
   "b26": {
