@@ -224,11 +224,11 @@
   },
   "_order": {
     "L1": [
+      "a25",
       "a21",
       "a22",
       "a23",
       "a24",
-      "a25",
       "a28",
       "a26"
     ],
@@ -492,5 +492,8 @@
       "asof": "2026-09-27",
       "why": "match your U2 face pull"
     }
+  },
+  "a25": {
+    "note": "MOVED TO FIRST 9/20. This is two jobs in one slot: the ROCKS are ankle mobility, the RAISES are calf strength. Ankle dorsiflexion is the most common limiter of squat depth, so doing the mobility half before squatting directly improves the squat - that is worth more than the small cost of squatting on slightly pre-fatigued calves at these loads. Do the rocks deliberately through full range before the raises."
   }
 }
