@@ -92,12 +92,12 @@
     "execute": "Let the weight lower your wrist over 3 SECONDS — the slow lowering is the whole exercise. Use your OTHER hand to lift it back. Only the lowering is loaded. 15 reps each direction."
   },
   "a23": {
-    "note": "RIGHT KNEE WATCH. Josh reported knee pressure at 30 lb on 9/8 and said do not add weight — that call stands and outranks the completed rep range. This is the heaviest kneecap loader in the program and the knee is a managed constraint, so it does not climb on rep count alone. Progress with reps and a hard squeeze at the top. If pressure persists at 30, we drop to 25 or cut the exercise — tell me either way.",
+    "note": "RIGHT KNEE WATCH — and effort is now the problem too. On 9/20 all three sets at 30 were tagged MAX with reps falling 13/12/10; on 9/8 the same weight gave 12/12/12 with only the last set Hard. Same load, more effort, worse fatigue curve. Combined with the knee pressure Josh reported at 30 on 9/8, this exercise is not going well. DROPPED TO 25. This is the heaviest patellofemoral loader in the program and the knee is a managed constraint, so it does not climb on rep count alone. If 25 is still Max or the knee still talks, the exercise gets cut — quads are covered by squats and Bulgarians.",
     "next": {
-      "w": 30,
-      "r": 13,
-      "asof": "2026-09-15",
-      "why": "STAY at 30 — you reported knee pressure 9/8. Reps only"
+      "w": 25,
+      "r": 12,
+      "asof": "2026-09-27",
+      "why": "DOWN to 25 — all three sets were Max at 30, and reps fell across them"
     }
   },
   "b22": {
@@ -166,9 +166,9 @@
     },
     "next": {
       "w": 25,
-      "r": 12,
-      "asof": "2026-09-15",
-      "why": "hold 25 — set 2 was Hard. Own 12 first"
+      "r": 15,
+      "asof": "2026-09-27",
+      "why": "12x2 clean — add reps before load"
     }
   },
   "b28": {
@@ -286,10 +286,10 @@
   "a21": {
     "equipment": "Barbell in the rack — log TOTAL bar weight, not per side. Bar is 45 lb. Current 65 = bar + 10 per side.",
     "next": {
-      "w": 75,
+      "w": 80,
       "r": 8,
-      "asof": "2026-09-15",
-      "why": "75 across all 3 — the 95 was a misload, ignore it"
+      "asof": "2026-09-27",
+      "why": "8x3 clean at 75"
     },
     "note": "\n\nNECK: you have documented cervical stenosis (2022 MRI — severe foraminal narrowing at C5-C6 and C6-C7). NEUTRAL NECK — do not look up. Eyes on a spot a few feet ahead on the floor."
   },
@@ -457,19 +457,19 @@
   },
   "a22": {
     "next": {
-      "w": 60,
+      "w": 65,
       "r": 8,
-      "asof": "2026-09-15",
-      "why": "10x3 clean at 55"
+      "asof": "2026-09-27",
+      "why": "8x3 clean at 60"
     },
     "note": "\n\nNECK: you have documented cervical stenosis (2022 MRI — severe foraminal narrowing at C5-C6 and C6-C7). NEUTRAL NECK — do not look up. Let your head follow your spine."
   },
   "a24": {
     "next": {
       "w": 35,
-      "r": 10,
-      "asof": "2026-09-15",
-      "why": "range topped at 30"
+      "r": 12,
+      "asof": "2026-09-27",
+      "why": "10x3 at 35 — climb the range"
     }
   },
   "a1a": {
