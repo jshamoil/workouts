@@ -258,6 +258,15 @@
       "b18",
       "a19",
       "b19"
+    ],
+    "U1": [
+      "a11",
+      "a12",
+      "a13",
+      "a14",
+      "a15",
+      "a1a",
+      "a17"
     ]
   },
   "a18": {
@@ -281,7 +290,8 @@
       "r": 8,
       "asof": "2026-09-15",
       "why": "75 across all 3 — the 95 was a misload, ignore it"
-    }
+    },
+    "note": "\n\nNECK: you have documented cervical stenosis (2022 MRI — severe foraminal narrowing at C5-C6 and C6-C7). NEUTRAL NECK — do not look up. Eyes on a spot a few feet ahead on the floor."
   },
   "a11": {
     "next": {
@@ -317,7 +327,7 @@
       "lo": 12,
       "hi": 15
     },
-    "note": "THE LIGHT PULL. Deliberately separated from the U2 heavy pulldown on 9/9 — they had converged to within 5 lb and become the same exercise twice a week. This one is moderate load for 12–15 reps, on the day you also press three times. It also sits on the day your elbow historically complained (8/4 twinge came from pulldowns after pressing), so keeping load off it here is deliberate."
+    "note": "THE LIGHT PULL. Deliberately separated from the U2 heavy pulldown on 9/9 — they had converged to within 5 lb and become the same exercise twice a week. This one is moderate load for 12–15 reps, on the day you also press three times. It also sits on the day your elbow historically complained (8/4 twinge came from pulldowns after pressing), so keeping load off it here is deliberate.\n\nNECK: you have documented cervical stenosis (2022 MRI — severe foraminal narrowing at C5-C6 and C6-C7). PULL TO THE FRONT ONLY — never behind the neck. Behind-neck pulling closes the foramen and is the worst single thing you could do with this MRI."
   },
   "a15": {
     "next": {
@@ -330,7 +340,8 @@
       "inc": 5,
       "lo": 12,
       "hi": 20
-    }
+    },
+    "note": "\n\nNECK: you have documented cervical stenosis (2022 MRI — severe foraminal narrowing at C5-C6 and C6-C7). STOP AT SHOULDER HEIGHT. Going above it shifts the work to the upper traps, which is the opposite of what a cranky neck wants."
   },
   "a16": {
     "next": {
@@ -356,7 +367,7 @@
       "lo": 6,
       "hi": 8
     },
-    "note": "THE HEAVY PULL — 6–8 reps, and it should be a weight you cannot get 9 of. On 9/2 you did 95x9x3, which is not heavy; hence 105. This is the strength stimulus for vertical pulling. If 105 feels wrong on set 1, take 100 rather than grinding."
+    "note": "THE HEAVY PULL — 6–8 reps, and it should be a weight you cannot get 9 of. On 9/2 you did 95x9x3, which is not heavy; hence 105. This is the strength stimulus for vertical pulling. If 105 feels wrong on set 1, take 100 rather than grinding.\n\nNECK: you have documented cervical stenosis (2022 MRI — severe foraminal narrowing at C5-C6 and C6-C7). PULL TO THE FRONT ONLY — never behind the neck."
   },
   "b12": {
     "next": {
@@ -400,7 +411,8 @@
     "meta": {
       "n": 3,
       "inc": 5
-    }
+    },
+    "note": "\n\nELBOW NERVE WATCH (9/20): the sore spot is the groove between the elbow tip and the inner bump — the cubital tunnel, where the ulnar nerve runs. Deep SUSTAINED elbow flexion provokes it, and the preacher bench holds you there. Do not rest at the bottom between reps; keep moving, and come out of full flexion between sets."
   },
   "b19": {
     "next": {
@@ -430,7 +442,7 @@
   },
   "b21": {
     "equipment": "Barbell (45 lb) + HIP THRUST PAD (new 9/4) · log TOTAL bar weight",
-    "note": "PAD ADDED 9/4. At 135 the bar on the hips was the limiting factor well before the glutes were, so expect the load to move once the discomfort is gone. IMPORTANT FOR READING THE LOG: a jump next session is the PAD, not a strength change — do not treat it as a new baseline until it holds for two sessions. Chin tucked, ribs down, drive through the heels, squeeze at the top rather than hyperextending the low back.",
+    "note": "PAD ADDED 9/4. At 135 the bar on the hips was the limiting factor well before the glutes were, so expect the load to move once the discomfort is gone. IMPORTANT FOR READING THE LOG: a jump next session is the PAD, not a strength change — do not treat it as a new baseline until it holds for two sessions. Chin tucked, ribs down, drive through the heels, squeeze at the top rather than hyperextending the low back.\n\nNECK: you have documented cervical stenosis (2022 MRI — severe foraminal narrowing at C5-C6 and C6-C7). CHIN TUCKED, eyes toward your knees through the whole rep. Do not crane your head up at lockout — that is the position to avoid, and hip thrusts are where people do it most.",
     "next": {
       "w": 135,
       "r": 12,
@@ -444,7 +456,8 @@
       "r": 8,
       "asof": "2026-09-15",
       "why": "10x3 clean at 55"
-    }
+    },
+    "note": "\n\nNECK: you have documented cervical stenosis (2022 MRI — severe foraminal narrowing at C5-C6 and C6-C7). NEUTRAL NECK — do not look up. Let your head follow your spine."
   },
   "a24": {
     "next": {
@@ -452,6 +465,32 @@
       "r": 10,
       "asof": "2026-09-15",
       "why": "range topped at 30"
+    }
+  },
+  "a1a": {
+    "name": "Face Pull / Rear Delt Fly",
+    "sr": "2 × 15",
+    "equipment": "Ancore cables, anchor height 21 · rope or dual handles",
+    "setup": "Anchors at height 21. Step back until there is tension before rep one.",
+    "execute": "Pull toward your face, elbows high and wide, externally rotating so your hands finish beside your ears. Squeeze the rear delts and mid-back at the end. Slow return.",
+    "note": "ADDED 9/20 for the neck and shoulders. This is the single best exercise in the program for cervical and scapular support, and U1 had none — it was only in U2. Builds the posterior shoulder and mid-back that hold your head and shoulders in a better position. Well matched to the Ancore curve: tension peaks at the squeeze, which is where rear delts want it. Same movement as b16; progress them together.",
+    "meta": {
+      "n": 2,
+      "lo": 12,
+      "hi": 15,
+      "inc": 5,
+      "rest": 60,
+      "mus": [
+        "rear delts",
+        "upper back",
+        "traps"
+      ]
+    },
+    "next": {
+      "w": 15,
+      "r": 15,
+      "asof": "2026-09-27",
+      "why": "match your U2 face pull"
     }
   }
 }
