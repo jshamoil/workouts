@@ -134,12 +134,12 @@
     }
   },
   "b18": {
-    "note": "Well-suited to the Ancore: load peaks at lockout, where the triceps are shortest - the curve matches the exercise. Stop short of hard lockout for the elbow.",
+    "note": "WORST EXERCISE IN THE PROGRAM FOR THE CURRENT ELBOW THEORY. Kickback-style movements peak at FULL EXTENSION, which is maximum tension on the triceps insertion at the olecranon — exactly the structure the 2023 MRI flagged. CUT THE LAST 10-15 DEGREES: stop when the arm is nearly straight, never snap it out. If the elbow talks here at all, tell coach and this gets swapped.",
     "next": {
       "w": 15,
       "r": 12,
-      "asof": "2026-09-16",
-      "why": "range topped at 10"
+      "asof": "2026-09-27",
+      "why": "hold 15 — shortened range, elbow watch"
     },
     "meta": {
       "n": 2
@@ -302,7 +302,8 @@
     },
     "meta": {
       "inc": 5
-    }
+    },
+    "note": "\n\nSTOP SHORT OF HARD LOCKOUT (9/20). Working theory is distal TRICEPS TENDINOSIS at the olecranon — documented on the 2023 MRI and never treated. Insertion tension peaks at lockout, and locking out adds almost nothing to growth: the tension is already gone by then. Leave a few degrees in the elbow on every rep."
   },
   "a12": {
     "next": {
@@ -314,7 +315,7 @@
     "meta": {
       "inc": 5
     },
-    "note": "ELBOW FLAG 9/17: twinge on set 2 at 45 lb, first flag since 8/4. Josh stopped the exercise, which was the right call. Back to 40 and rebuild. CONTEXT THAT MATTERS - flat press went 45->50 and incline went 40->45 in the SAME session; the flat press was clean across 3 sets and the elbow spoke on the incline afterwards. Cumulative pressing load, not this exercise alone. RULE FROM HERE: never raise both presses in the same session. One variable at a time on a managed tendon."
+    "note": "ELBOW FLAG 9/17: twinge on set 2 at 45 lb, first flag since 8/4. Josh stopped the exercise, which was the right call. Back to 40 and rebuild. CONTEXT THAT MATTERS - flat press went 45->50 and incline went 40->45 in the SAME session; the flat press was clean across 3 sets and the elbow spoke on the incline afterwards. Cumulative pressing load, not this exercise alone. RULE FROM HERE: never raise both presses in the same session. One variable at a time on a managed tendon.\n\nSTOP SHORT OF HARD LOCKOUT (9/20). Working theory is distal TRICEPS TENDINOSIS at the olecranon — documented on the 2023 MRI and never treated. Insertion tension peaks at lockout, and locking out adds almost nothing to growth: the tension is already gone by then. Leave a few degrees in the elbow on every rep."
   },
   "a13": {
     "next": {
@@ -345,16 +346,19 @@
   },
   "a16": {
     "next": {
-      "w": 30,
+      "w": 25,
       "r": 12,
-      "asof": "2026-09-16",
-      "why": "range topped at 25 — V-grip is working"
+      "asof": "2026-09-27",
+      "why": "dropped from 30 — 3-second eccentrics make the same weight much harder"
     },
     "equipment": "Rack pulley, high · ROTATING V-GRIP (new 9/4)",
-    "note": "NEW ATTACHMENT 9/4 — rotating V-grip replaces the fixed Rogue bar. The swivel lets your wrists find their own angle through the rep instead of being locked pronated, which is the single cheapest elbow upgrade available on this movement. Keep 25 lb for the first session and judge the FEEL, not the number: if the elbow is quieter, that is the attachment doing its job. Elbows stay pinned to your sides; stop just short of hard lockout.",
+    "note": "THIS IS NOW REHAB AS WELL AS TRAINING (9/20). Tendinopathy does not heal by resting — it heals under controlled load, and slow ECCENTRICS are the best-evidenced method. That is why the wrist work is eccentric-only, and it is why the pushdown is the natural place to load the triceps insertion deliberately rather than avoiding it. The rotating V-grip means the wrist is not fighting a fixed position while you do it.\n\nEXPECT IT TO FEEL HARDER at the same weight — dropped 30 -> 25 for the first two sessions. Tendon SORENESS during and after is normal in tendon rehab. SHARP pain is not: stop and tell coach.",
     "meta": {
       "n": 3
-    }
+    },
+    "name": "Triceps Pushdown — 3s eccentric",
+    "sr": "3 × 12–15 · 3 SEC up",
+    "execute": "Press down to just SHORT of hard lockout. Then take a full 3 SECONDS letting it come back up, resisting the whole way. The slow return is the point of this exercise now, not the press."
   },
   "b11": {
     "next": {
@@ -390,7 +394,8 @@
     },
     "meta": {
       "inc": 5
-    }
+    },
+    "note": "\n\nSTOP SHORT OF HARD LOCKOUT (9/20). Working theory is distal TRICEPS TENDINOSIS at the olecranon — documented on the 2023 MRI and never treated. Insertion tension peaks at lockout, and locking out adds almost nothing to growth: the tension is already gone by then. Leave a few degrees in the elbow on every rep."
   },
   "b14": {
     "note": "",
