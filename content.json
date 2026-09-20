@@ -52,8 +52,8 @@
     }
   },
   "a17": {
-    "sr": "2 × 15 @ 5 lb · palm UP",
-    "note": "CHANGED 9/17: this was a wrist EXTENSOR eccentric (palm down) for two months. Josh localised the pain to the INNER elbow — the medial epicondyle, where the wrist FLEXORS and pronators originate. Extensor work was treating the wrong tendon. Palm UP from here.\n\nHARD CEILING 5 LB. Rehab, not training — controlled, sub-maximal, never to failure, never past Med. This is the medicine that keeps the elbow trainable. If 5x15 ever feels genuinely trivial, the next step is 7.5, and only after two clean weeks.\n\nMedial also explains the history better than lateral did: grip comes from the finger flexors, which originate here — so the 8/4 twinge after gripping a pulldown bar, and the long-standing bench-press trigger, both fit. Worth confirming with a physio rather than building further on inference.",
+    "sr": "15 palm-down + 15 palm-up @ 5 lb",
+    "note": "BOTH DIRECTIONS from 9/20, and here is why the target keeps moving. Your 2023 elbow MRI found MILD TENDINOSIS OF THE COMMON EXTENSOR TENDON (lateral) with the COMMON FLEXOR TENDON INTACT — so palm-down was right. But you localise today’s pain to the INNER/POSTERIOR groove, which is not where that tendinosis sits. Rather than keep guessing, do both: 5 lb, 15 reps each way, 3-second lowering.\n\nHARD CEILING 5 LB either direction. Rehab, not training — never to failure, never past Med.\n\nALSO IN THAT MRI AND NEVER TREATED: mild tendinosis of the DISTAL TRICEPS tendon plus posterior subcutaneous edema. The triceps inserts on the olecranon — the elbow tip you pointed to. That may be the better explanation than either wrist tendon group, and it is worth raising with a clinician. The ulnar nerve was explicitly NORMAL in the cubital tunnel in 2023, and there was NO degenerative joint disease.",
     "meta": {
       "lo": 15,
       "hi": 15,
@@ -66,14 +66,14 @@
       "asof": "2026-09-20",
       "why": "ceiling — rehab, never past Med"
     },
-    "name": "Wrist FLEXOR Eccentric",
-    "equipment": "One dumbbell, 5 lb · forearm supported on a bench or your thigh, PALM UP",
-    "setup": "Forearm flat and supported, palm facing UP, wrist just past the edge. Dumbbell in that hand.",
-    "execute": "Let the weight lower your wrist back toward the floor over 3 SECONDS — that slow lowering is the whole exercise. Use your OTHER hand to lift it back to the start. Only the lowering is loaded."
+    "name": "Wrist Eccentrics — both directions",
+    "equipment": "One dumbbell, 5 lb · forearm supported on a bench or your thigh",
+    "setup": "Forearm flat and supported, wrist just past the edge. Set 1 PALM DOWN (extensors). Set 2 PALM UP (flexors).",
+    "execute": "Let the weight lower your wrist over 3 SECONDS — the slow lowering is the whole exercise. Use your OTHER hand to lift it back. Only the lowering is loaded. 15 reps each direction."
   },
   "b17": {
-    "sr": "2 × 15 @ 5 lb · palm UP",
-    "note": "CHANGED 9/17: this was a wrist EXTENSOR eccentric (palm down) for two months. Josh localised the pain to the INNER elbow — the medial epicondyle, where the wrist FLEXORS and pronators originate. Extensor work was treating the wrong tendon. Palm UP from here.\n\nHARD CEILING 5 LB. Rehab, not training — controlled, sub-maximal, never to failure, never past Med. This is the medicine that keeps the elbow trainable. If 5x15 ever feels genuinely trivial, the next step is 7.5, and only after two clean weeks.\n\nMedial also explains the history better than lateral did: grip comes from the finger flexors, which originate here — so the 8/4 twinge after gripping a pulldown bar, and the long-standing bench-press trigger, both fit. Worth confirming with a physio rather than building further on inference.",
+    "sr": "15 palm-down + 15 palm-up @ 5 lb",
+    "note": "BOTH DIRECTIONS from 9/20, and here is why the target keeps moving. Your 2023 elbow MRI found MILD TENDINOSIS OF THE COMMON EXTENSOR TENDON (lateral) with the COMMON FLEXOR TENDON INTACT — so palm-down was right. But you localise today’s pain to the INNER/POSTERIOR groove, which is not where that tendinosis sits. Rather than keep guessing, do both: 5 lb, 15 reps each way, 3-second lowering.\n\nHARD CEILING 5 LB either direction. Rehab, not training — never to failure, never past Med.\n\nALSO IN THAT MRI AND NEVER TREATED: mild tendinosis of the DISTAL TRICEPS tendon plus posterior subcutaneous edema. The triceps inserts on the olecranon — the elbow tip you pointed to. That may be the better explanation than either wrist tendon group, and it is worth raising with a clinician. The ulnar nerve was explicitly NORMAL in the cubital tunnel in 2023, and there was NO degenerative joint disease.",
     "meta": {
       "lo": 15,
       "hi": 15,
@@ -86,10 +86,10 @@
       "asof": "2026-09-18",
       "why": "ceiling — rehab, never past Med"
     },
-    "name": "Wrist FLEXOR Eccentric",
-    "equipment": "One dumbbell, 5 lb · forearm supported on a bench or your thigh, PALM UP",
-    "setup": "Forearm flat and supported, palm facing UP, wrist just past the edge. Dumbbell in that hand.",
-    "execute": "Let the weight lower your wrist back toward the floor over 3 SECONDS — that slow lowering is the whole exercise. Use your OTHER hand to lift it back to the start. Only the lowering is loaded."
+    "name": "Wrist Eccentrics — both directions",
+    "equipment": "One dumbbell, 5 lb · forearm supported on a bench or your thigh",
+    "setup": "Forearm flat and supported, wrist just past the edge. Set 1 PALM DOWN (extensors). Set 2 PALM UP (flexors).",
+    "execute": "Let the weight lower your wrist over 3 SECONDS — the slow lowering is the whole exercise. Use your OTHER hand to lift it back. Only the lowering is loaded. 15 reps each direction."
   },
   "a23": {
     "note": "RIGHT KNEE WATCH. Josh reported knee pressure at 30 lb on 9/8 and said do not add weight — that call stands and outranks the completed rep range. This is the heaviest kneecap loader in the program and the knee is a managed constraint, so it does not climb on rep count alone. Progress with reps and a hard squeeze at the top. If pressure persists at 30, we drop to 25 or cut the exercise — tell me either way.",
