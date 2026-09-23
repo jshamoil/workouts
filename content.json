@@ -53,8 +53,8 @@
     "next": {
       "w": 15,
       "r": 15,
-      "asof": "2026-09-18",
-      "why": "hold — rear delts do not need more load"
+      "asof": "2026-09-30",
+      "why": "hold"
     }
   },
   "a17": {
@@ -369,9 +369,9 @@
   "b11": {
     "next": {
       "w": 115,
-      "r": 7,
-      "asof": "2026-09-18",
-      "why": "105 gave you 10 and 9 — still not heavy. TAG YOUR EFFORT on set 1"
+      "r": 8,
+      "asof": "2026-09-30",
+      "why": "hold 115 — Hard x3 means it is finally heavy. Climb to 8"
     },
     "meta": {
       "lo": 6,
@@ -381,10 +381,10 @@
   },
   "b12": {
     "next": {
-      "w": 35,
-      "r": 12,
-      "asof": "2026-09-18",
-      "why": "own 12 across before 40"
+      "w": 40,
+      "r": 10,
+      "asof": "2026-09-30",
+      "why": "12x3 clean at 35"
     },
     "note": "",
     "meta": {
@@ -394,9 +394,9 @@
   "b13": {
     "next": {
       "w": 35,
-      "r": 10,
-      "asof": "2026-09-18",
-      "why": "12/10/10 at 30 — range topped"
+      "r": 12,
+      "asof": "2026-09-30",
+      "why": "hold 35 — set 1 was Hard. Climb the range"
     },
     "meta": {
       "inc": 5
@@ -407,9 +407,9 @@
     "note": "",
     "next": {
       "w": 90,
-      "r": 10,
-      "asof": "2026-09-18",
-      "why": "12x3 at 85"
+      "r": 12,
+      "asof": "2026-09-30",
+      "why": "climb the range before 95"
     }
   },
   "b15": {
