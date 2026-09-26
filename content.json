@@ -136,10 +136,10 @@
     "setup": "One Ancore at HIP HEIGHT behind you. Face away, working arm trailing behind the body, palm forward, one arm at a time. STEP FORWARD until the cable is tight with the arm hanging back - tension must exist at the bottom.",
     "note": "This exercise exists to load the biceps long head in the STRETCH (arm behind the body). Ancore tension rises as the cable extends, which works against that - so the step-forward distance is doing the work the weight number cannot. Set up so the stretched bottom position already feels loaded. Numbers are actual pounds. Stop 15-20 degrees short of full extension.",
     "next": {
-      "w": 15,
+      "w": 20,
       "r": 12,
-      "asof": "2026-09-16",
-      "why": "15x15 after 10 felt Easy — 15 is the right load"
+      "asof": "2026-10-03",
+      "why": "15x15 topped the range"
     },
     "meta": {
       "n": 2
@@ -150,8 +150,8 @@
     "next": {
       "w": 15,
       "r": 12,
-      "asof": "2026-09-27",
-      "why": "range topped at 10"
+      "asof": "2026-10-03",
+      "why": "hold 15 — triceps side of the elbow was talking today"
     },
     "meta": {
       "n": 2
@@ -291,8 +291,8 @@
     "next": {
       "w": 35,
       "r": 21,
-      "asof": "2026-09-16",
-      "why": "hold 35 — set 2 was Max"
+      "asof": "2026-10-03",
+      "why": "hold 35 — set 2 Max again"
     }
   },
   "a21": {
@@ -360,17 +360,18 @@
     "next": {
       "w": 30,
       "r": 12,
-      "asof": "2026-09-27",
-      "why": "range topped at 25 — V-grip is working"
+      "asof": "2026-10-03",
+      "why": "hold 30 — rebuild reps with elbows further back"
     },
     "equipment": "Rack pulley, high · ROTATING V-GRIP (new 9/4)",
-    "note": "Rotating V-grip (new 9/4) — the swivel lets your wrist find its own angle instead of being locked pronated. Normal tempo; the 3-second eccentric trialled on 9/20 was rolled back the same day when the mechanism turned out to be heavy pressing at depth, not the triceps insertion.",
+    "note": "JOSH’S OWN FIX, 9/26: moving the elbows further back reduced elbow stress on the last set. That is the position from here. It changes the leverage, so expect fewer reps at the same weight at first — set 3 dropped to 7 the day he found it. Rebuild reps at 30 in the new position before adding load. Elbows stay fixed; only the forearms move.",
     "meta": {
       "n": 3
     },
     "name": "Triceps Pushdown",
     "sr": "3 × 12–15",
-    "execute": "Elbows pinned to your sides. Press down, control the return. Do not let the elbows drift forward."
+    "execute": "Elbows pinned to your sides. Press down, control the return. Do not let the elbows drift forward.",
+    "setup": "ELBOWS SET FURTHER BACK (Josh, 9/26) — upper arms slightly behind the torso line rather than straight down at your sides. Rotating V-grip."
   },
   "b11": {
     "next": {
@@ -422,8 +423,8 @@
     "next": {
       "w": 25,
       "r": 12,
-      "asof": "2026-09-16",
-      "why": "hold 25 — set 3 was Max. Own 12 first"
+      "asof": "2026-10-03",
+      "why": "hold 25 — set 1 was Max"
     },
     "meta": {
       "n": 3,
@@ -433,10 +434,10 @@
   },
   "b19": {
     "next": {
-      "w": 20,
-      "r": 12,
-      "asof": "2026-09-16",
-      "why": "hold 20 — second set Max twice running"
+      "w": 25,
+      "r": 10,
+      "asof": "2026-10-03",
+      "why": "12/12 at 20 — finally owned it"
     },
     "meta": {
       "n": 2,
