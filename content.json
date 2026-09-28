@@ -54,13 +54,17 @@
     }
   ],
   "b16": {
-    "setup": "Anchors at height 21 (confirmed 8/14). Step back until there is tension before rep one.",
+    "setup": "ANCHOR HEIGHT 21, BOTH UNITS (confirmed). One Ancore per hand, side by side. Step back until there is tension before rep one. Weight is PER HAND — 15 means 15 on each unit.",
     "note": "Well-suited to the Ancore: resistance rises as the cable extends, which peaks the load right at the squeeze - exactly where rear delts want it. No distance adjustment needed.",
     "next": {
       "w": 15,
       "r": 15,
       "asof": "2026-09-30",
       "why": "hold"
+    },
+    "equipment": "TWO Ancores, one per hand, both at height 21 side by side · single handle each",
+    "meta": {
+      "ph": true
     }
   },
   "a17": {
@@ -488,8 +492,8 @@
   "a1a": {
     "name": "Face Pull / Rear Delt Fly",
     "sr": "2 × 15",
-    "equipment": "Ancore cables, anchor height 21 · rope or dual handles",
-    "setup": "Anchors at height 21. Step back until there is tension before rep one.",
+    "equipment": "TWO Ancores, one per hand, both at height 21 side by side · single handle each",
+    "setup": "ANCHOR HEIGHT 21, BOTH UNITS (confirmed). One Ancore per hand, side by side. Step back until there is tension before rep one. Weight is PER HAND — 15 means 15 on each unit.",
     "execute": "Pull toward your face, elbows high and wide, externally rotating so your hands finish beside your ears. Squeeze the rear delts and mid-back at the end. Slow return.",
     "note": "ADDED 9/20 for the neck and shoulders. This is the single best exercise in the program for cervical and scapular support, and U1 had none — it was only in U2. Builds the posterior shoulder and mid-back that hold your head and shoulders in a better position. Well matched to the Ancore curve: tension peaks at the squeeze, which is where rear delts want it. Same movement as b16; progress them together.",
     "meta": {
@@ -502,7 +506,8 @@
         "rear delts",
         "upper back",
         "traps"
-      ]
+      ],
+      "ph": true
     },
     "next": {
       "w": 15,
