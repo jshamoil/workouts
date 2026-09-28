@@ -131,9 +131,9 @@
     "note": "DISTANCE MATTERS ON THIS ONE (8/16): Ancore resistance RISES as the cable extends, so the stretch position - arms wide, where the chest actually grows - is where tension is lowest. Standing farther from the units restores load in the stretch. If the wide position feels loose, you are standing too close, regardless of the number on the plates.",
     "next": {
       "w": 25,
-      "r": 10,
-      "asof": "2026-09-14",
-      "why": "14x3 clean — first Ancore increase"
+      "r": 12,
+      "asof": "2026-09-29",
+      "why": "hold 25, climb to 12s across"
     }
   },
   "a19": {
@@ -313,8 +313,8 @@
     "next": {
       "w": 50,
       "r": 10,
-      "asof": "2026-09-24",
-      "why": "hold 50 — clean 8x3. Climb reps, no new weight while the elbow is talking"
+      "asof": "2026-09-29",
+      "why": "hold 50 — twinge on set 3 today. All 3 sets at 50, no increase until a clean session"
     },
     "meta": {
       "inc": 5
@@ -325,8 +325,8 @@
     "next": {
       "w": 40,
       "r": 12,
-      "asof": "2026-09-24",
-      "why": "BACK TO 40 — elbow twinged at 45 on 9/17. Own 12 again before retrying"
+      "asof": "2026-09-29",
+      "why": "hold 40 — set 2 Max, set 3 fell to 10. Own 12x3 before 45"
     },
     "meta": {
       "inc": 5
@@ -335,10 +335,10 @@
   },
   "a13": {
     "next": {
-      "w": 80,
-      "r": 13,
-      "asof": "2026-09-16",
-      "why": "lighter + higher reps — this is the volume day, not the strength day"
+      "w": 85,
+      "r": 12,
+      "asof": "2026-09-29",
+      "why": "80x15x3 topped the range — up 5"
     },
     "meta": {
       "lo": 12,
@@ -350,8 +350,8 @@
     "next": {
       "w": 10,
       "r": 16,
-      "asof": "2026-09-20",
-      "why": "hold 10, climb to 15-20 reps — 15 lb is a 50% jump"
+      "asof": "2026-09-29",
+      "why": "hold 10 — last two sets Hard, set 3 fell to 12"
     },
     "meta": {
       "inc": 5,
@@ -512,8 +512,8 @@
     "next": {
       "w": 15,
       "r": 15,
-      "asof": "2026-09-27",
-      "why": "match your U2 face pull"
+      "asof": "2026-09-29",
+      "why": "hold 15/hand — matches U2"
     }
   },
   "a25": {
