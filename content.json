@@ -120,10 +120,10 @@
     "setup": "Rear foot on a LOWER platform than before (8/11 knee flag), laces flat / tops of toes down, pad under the foot if the bench edge digs. Long stance, front shin vertical.",
     "note": "RIGHT KNEE WATCH: pain during reps with the RIGHT foot as the REAR (elevated) leg, 8/11. Rear-leg pain is deep-flexion pressure — the platform height is the first fix. If it still talks after the lower setup, the slot swaps to lateral lunge or goblet box squat (reverse lunge already occupies b25). Report honestly rather than pushing through.",
     "next": {
-      "w": 5,
-      "r": 10,
-      "asof": "2026-09-22",
-      "why": "first loaded session went 10 → 8 reps. Rebuild to 10 at 5 lb"
+      "w": 10,
+      "r": 8,
+      "asof": "2026-09-30",
+      "why": "5x10x3 rebuilt — up to 10s, back to 8 reps"
     }
   },
   "a14": {
@@ -208,10 +208,10 @@
       ]
     },
     "next": {
-      "w": 15,
+      "w": 20,
       "r": 12,
-      "asof": "2026-09-22",
-      "why": "10 was Easy — 15 both sides now"
+      "asof": "2026-09-30",
+      "why": "15 was Easy, you moved to 20 yourself — keep it"
     }
   },
   "b29": {
@@ -232,10 +232,10 @@
       ]
     },
     "next": {
-      "w": 30,
-      "r": 15,
-      "asof": "2026-09-22",
-      "why": "top the range at 30 before adding"
+      "w": 35,
+      "r": 12,
+      "asof": "2026-09-30",
+      "why": "30x15x2 topped the range — up 5"
     }
   },
   "_order": {
@@ -468,8 +468,8 @@
     "next": {
       "w": 135,
       "r": 12,
-      "asof": "2026-09-22",
-      "why": "HOLD 135 — your call 9/15, weight felt good"
+      "asof": "2026-09-30",
+      "why": "HOLD 135 per your call — 12x3 clean twice now; say the word for 145"
     }
   },
   "a22": {
