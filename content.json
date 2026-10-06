@@ -282,6 +282,8 @@
       "b19"
     ],
     "U1": [
+      "a1b",
+      "a1c",
       "a11",
       "a12",
       "a13",
@@ -527,5 +529,67 @@
   },
   "b27": {
     "removed": true
+  },
+  "a1b": {
+    "name": "Barbell Bench Press",
+    "sr": "3 × 8–10",
+    "equipment": "Barbell (45) in the rack · flat bench · safeties set just below chest height",
+    "setup": "Safeties ON. Weight logged is the TOTAL including the 45 lb bar. Warm-up before set 1: bar × 10, 65 × 5, 85 × 3. BACK: lower back close to flat on the bench — NO big arch, no leg drive; feet up on the bench if the back pinches.",
+    "execute": "Grip just outside shoulder width, elbows about 45° from your sides. Lower under control; stop an inch above the chest if the elbow complains. Press without bouncing.",
+    "note": "ADDED 10/6 — temporary stand-in for the flat DB press while the right low back/SI is healing (no lifting 50s off the floor). The DB card is still there; skip it on barbell days.",
+    "meta": {
+      "n": 3,
+      "lo": 8,
+      "hi": 10,
+      "inc": 5,
+      "unit": "reps",
+      "ph": false,
+      "vm": 1,
+      "bar": 45,
+      "pain": 1,
+      "rest": 180,
+      "mus": [
+        "chest",
+        "front delts",
+        "triceps"
+      ]
+    },
+    "next": {
+      "w": 95,
+      "r": 10,
+      "asof": "2026-10-06",
+      "why": "first barbell session — start 95; go 105 if set 1 is easy"
+    }
+  },
+  "a1c": {
+    "name": "Barbell Incline Press",
+    "sr": "3 × 8–10",
+    "equipment": "Barbell (45) in the rack · bench at 30° · safeties set",
+    "setup": "Bench at 30°, safeties ON. Weight logged is the TOTAL including the 45 lb bar. One warm-up set with the bar × 8 first. BACK: stay flat against the pad, no arch.",
+    "execute": "Lower to the upper chest under control, elbows about 45°. Stop an inch short if the elbow complains. Press up and slightly back.",
+    "note": "ADDED 10/6 — temporary stand-in for the incline DB press while the back is healing. Skip the DB card on barbell days.",
+    "meta": {
+      "n": 3,
+      "lo": 8,
+      "hi": 10,
+      "inc": 5,
+      "unit": "reps",
+      "ph": false,
+      "vm": 1,
+      "bar": 45,
+      "pain": 1,
+      "rest": 180,
+      "mus": [
+        "chest",
+        "front delts",
+        "triceps"
+      ]
+    },
+    "next": {
+      "w": 75,
+      "r": 10,
+      "asof": "2026-10-06",
+      "why": "first barbell session — start 75"
+    }
   }
 }
