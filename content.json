@@ -252,7 +252,8 @@
       "a23",
       "a24",
       "a28",
-      "a26"
+      "a26",
+      "a29"
     ],
     "L2": [
       "b21",
@@ -261,7 +262,8 @@
       "b24",
       "b27",
       "b28",
-      "b29"
+      "b29",
+      "b2a"
     ],
     "A1": [
       "a18",
@@ -282,6 +284,7 @@
       "b19"
     ],
     "U1": [
+      "a1d",
       "a1b",
       "a1c",
       "a11",
@@ -291,6 +294,15 @@
       "a15",
       "a1a",
       "a17"
+    ],
+    "U2": [
+      "b1a",
+      "b11",
+      "b12",
+      "b13",
+      "b14",
+      "b16",
+      "b17"
     ]
   },
   "a18": {
@@ -590,6 +602,118 @@
       "r": 10,
       "asof": "2026-10-06",
       "why": "first barbell session — start 75"
+    }
+  },
+  "a1d": {
+    "name": "Triceps Hold (elbow rehab)",
+    "sr": "5 × 30–45 sec",
+    "equipment": "Rack pulley, high · rotating V-grip (same setup as the pushdown)",
+    "setup": "Same position as your pushdown: elbows set slightly back, pinned. Push down until your forearms are LEVEL WITH THE FLOOR (elbows at 90°) and STOP there. Log the weight and the seconds held.",
+    "execute": "Hold still for 30–45 seconds. Effort about 6–7 out of 10. Rest a minute. Five holds. Pain up to 3/10 during is fine; it should be back to normal by next morning — if not, use less weight next time.",
+    "note": "ADDED 10/6 — stage 1 of the triceps tendon rehab (2023 MRI: distal triceps tendinosis). Do it EVERY training day, 4–5 days a week, FIRST on upper days — holds often quiet the tendon before pressing. Skip it on a day the elbow is already flared. Weeks 1–2 holds only; then slow pushdowns replace it.",
+    "meta": {
+      "n": 5,
+      "lo": 30,
+      "hi": 45,
+      "inc": 5,
+      "unit": "sec",
+      "ph": false,
+      "vm": 1,
+      "pain": 1,
+      "rest": 60,
+      "mus": [
+        "triceps"
+      ]
+    },
+    "next": {
+      "w": 25,
+      "r": 30,
+      "asof": "2026-10-06",
+      "why": "start light — 25 for 30 sec; adjust to a 6–7/10 effort"
+    }
+  },
+  "b1a": {
+    "name": "Triceps Hold (elbow rehab)",
+    "sr": "5 × 30–45 sec",
+    "equipment": "Rack pulley, high · rotating V-grip (same setup as the pushdown)",
+    "setup": "Same position as your pushdown: elbows set slightly back, pinned. Push down until your forearms are LEVEL WITH THE FLOOR (elbows at 90°) and STOP there. Log the weight and the seconds held.",
+    "execute": "Hold still for 30–45 seconds. Effort about 6–7 out of 10. Rest a minute. Five holds. Pain up to 3/10 during is fine; it should be back to normal by next morning — if not, use less weight next time.",
+    "note": "ADDED 10/6 — stage 1 of the triceps tendon rehab (2023 MRI: distal triceps tendinosis). Do it EVERY training day, 4–5 days a week, FIRST on upper days — holds often quiet the tendon before pressing. Skip it on a day the elbow is already flared. Weeks 1–2 holds only; then slow pushdowns replace it.",
+    "meta": {
+      "n": 5,
+      "lo": 30,
+      "hi": 45,
+      "inc": 5,
+      "unit": "sec",
+      "ph": false,
+      "vm": 1,
+      "pain": 1,
+      "rest": 60,
+      "mus": [
+        "triceps"
+      ]
+    },
+    "next": {
+      "w": 25,
+      "r": 30,
+      "asof": "2026-10-06",
+      "why": "start light — 25 for 30 sec; adjust to a 6–7/10 effort"
+    }
+  },
+  "a29": {
+    "name": "Triceps Hold (elbow rehab)",
+    "sr": "5 × 30–45 sec",
+    "equipment": "Rack pulley, high · rotating V-grip (same setup as the pushdown)",
+    "setup": "Same position as your pushdown: elbows set slightly back, pinned. Push down until your forearms are LEVEL WITH THE FLOOR (elbows at 90°) and STOP there. Log the weight and the seconds held.",
+    "execute": "Hold still for 30–45 seconds. Effort about 6–7 out of 10. Rest a minute. Five holds. Pain up to 3/10 during is fine; it should be back to normal by next morning — if not, use less weight next time.",
+    "note": "ADDED 10/6 — stage 1 of the triceps tendon rehab (2023 MRI: distal triceps tendinosis). Do it EVERY training day, 4–5 days a week. Skip it on a day the elbow is already flared. Weeks 1–2 holds only; then slow pushdowns replace it.",
+    "meta": {
+      "n": 5,
+      "lo": 30,
+      "hi": 45,
+      "inc": 5,
+      "unit": "sec",
+      "ph": false,
+      "vm": 1,
+      "pain": 1,
+      "rest": 60,
+      "mus": [
+        "triceps"
+      ]
+    },
+    "next": {
+      "w": 25,
+      "r": 30,
+      "asof": "2026-10-06",
+      "why": "start light — 25 for 30 sec; adjust to a 6–7/10 effort"
+    }
+  },
+  "b2a": {
+    "name": "Triceps Hold (elbow rehab)",
+    "sr": "5 × 30–45 sec",
+    "equipment": "Rack pulley, high · rotating V-grip (same setup as the pushdown)",
+    "setup": "Same position as your pushdown: elbows set slightly back, pinned. Push down until your forearms are LEVEL WITH THE FLOOR (elbows at 90°) and STOP there. Log the weight and the seconds held.",
+    "execute": "Hold still for 30–45 seconds. Effort about 6–7 out of 10. Rest a minute. Five holds. Pain up to 3/10 during is fine; it should be back to normal by next morning — if not, use less weight next time.",
+    "note": "ADDED 10/6 — stage 1 of the triceps tendon rehab (2023 MRI: distal triceps tendinosis). Do it EVERY training day, 4–5 days a week. Skip it on a day the elbow is already flared. Weeks 1–2 holds only; then slow pushdowns replace it.",
+    "meta": {
+      "n": 5,
+      "lo": 30,
+      "hi": 45,
+      "inc": 5,
+      "unit": "sec",
+      "ph": false,
+      "vm": 1,
+      "pain": 1,
+      "rest": 60,
+      "mus": [
+        "triceps"
+      ]
+    },
+    "next": {
+      "w": 25,
+      "r": 30,
+      "asof": "2026-10-06",
+      "why": "start light — 25 for 30 sec; adjust to a 6–7/10 effort"
     }
   }
 }
