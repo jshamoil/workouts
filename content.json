@@ -77,8 +77,8 @@
     "next": {
       "w": 15,
       "r": 15,
-      "asof": "2026-10-12",
-      "why": "light return — same as usual"
+      "asof": "2026-10-13",
+      "why": "hold 15/hand"
     },
     "equipment": "TWO Ancores, one per hand, both at height 21 side by side · single handle each",
     "meta": {
@@ -411,10 +411,10 @@
   },
   "b11": {
     "next": {
-      "w": 85,
-      "r": 12,
-      "asof": "2026-10-12",
-      "why": "LIGHT RETURN 10/12 — thighs locked, no lean back"
+      "w": 95,
+      "r": 10,
+      "asof": "2026-10-13",
+      "why": "step back up from the light return (was 115x7 on 9/23)"
     },
     "meta": {
       "lo": 6,
@@ -426,8 +426,8 @@
     "next": {
       "w": 30,
       "r": 12,
-      "asof": "2026-10-12",
-      "why": "LIGHT RETURN 10/12 — chest on pad, DBs from the bench"
+      "asof": "2026-10-13",
+      "why": "own 30 for 12 before going back to 40"
     },
     "note": "",
     "meta": {
@@ -436,10 +436,10 @@
   },
   "b13": {
     "next": {
-      "w": 35,
+      "w": 25,
       "r": 12,
-      "asof": "2026-09-30",
-      "why": "hold 35 — set 1 was Hard. Climb the range"
+      "asof": "2026-10-13",
+      "why": "pressing restart — light, only if the elbow is quiet; holds first"
     },
     "meta": {
       "inc": 5
@@ -449,10 +449,10 @@
   "b14": {
     "note": "",
     "next": {
-      "w": 90,
+      "w": 75,
       "r": 12,
-      "asof": "2026-09-30",
-      "why": "climb the range before 95"
+      "asof": "2026-10-13",
+      "why": "only if the back is fine sitting — torso still, no lean back"
     }
   },
   "b15": {
@@ -639,9 +639,9 @@
     },
     "next": {
       "w": 25,
-      "r": 30,
-      "asof": "2026-10-06",
-      "why": "start light — 25 for 30 sec; adjust to a 6–7/10 effort"
+      "r": 40,
+      "asof": "2026-10-13",
+      "why": "add time first: 40 sec. Tell coach if 25 felt easy"
     }
   },
   "b1a": {
@@ -667,9 +667,9 @@
     },
     "next": {
       "w": 25,
-      "r": 30,
-      "asof": "2026-10-12",
-      "why": "elbow rehab — stop if over 3/10"
+      "r": 40,
+      "asof": "2026-10-13",
+      "why": "add time first: 40 sec. Tell coach if 25 felt easy"
     }
   },
   "a29": {
@@ -695,9 +695,9 @@
     },
     "next": {
       "w": 25,
-      "r": 30,
-      "asof": "2026-10-06",
-      "why": "start light — 25 for 30 sec; adjust to a 6–7/10 effort"
+      "r": 40,
+      "asof": "2026-10-13",
+      "why": "add time first: 40 sec. Tell coach if 25 felt easy"
     }
   },
   "b2a": {
@@ -723,9 +723,9 @@
     },
     "next": {
       "w": 25,
-      "r": 30,
-      "asof": "2026-10-06",
-      "why": "start light — 25 for 30 sec; adjust to a 6–7/10 effort"
+      "r": 40,
+      "asof": "2026-10-13",
+      "why": "add time first: 40 sec. Tell coach if 25 felt easy"
     }
   }
 }
