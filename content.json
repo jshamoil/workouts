@@ -77,8 +77,8 @@
     "next": {
       "w": 15,
       "r": 15,
-      "asof": "2026-09-30",
-      "why": "hold"
+      "asof": "2026-10-12",
+      "why": "light return — same as usual"
     },
     "equipment": "TWO Ancores, one per hand, both at height 21 side by side · single handle each",
     "meta": {
@@ -411,10 +411,10 @@
   },
   "b11": {
     "next": {
-      "w": 115,
-      "r": 8,
-      "asof": "2026-09-30",
-      "why": "hold 115 — Hard x3 means it is finally heavy. Climb to 8"
+      "w": 85,
+      "r": 12,
+      "asof": "2026-10-12",
+      "why": "LIGHT RETURN 10/12 — thighs locked, no lean back"
     },
     "meta": {
       "lo": 6,
@@ -424,10 +424,10 @@
   },
   "b12": {
     "next": {
-      "w": 40,
-      "r": 10,
-      "asof": "2026-09-30",
-      "why": "12x3 clean at 35"
+      "w": 30,
+      "r": 12,
+      "asof": "2026-10-12",
+      "why": "LIGHT RETURN 10/12 — chest on pad, DBs from the bench"
     },
     "note": "",
     "meta": {
@@ -668,8 +668,8 @@
     "next": {
       "w": 25,
       "r": 30,
-      "asof": "2026-10-06",
-      "why": "start light — 25 for 30 sec; adjust to a 6–7/10 effort"
+      "asof": "2026-10-12",
+      "why": "elbow rehab — stop if over 3/10"
     }
   },
   "a29": {
