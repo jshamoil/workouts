@@ -103,8 +103,8 @@
     "next": {
       "w": 5,
       "r": 15,
-      "asof": "2026-09-20",
-      "why": "ceiling — rehab, never past Med"
+      "asof": "2026-10-20",
+      "why": "ceiling — rehab"
     },
     "name": "Wrist Eccentrics — both directions",
     "equipment": "One dumbbell, 5 lb · forearm supported on a bench or your thigh",
@@ -155,9 +155,9 @@
     "note": "DISTANCE MATTERS ON THIS ONE (8/16): Ancore resistance RISES as the cable extends, so the stretch position - arms wide, where the chest actually grows - is where tension is lowest. Standing farther from the units restores load in the stretch. If the wide position feels loose, you are standing too close, regardless of the number on the plates.",
     "next": {
       "w": 25,
-      "r": 12,
-      "asof": "2026-09-29",
-      "why": "hold 25, climb to 12s across"
+      "r": 14,
+      "asof": "2026-10-20",
+      "why": "hold 25, climb reps"
     }
   },
   "a19": {
@@ -373,10 +373,10 @@
   },
   "a13": {
     "next": {
-      "w": 85,
+      "w": 90,
       "r": 12,
-      "asof": "2026-09-29",
-      "why": "80x15x3 topped the range — up 5"
+      "asof": "2026-10-20",
+      "why": "85x15x2 on 10/6 topped the range — up 5"
     },
     "meta": {
       "lo": 12,
@@ -387,9 +387,9 @@
   "a15": {
     "next": {
       "w": 10,
-      "r": 16,
-      "asof": "2026-09-29",
-      "why": "hold 10 — last two sets Hard, set 3 fell to 12"
+      "r": 15,
+      "asof": "2026-10-20",
+      "why": "hold 10"
     },
     "meta": {
       "inc": 5,
@@ -550,8 +550,8 @@
     "next": {
       "w": 15,
       "r": 15,
-      "asof": "2026-09-29",
-      "why": "hold 15/hand — matches U2"
+      "asof": "2026-10-20",
+      "why": "hold 15/hand"
     }
   },
   "a25": {
@@ -585,10 +585,10 @@
       ]
     },
     "next": {
-      "w": 95,
-      "r": 10,
-      "asof": "2026-10-06",
-      "why": "first barbell session — start 95; go 105 if set 1 is easy"
+      "w": 85,
+      "r": 12,
+      "asof": "2026-10-20",
+      "why": "pressing restart below the 95 that felt fine on 10/6; stop if elbow >3/10"
     }
   },
   "a1c": {
@@ -616,10 +616,10 @@
       ]
     },
     "next": {
-      "w": 75,
-      "r": 10,
-      "asof": "2026-10-06",
-      "why": "first barbell session — start 75"
+      "w": 65,
+      "r": 12,
+      "asof": "2026-10-20",
+      "why": "only if flat bench was clean — otherwise skip"
     }
   },
   "a1d": {
@@ -646,8 +646,8 @@
     "next": {
       "w": 25,
       "r": 40,
-      "asof": "2026-10-13",
-      "why": "add time first: 40 sec. Tell coach if 25 felt easy"
+      "asof": "2026-10-20",
+      "why": "elbow rehab first — 40 sec holds"
     }
   },
   "b1a": {
