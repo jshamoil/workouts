@@ -303,8 +303,6 @@
     ],
     "U1": [
       "a1d",
-      "a1b",
-      "a1c",
       "a11",
       "a12",
       "a13",
@@ -349,10 +347,10 @@
   },
   "a11": {
     "next": {
-      "w": 50,
-      "r": 10,
-      "asof": "2026-09-29",
-      "why": "hold 50 — twinge on set 3 today. All 3 sets at 50, no increase until a clean session"
+      "w": 40,
+      "r": 12,
+      "asof": "2026-10-20",
+      "why": "pressing restart — well below 50; stop if elbow >3/10"
     },
     "meta": {
       "inc": 5
@@ -361,10 +359,10 @@
   },
   "a12": {
     "next": {
-      "w": 40,
+      "w": 30,
       "r": 12,
-      "asof": "2026-09-29",
-      "why": "hold 40 — set 2 Max, set 3 fell to 10. Own 12x3 before 45"
+      "asof": "2026-10-20",
+      "why": "only if flat was clean — otherwise skip"
     },
     "meta": {
       "inc": 5
@@ -584,12 +582,7 @@
         "triceps"
       ]
     },
-    "next": {
-      "w": 85,
-      "r": 12,
-      "asof": "2026-10-20",
-      "why": "pressing restart below the 95 that felt fine on 10/6; stop if elbow >3/10"
-    }
+    "removed": true
   },
   "a1c": {
     "name": "Barbell Incline Press",
@@ -615,12 +608,7 @@
         "triceps"
       ]
     },
-    "next": {
-      "w": 65,
-      "r": 12,
-      "asof": "2026-10-20",
-      "why": "only if flat bench was clean — otherwise skip"
-    }
+    "removed": true
   },
   "a1d": {
     "name": "Triceps Hold (elbow rehab)",
