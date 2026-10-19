@@ -155,9 +155,9 @@
     "note": "DISTANCE MATTERS ON THIS ONE (8/16): Ancore resistance RISES as the cable extends, so the stretch position - arms wide, where the chest actually grows - is where tension is lowest. Standing farther from the units restores load in the stretch. If the wide position feels loose, you are standing too close, regardless of the number on the plates.",
     "next": {
       "w": 25,
-      "r": 14,
+      "r": 15,
       "asof": "2026-10-20",
-      "why": "hold 25, climb reps"
+      "why": "25x15 on the last set — all three at 25"
     }
   },
   "a19": {
@@ -347,10 +347,10 @@
   },
   "a11": {
     "next": {
-      "w": 40,
+      "w": 45,
       "r": 12,
       "asof": "2026-10-20",
-      "why": "pressing restart — well below 50; stop if elbow >3/10"
+      "why": "40x12x3 clean on 10/19 — up 5, keep the ramp"
     },
     "meta": {
       "inc": 5
@@ -359,10 +359,10 @@
   },
   "a12": {
     "next": {
-      "w": 30,
+      "w": 35,
       "r": 12,
       "asof": "2026-10-20",
-      "why": "only if flat was clean — otherwise skip"
+      "why": "35x12x2 clean — own 12 on all three"
     },
     "meta": {
       "inc": 5
@@ -633,9 +633,9 @@
     },
     "next": {
       "w": 25,
-      "r": 40,
+      "r": 35,
       "asof": "2026-10-20",
-      "why": "elbow rehab first — 40 sec holds"
+      "why": "4 x 30 sec on 10/19 — build to 5 holds, then add time"
     }
   },
   "b1a": {
