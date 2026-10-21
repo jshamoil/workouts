@@ -165,9 +165,9 @@
     "note": "This exercise exists to load the biceps long head in the STRETCH (arm behind the body). Ancore tension rises as the cable extends, which works against that - so the step-forward distance is doing the work the weight number cannot. Set up so the stretched bottom position already feels loaded. Numbers are actual pounds. Stop 15-20 degrees short of full extension.",
     "next": {
       "w": 20,
-      "r": 12,
-      "asof": "2026-10-03",
-      "why": "15x15 topped the range"
+      "r": 15,
+      "asof": "2026-10-22",
+      "why": "hold 20, climb to 15"
     },
     "meta": {
       "n": 2
@@ -176,10 +176,10 @@
   "b18": {
     "note": "Stop just short of snapping the arm straight. Elbow watch only — no range restriction.",
     "next": {
-      "w": 15,
+      "w": 10,
       "r": 12,
-      "asof": "2026-10-03",
-      "why": "hold 15 — triceps side of the elbow was talking today"
+      "asof": "2026-10-22",
+      "why": "hold 10"
     },
     "meta": {
       "n": 2
@@ -331,8 +331,8 @@
     "next": {
       "w": 35,
       "r": 21,
-      "asof": "2026-10-03",
-      "why": "hold 35 — set 2 Max again"
+      "asof": "2026-10-22",
+      "why": "hold — set 2 Hard, elbow Fine"
     }
   },
   "a21": {
@@ -398,10 +398,10 @@
   },
   "a16": {
     "next": {
-      "w": 30,
+      "w": 25,
       "r": 12,
-      "asof": "2026-10-03",
-      "why": "hold 30 — rebuild reps with elbows further back"
+      "asof": "2026-10-22",
+      "why": "hold 25 — twinged on set 1; do 2-3 triceps holds before the first set"
     },
     "equipment": "Rack pulley, high · ROTATING V-GRIP (new 9/4)",
     "note": "JOSH’S OWN FIX, 9/26: moving the elbows further back reduced elbow stress on the last set. That is the position from here. It changes the leverage, so expect fewer reps at the same weight at first — set 3 dropped to 7 the day he found it. Rebuild reps at 30 in the new position before adding load. Elbows stay fixed; only the forearms move.",
@@ -461,10 +461,10 @@
   },
   "b15": {
     "next": {
-      "w": 25,
-      "r": 12,
-      "asof": "2026-10-03",
-      "why": "hold 25 — set 1 was Max"
+      "w": 30,
+      "r": 10,
+      "asof": "2026-10-22",
+      "why": "25x12 was Easy — up 5"
     },
     "meta": {
       "n": 3,
@@ -474,10 +474,10 @@
   },
   "b19": {
     "next": {
-      "w": 25,
-      "r": 10,
-      "asof": "2026-10-03",
-      "why": "12/12 at 20 — finally owned it"
+      "w": 20,
+      "r": 12,
+      "asof": "2026-10-22",
+      "why": "25 fell to 8 and 6 (Max) — drop to 20, rebuild reps"
     },
     "meta": {
       "n": 2,
