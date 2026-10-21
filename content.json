@@ -284,6 +284,7 @@
       "b2a"
     ],
     "A1": [
+      "a1e",
       "a18",
       "a16",
       "a19"
@@ -294,6 +295,7 @@
       "b19"
     ],
     "Arms": [
+      "a1e",
       "a18",
       "a16",
       "b15",
@@ -721,5 +723,46 @@
       "asof": "2026-10-13",
       "why": "add time first: 40 sec. Tell coach if 25 felt easy"
     }
+  },
+  "a1e": {
+    "name": "Arms Warm-Up — Triceps Holds",
+    "sr": "3 × 30 sec",
+    "equipment": "Rack pulley, high · rotating V-grip (same as pushdown) · 10-lb dumbbells",
+    "setup": "ARMS-DAY WARM-UP, before anything else: (1) 10 arm circles each way + 10 slow wrist circles. (2) One easy set of curls with 10-lb dumbbells × 15. (3) Then the holds on this card: pushdown position, elbows set slightly back, push down to forearms LEVEL (elbows 90°) and hold. Log weight + seconds held.",
+    "execute": "3 holds of 30 sec at about 6–7/10 effort, 30–60 sec rest. Pain up to 3/10 is fine. Then go straight into the session — the tendon is warm before the first loaded set (the first-set twinge on 10/21 pushdowns is what this fixes).",
+    "note": "ADDED 10/21 at Josh's request — arms day had no warm-up. Same hold as the rehab card on U1/U2/L1/L2, just 3 instead of 5.",
+    "meta": {
+      "n": 3,
+      "lo": 30,
+      "hi": 45,
+      "inc": 5,
+      "unit": "sec",
+      "ph": false,
+      "vm": 1,
+      "pain": 1,
+      "rest": 45,
+      "mus": [
+        "triceps"
+      ]
+    },
+    "next": {
+      "w": 25,
+      "r": 30,
+      "asof": "2026-10-22",
+      "why": "warm-up — 25 for 30 sec"
+    }
+  },
+  "_arms": {
+    "A1": [
+      "a1e",
+      "a18",
+      "a19",
+      "a16"
+    ],
+    "A2": [
+      "b15",
+      "b19",
+      "b18"
+    ]
   }
 }
