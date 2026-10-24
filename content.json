@@ -109,8 +109,8 @@
     "next": {
       "w": 5,
       "r": 15,
-      "asof": "2026-10-20",
-      "why": "ceiling — rehab"
+      "asof": "2026-10-25",
+      "why": "skipped the last 3 U1s — do these, they are elbow rehab"
     },
     "name": "Wrist Eccentrics — both directions",
     "equipment": "One dumbbell, 5 lb · forearm supported on a bench or your thigh",
@@ -160,10 +160,10 @@
     "setup": "Ancore anchors at chest height. STEP WELL FORWARD - far enough that the cables are already under real tension with your arms open wide, before rep one.",
     "note": "DISTANCE MATTERS ON THIS ONE (8/16): Ancore resistance RISES as the cable extends, so the stretch position - arms wide, where the chest actually grows - is where tension is lowest. Standing farther from the units restores load in the stretch. If the wide position feels loose, you are standing too close, regardless of the number on the plates.",
     "next": {
-      "w": 25,
-      "r": 15,
-      "asof": "2026-10-20",
-      "why": "25x15 on the last set — all three at 25"
+      "w": 30,
+      "r": 12,
+      "asof": "2026-10-25",
+      "why": "25x15x3 topped — up 5"
     }
   },
   "a19": {
@@ -357,8 +357,8 @@
     "next": {
       "w": 45,
       "r": 12,
-      "asof": "2026-10-20",
-      "why": "40x12x3 clean on 10/19 — up 5, keep the ramp"
+      "asof": "2026-10-25",
+      "why": "hold 45 — set 3 Hard; own it untagged"
     },
     "meta": {
       "inc": 5
@@ -367,10 +367,10 @@
   },
   "a12": {
     "next": {
-      "w": 35,
-      "r": 12,
-      "asof": "2026-10-20",
-      "why": "35x12x2 clean — own 12 on all three"
+      "w": 40,
+      "r": 10,
+      "asof": "2026-10-25",
+      "why": "35x12x3 clean — up 5 (careful: 45 twinged on 9/17)"
     },
     "meta": {
       "inc": 5
@@ -380,9 +380,9 @@
   "a13": {
     "next": {
       "w": 90,
-      "r": 12,
-      "asof": "2026-10-20",
-      "why": "85x15x2 on 10/6 topped the range — up 5"
+      "r": 15,
+      "asof": "2026-10-25",
+      "why": "hold 90, climb to 15"
     },
     "meta": {
       "lo": 12,
@@ -393,9 +393,9 @@
   "a15": {
     "next": {
       "w": 10,
-      "r": 15,
-      "asof": "2026-10-20",
-      "why": "hold 10"
+      "r": 17,
+      "asof": "2026-10-25",
+      "why": "hold 10, climb toward 20"
     },
     "meta": {
       "inc": 5,
@@ -556,7 +556,7 @@
     "next": {
       "w": 15,
       "r": 15,
-      "asof": "2026-10-20",
+      "asof": "2026-10-25",
       "why": "hold 15/hand"
     }
   },
@@ -641,9 +641,9 @@
     },
     "next": {
       "w": 25,
-      "r": 35,
-      "asof": "2026-10-20",
-      "why": "4 x 30 sec on 10/19 — build to 5 holds, then add time"
+      "r": 40,
+      "asof": "2026-10-25",
+      "why": "5 holds done 10/24 — add time: 40 sec"
     }
   },
   "b1a": {
