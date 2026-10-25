@@ -819,8 +819,8 @@
     "next": {
       "w": 25,
       "r": 40,
-      "asof": "2026-10-26",
-      "why": "hold 25 x 40 — then add time to 45"
+      "asof": "2026-10-25",
+      "why": "today's numbers — tick to log"
     }
   },
   "l35": {
@@ -848,8 +848,8 @@
     "next": {
       "w": 0,
       "r": 20,
-      "asof": "2026-10-26",
-      "why": "20 each way"
+      "asof": "2026-10-25",
+      "why": "today's numbers — tick to log"
     }
   },
   "l32": {
@@ -873,6 +873,12 @@
         "quads",
         "glutes"
       ]
+    },
+    "next": {
+      "w": 10,
+      "r": 10,
+      "asof": "2026-10-25",
+      "why": "today: 3 x 10/side — fix the weight if it wasn't 10s"
     }
   },
   "l33": {
@@ -896,6 +902,12 @@
         "quads",
         "glutes"
       ]
+    },
+    "next": {
+      "w": 0,
+      "r": 4,
+      "asof": "2026-10-25",
+      "why": "today: 1 set of 4/side — tick set 1 only"
     }
   },
   "l34": {
@@ -921,9 +933,9 @@
     },
     "next": {
       "w": 0,
-      "r": 30,
-      "asof": "2026-10-26",
-      "why": "25 and 15 on 10/25 — aim 30 each"
+      "r": 25,
+      "asof": "2026-10-25",
+      "why": "today: 25 sec, then change set 2 to 15"
     }
   },
   "l36": {
@@ -946,12 +958,6 @@
       "mus": [
         "quads"
       ]
-    },
-    "next": {
-      "w": 25,
-      "r": 12,
-      "asof": "2026-10-26",
-      "why": "25 — cut it if the knee talks"
     }
   }
 }
