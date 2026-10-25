@@ -818,9 +818,9 @@
     },
     "next": {
       "w": 25,
-      "r": 40,
-      "asof": "2026-10-25",
-      "why": "today's numbers — tick to log"
+      "r": 45,
+      "asof": "2026-10-26",
+      "why": "40 sec x5 clean — up to 45"
     }
   },
   "l35": {
@@ -848,8 +848,8 @@
     "next": {
       "w": 0,
       "r": 20,
-      "asof": "2026-10-25",
-      "why": "today's numbers — tick to log"
+      "asof": "2026-10-26",
+      "why": "20 each way"
     }
   },
   "l32": {
@@ -876,9 +876,9 @@
     },
     "next": {
       "w": 10,
-      "r": 10,
-      "asof": "2026-10-25",
-      "why": "today: 3 x 10/side — fix the weight if it wasn't 10s"
+      "r": 8,
+      "asof": "2026-10-26",
+      "why": "bodyweight 10/side x3 topped the range — add 10s"
     }
   },
   "l33": {
@@ -905,9 +905,9 @@
     },
     "next": {
       "w": 0,
-      "r": 4,
-      "asof": "2026-10-25",
-      "why": "today: 1 set of 4/side — tick set 1 only"
+      "r": 8,
+      "asof": "2026-10-26",
+      "why": "bodyweight, both sets this time"
     }
   },
   "l34": {
@@ -933,9 +933,9 @@
     },
     "next": {
       "w": 0,
-      "r": 25,
-      "asof": "2026-10-25",
-      "why": "today: 25 sec, then change set 2 to 15"
+      "r": 30,
+      "asof": "2026-10-26",
+      "why": "25 and 15 last time — aim 30 each"
     }
   },
   "l36": {
@@ -958,6 +958,12 @@
       "mus": [
         "quads"
       ]
+    },
+    "next": {
+      "w": 25,
+      "r": 12,
+      "asof": "2026-10-26",
+      "why": "optional — skip if the knee talks"
     }
   }
 }
