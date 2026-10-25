@@ -327,6 +327,14 @@
       "b14",
       "b16",
       "b17"
+    ],
+    "L3": [
+      "l31",
+      "l35",
+      "l32",
+      "l33",
+      "l34",
+      "l36"
     ]
   },
   "a18": {
@@ -770,5 +778,180 @@
       "b19",
       "b18"
     ]
+  },
+  "_sessions": [
+    {
+      "code": "L3",
+      "label": "L3",
+      "sub": "Lower",
+      "detail": "Back-safe",
+      "rotation": false,
+      "warmup": [
+        "2–3 min easy marching or walking",
+        "10 slow bodyweight squats to a box or bench",
+        "Then the cards in order — nothing bends, twists, or comes off the floor"
+      ],
+      "warmupMins": 5
+    }
+  ],
+  "l31": {
+    "session": "L3",
+    "shares": "b2a",
+    "name": "Triceps Hold (elbow rehab)",
+    "sr": "5 × 40 sec",
+    "equipment": "Rack pulley, high · rotating V-grip",
+    "setup": "Pushdown position, elbows set slightly back. Push down to forearms LEVEL (elbows 90°) and hold. Log weight + seconds.",
+    "execute": "Five holds, ~6–7/10 effort, 1 min rest. Pain up to 3/10 is fine.",
+    "meta": {
+      "n": 5,
+      "lo": 30,
+      "hi": 45,
+      "inc": 5,
+      "unit": "sec",
+      "ph": false,
+      "vm": 1,
+      "pain": 1,
+      "rest": 60,
+      "mus": [
+        "triceps"
+      ]
+    },
+    "next": {
+      "w": 25,
+      "r": 40,
+      "asof": "2026-10-26",
+      "why": "hold 25 x 40 — then add time to 45"
+    }
+  },
+  "l35": {
+    "session": "L3",
+    "shares": "a25",
+    "name": "Calf Raises & Rocks (The Bob)",
+    "sr": "2 × 20 each way",
+    "equipment": "Bodyweight · hand on the rack for balance",
+    "setup": "Stand tall, hand on the rack. Rocks = heel-to-toe ankle rocks; raises = full calf raises.",
+    "execute": "20 each way, 2 rounds. Slow at the top and bottom.",
+    "meta": {
+      "n": 2,
+      "lo": 15,
+      "hi": 20,
+      "inc": 5,
+      "unit": "reps",
+      "ph": false,
+      "vm": 1,
+      "bw": 1,
+      "rest": 45,
+      "mus": [
+        "calves"
+      ]
+    },
+    "next": {
+      "w": 0,
+      "r": 20,
+      "asof": "2026-10-26",
+      "why": "20 each way"
+    }
+  },
+  "l32": {
+    "session": "L3",
+    "shares": "b22",
+    "name": "Bulgarian Split Squat",
+    "sr": "3 × 8–10 / leg",
+    "equipment": "Dumbbells · bench · LOWER rear-foot platform",
+    "setup": "Rear foot on the LOWER platform (right-knee fix). Pick the dumbbells up from the bench, not the floor. Torso tall the whole time.",
+    "execute": "Lower straight down, front shin near vertical, drive through the front heel. Weight per hand.",
+    "meta": {
+      "n": 3,
+      "lo": 8,
+      "hi": 10,
+      "inc": 5,
+      "unit": "reps",
+      "ph": true,
+      "vm": 2,
+      "rest": 120,
+      "mus": [
+        "quads",
+        "glutes"
+      ]
+    }
+  },
+  "l33": {
+    "session": "L3",
+    "shares": "b25",
+    "name": "Reverse Lunge",
+    "sr": "2 × 8–10 / leg",
+    "equipment": "Bodyweight or dumbbells (from the bench)",
+    "setup": "Knee-friendly lunge — front foot flat, step BACK, shallower knee bend than a Bulgarian. Torso tall.",
+    "execute": "Step back, lower straight down, push through the front heel to return. Alternate legs or finish one side first.",
+    "meta": {
+      "n": 2,
+      "lo": 8,
+      "hi": 10,
+      "inc": 5,
+      "unit": "reps",
+      "ph": true,
+      "vm": 2,
+      "rest": 90,
+      "mus": [
+        "quads",
+        "glutes"
+      ]
+    }
+  },
+  "l34": {
+    "session": "L3",
+    "name": "Wall Sit",
+    "sr": "2 × 30–45 sec",
+    "equipment": "Wall",
+    "setup": "Back FLAT against the wall, feet out in front, slide down until thighs are about parallel (higher is fine to start).",
+    "execute": "Hold. Log seconds in the reps box. No spinal load — quads only.",
+    "meta": {
+      "n": 2,
+      "lo": 20,
+      "hi": 45,
+      "inc": 5,
+      "unit": "sec",
+      "ph": false,
+      "vm": 1,
+      "bw": 1,
+      "rest": 60,
+      "mus": [
+        "quads"
+      ]
+    },
+    "next": {
+      "w": 0,
+      "r": 30,
+      "asof": "2026-10-26",
+      "why": "25 and 15 on 10/25 — aim 30 each"
+    }
+  },
+  "l36": {
+    "session": "L3",
+    "shares": "a23",
+    "name": "Leg Extension (optional)",
+    "sr": "2 × 12",
+    "equipment": "Leg extension",
+    "setup": "OPTIONAL — only if the right knee is quiet. Skip at any knee pressure.",
+    "execute": "Controlled up and down, squeeze at the top.",
+    "meta": {
+      "n": 2,
+      "lo": 10,
+      "hi": 15,
+      "inc": 5,
+      "unit": "reps",
+      "ph": false,
+      "vm": 1,
+      "rest": 60,
+      "mus": [
+        "quads"
+      ]
+    },
+    "next": {
+      "w": 25,
+      "r": 12,
+      "asof": "2026-10-26",
+      "why": "25 — cut it if the knee talks"
+    }
   }
 }
