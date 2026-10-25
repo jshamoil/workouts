@@ -29,6 +29,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font
 .brand b{font-family:var(--disp);font-weight:700;font-size:19px;letter-spacing:.05em;text-transform:uppercase}
 .brand span{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
 [role=tablist]{display:grid;grid-template-columns:repeat(5,1fr)}
+.tab[hidden]{display:none}
+[role=tablist].dense .tc{font-size:19px}
+[role=tablist].dense .tl{font-size:8.5px;letter-spacing:.08em}
+[role=tablist].dense .tf{font-size:9.5px}
 #t-AR.due::after{content:'';display:block;width:6px;height:6px;border-radius:50%;background:var(--amber);margin-top:2px}
 .armhide{display:none!important}
 .armnote{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin:0 4px 12px;line-height:1.5}
@@ -1436,7 +1440,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></section><section role="tabpanel" id="s-AR" aria-labelledby="t-AR" class="pane" hidden><p class="pane-hd">0 movements · run in order<span data-saved class="saved"></span></p><p class="armnote" id="armnote" hidden></p></section><section role="tabpanel" id="s-WK" aria-label="Log" class="pane" hidden><div class="wkcard" id="goalwrap" hidden><h3>Goal</h3><div id="goalcard"></div></div><div class="wkcard"><h3>Muscle coverage · trailing 7 days</h3><div id="heatmap"></div><p class="wk-legend"><i class="lg lg-low"></i>under 8 sets <i class="lg lg-ok"></i>8–20 <i class="lg lg-hi"></i>20+</p></div><div class="wkcard"><h3>Consistency · last 8 weeks</h3><div id="cal"></div><p id="streak" class="wk-sub"></p><p class="wk-sub">tap a lit day for the full session</p></div><div class="wkcard" id="dayd" hidden><h3 id="dayd-h">Session detail</h3><div id="dayd-b"></div></div><div class="wkcard"><h3>Recomposition</h3><div id="recomp"></div></div><div class="wkcard"><h3>Bodyweight</h3><div id="bwcard"></div></div><div class="wkcard"><h3>Sync log · last attempts</h3><div id="synclog"></div></div></section></main>
 
 <footer>
-  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-09-26.a</span></div>
+  <div class="ft-bar"><span id="mode">Checking storage…</span><span id="buildv">build 2026-10-25.a</span></div>
   <p class="ft-tip" id="sync" hidden></p>
   <p class="ft-tip" id="syncclear" hidden><u>Already confirmed these landed in Airtable? Tap here to clear the queue.</u></p>
   <p class="ft-tip"><b>Finish</b> banks the session, syncs it to Airtable, and copies your log — paste it to Claude whenever you want the coach.</p>
@@ -1449,6 +1453,19 @@ var META = {"a11": {"n": 3, "lo": 8, "hi": 10, "inc": 5, "unit": "reps", "ph": 1
 var DISP = {A1:'U1', A2:'L1', B1:'U2', B2:'L2', R1:'A1', R2:'A2', AR:'Arms'};
 function disp(c){ return DISP[c] || c; }
 var tabs = [].slice.call(document.querySelectorAll('[role=tab]'));
+// ---- shared history (10/25) ----
+// content.json per-id `shares: "b22"` makes a card read and write ANOTHER
+// id's history, so the same movement on two tabs (L3's Bulgarian and L2's)
+// never forks progression. Every history-keyed site goes through hid().
+var SHARES = {};
+function hid(id){ return SHARES[id] || id; }
+// ---- data-driven sessions (10/25) ----
+// content.json _sessions: [{code, label, sub, detail, rotation, removed,
+// warmup: [...]}] adds, relabels or retires session tabs; _rotation orders
+// the pointer. Internal codes for the baked four stay A1/A2/B1/B2; coach
+// codes are used verbatim (pane s-<code>, Airtable Session = code).
+var SESS_FLAGS = {}, DYN_SESS = {};
+var RESERVED_SESS = {A1: 1, A2: 1, B1: 1, B2: 1, R1: 1, R2: 1, AR: 1, WK: 1, Arms: 1};
 var state = {cur:{}, hist:{}};
 var saveT, store = makeStore();
 
@@ -1587,7 +1604,7 @@ function bestE1(entry){
 }
 function priorBests(id, beforeDate){
   var bw2 = 0, be = 0;
-  (state.hist[id] || []).forEach(function(en){
+  (state.hist[hid(id)] || []).forEach(function(en){
     if(beforeDate && en.date >= beforeDate) return;
     en.sets.forEach(function(st){
       if(num(st.r) > 0 && num(st.w) > bw2) bw2 = num(st.w);
@@ -1612,7 +1629,7 @@ function plateLine(id){
   p.hidden = false;
 }
 function seriesFor(id){
-  return (state.hist[id] || []).map(function(en){
+  return (state.hist[hid(id)] || []).map(function(en){
     var top = 0, e1 = bestE1(en), reps = 0;
     en.sets.forEach(function(st){
       if(num(st.r) > 0){ reps += num(st.r); if(num(st.w) > top) top = num(st.w); }
@@ -1659,7 +1676,7 @@ function renderChart(id){
     '</p>';
 }
 
-function lastFor(id){ var h = state.hist[id]; return (h && h.length) ? h[h.length-1] : null; }
+function lastFor(id){ var h = state.hist[hid(id)]; return (h && h.length) ? h[h.length-1] : null; }
 
 function suggest(id){
   // coach override (9/2): content.json per-id next {w, r, asof, why} pins the
@@ -1671,7 +1688,7 @@ function suggest(id){
   var ovr = NEXT_OVR[id] || null;
   if(ovr && !ovr.asof) ovr = null;
   if(ovr){
-    var hOv = state.hist[id];
+    var hOv = state.hist[hid(id)];
     if(hOv && hOv.length && hOv[hOv.length - 1].date >= ovr.asof) ovr = null;
   }
   if(ovr && (ovr.w != null || ovr.r != null)){
@@ -1754,7 +1771,7 @@ function renderPrev(id){
   p.hidden = false;
   var el2 = exEl(id), ln = el2 && el2.querySelector('[data-lastnote]');
   if(ln){
-    var nt = state.note && state.note[id];
+    var nt = state.note && state.note[hid(id)];
     if(nt && nt.txt && nt.date !== today()){
       ln.textContent = '\ud83d\udccc ' + nt.date + ': ' + nt.txt;
       ln.hidden = false;
@@ -1880,15 +1897,121 @@ if(logBtn) logBtn.addEventListener('click', function(){
     if(bc0) setTimeout(function(){ bc0.scrollIntoView({behavior: 'smooth', block: 'start'}); }, 60);
   }
 });
-tabs.forEach(function(t, i){
+function bindTab(t){
+  if(t.dataset.bound) return;
+  t.dataset.bound = '1';
   t.addEventListener('click', function(){ select(t.dataset.s); });
   t.addEventListener('keydown', function(e){
     var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
     if(!d) return;
     e.preventDefault();
-    select(tabs[(i + d + tabs.length) % tabs.length].dataset.s, true);
+    var vis = tabs.filter(function(x){ return !x.hidden; });
+    var i = vis.indexOf(t);
+    select(vis[(i + d + vis.length) % vis.length].dataset.s, true);
   });
-});
+}
+// (re)collect tabs in DOM order, bind any new ones, size the grid to the
+// visible count — called at parse and after every _sessions apply
+function rebuildTabs(){
+  tabs = [].slice.call(document.querySelectorAll('[role=tab]'));
+  tabs.forEach(bindTab);
+  var list = document.querySelector('[role=tablist]');
+  var vis = tabs.filter(function(x){ return !x.hidden; }).length || 1;
+  if(list){
+    list.style.gridTemplateColumns = 'repeat(' + vis + ',1fr)';
+    list.classList.toggle('dense', vis > 5);
+  }
+}
+rebuildTabs();
+// create or update one session tab + pane from a _sessions entry
+function ensureSession(ic, e){
+  var tab = document.getElementById('t-' + ic), pane = document.getElementById('s-' + ic);
+  var arTab = document.getElementById('t-AR'), arPane = document.getElementById('s-AR');
+  if(!pane){
+    pane = document.createElement('section');
+    pane.setAttribute('role', 'tabpanel');
+    pane.id = 's-' + ic;
+    pane.setAttribute('aria-labelledby', 't-' + ic);
+    pane.className = 'pane';
+    pane.hidden = true;
+    pane.innerHTML = '<p class="pane-hd">0 movements \u00b7 run in order<span data-saved class="saved"></span></p>';
+    if(arPane) arPane.parentNode.insertBefore(pane, arPane);
+    else document.querySelector('main').appendChild(pane);
+    DYN_SESS[ic] = 1;
+  }
+  if(!tab){
+    tab = document.createElement('button');
+    tab.setAttribute('role', 'tab');
+    tab.className = 'tab';
+    tab.id = 't-' + ic;
+    tab.setAttribute('aria-controls', 's-' + ic);
+    tab.setAttribute('aria-selected', 'false');
+    tab.tabIndex = -1;
+    tab.dataset.s = ic;
+    tab.innerHTML = '<span class="tc"></span><span class="tl"></span><span class="tf"></span>';
+    var list = document.querySelector('[role=tablist]');
+    if(arTab) list.insertBefore(tab, arTab); else list.appendChild(tab);
+  }
+  var tc = tab.querySelector('.tc'), tl = tab.querySelector('.tl'), tf = tab.querySelector('.tf');
+  if(tc && (e.label || DYN_SESS[ic])) tc.textContent = e.label || disp(ic);
+  if(tl && (e.sub !== undefined || DYN_SESS[ic])) tl.textContent = e.sub || '';
+  if(tf && (e.detail !== undefined || DYN_SESS[ic])) tf.textContent = e.detail || '';
+  if(Array.isArray(e.warmup)){
+    var wu = pane.querySelector('details.wu');
+    if(!wu){
+      wu = document.createElement('details');
+      wu.className = 'wu';
+      wu.innerHTML = '<summary><span class="wu-t">Warm-up</span><span class="wu-m"></span>' +
+        '<svg class="chev" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><ol></ol>';
+      var hd0 = pane.querySelector('.pane-hd');
+      pane.insertBefore(wu, hd0 ? hd0.nextSibling : pane.firstChild);
+    }
+    var ol = wu.querySelector('ol'); ol.innerHTML = '';
+    e.warmup.forEach(function(t9){ var li = document.createElement('li'); li.textContent = String(t9); ol.appendChild(li); });
+    var wm = wu.querySelector('.wu-m');
+    if(wm) wm.textContent = '~' + (e.warmupMins || 6) + ' min \u00b7 not logged';
+  }
+  var gone = !!e.removed;
+  tab.hidden = gone;
+  if(gone){
+    pane.hidden = true;
+    if(tab.getAttribute('aria-selected') === 'true') setTimeout(function(){ select(nextSession()); }, 0);
+  }
+}
+function applySessions(list){
+  SESS_FLAGS = {};
+  var seen = {};
+  (Array.isArray(list) ? list : []).forEach(function(e){
+    if(!e || !e.code) return;
+    var raw = String(e.code);
+    if(RESERVED_SESS[raw] && !SESS_MAP[raw]) return;    // internal codes aren't addressable
+    var ic = SESS_MAP[raw] || raw;
+    if(ic === 'R1' || ic === 'R2' || ic === 'AR' || ic === 'WK') return;  // arms blocks / Log aren't sessions
+    if(!/^[A-Za-z0-9_-]{1,12}$/.test(ic)) return;
+    seen[ic] = 1;
+    SESS_FLAGS[ic] = {rotation: e.rotation, removed: !!e.removed};
+    ensureSession(ic, e);
+  });
+  // a dynamic tab no longer listed is treated as retired (history kept)
+  Object.keys(DYN_SESS).forEach(function(ic){
+    if(!seen[ic]){ SESS_FLAGS[ic] = {removed: true}; ensureSession(ic, {removed: true}); }
+  });
+  rebuildTabs();
+}
+function computeRot(list){
+  var base = (Array.isArray(list) && list.length) ? list.map(function(x){ return SESS_MAP[x] || String(x); }) : ['A1', 'A2', 'B1', 'B2'];
+  Object.keys(SESS_FLAGS).forEach(function(ic){
+    if(SESS_FLAGS[ic].rotation === true && base.indexOf(ic) < 0) base.push(ic);
+  });
+  var out = [];
+  base.forEach(function(ic){
+    var f = SESS_FLAGS[ic];
+    if(ic === 'AR' || ic === 'WK' || !document.getElementById('s-' + ic)) return;
+    if(f && (f.rotation === false || f.removed)) return;
+    if(out.indexOf(ic) < 0) out.push(ic);
+  });
+  ROT = out.length ? out : ['A1', 'A2', 'B1', 'B2'];
+}
 
 function setOpen(ex, on, scroll){
   var b = ex.querySelector('.ex-hd'), bd = ex.querySelector('.ex-bd');
@@ -2021,7 +2144,7 @@ function bindEx(ex){
   var noteIn = ex.querySelector('.exnote');
   if(noteIn) noteIn.addEventListener('input', function(){
     state.note = state.note || {};
-    state.note[id] = {date: today(), txt: noteIn.value};
+    state.note[hid(id)] = {date: today(), txt: noteIn.value};
     save();
   });
 }
@@ -2046,7 +2169,7 @@ function injectSetg(ex){
   bd.insertBefore(row, bd.firstChild);
   inp.addEventListener('input', function(){
     state.setg = state.setg || {};
-    state.setg[id] = inp.value;
+    state.setg[hid(id)] = inp.value;
     save();
   });
 }
@@ -2055,7 +2178,7 @@ function renderSetg(){
   [].slice.call(document.querySelectorAll('.ex')).forEach(function(ex){
     var id = ex.dataset.ex, inp = ex.querySelector('.setgin');
     if(!inp || document.activeElement === inp) return;
-    var v = state.setg && state.setg[id];
+    var v = state.setg && state.setg[hid(id)];
     inp.value = v ? v : (SETG_SEED[id] || '');
   });
 }
@@ -2085,7 +2208,7 @@ function buildLog(code, energy){
     out.push('');
     out.push(el.querySelector('.nm').textContent.trim());
     out = out.concat(lines);
-    var nt = state.note && state.note[id];
+    var nt = state.note && state.note[hid(id)];
     if(nt && nt.txt && nt.date === today()) out.push('  note: ' + nt.txt);
     if(vol){ out.push('  volume ' + fmt(vol) + ' lb'); grand += vol; }
   });
@@ -2145,7 +2268,7 @@ function buildPayload(code, energy){
       var xr = xrow(tr);
       var ev = (xr.querySelector('.rpe') || {dataset: {}}).dataset.v || '';
       var pv = +((xr.querySelector('.pain') || {dataset: {}}).dataset.v || 0);
-      var s = {id: id, name: nm, n: i + 1,
+      var s = {id: hid(id), name: nm, n: i + 1,
                done: tr.querySelector('.tick').getAttribute('aria-pressed') === 'true' ? 1 : 0};
       if(num(r)) s.reps = num(r);
       if(!m.bw && w){
@@ -2160,7 +2283,7 @@ function buildPayload(code, energy){
       if(pv) s.pain = pv >= 3 ? 'Painful' : pv === 2 ? 'Twinge' : 'Fine';
       sets.push(s);
     });
-    var nt = state.note && state.note[id];
+    var nt = state.note && state.note[hid(id)];
     if(nt && nt.txt && nt.date === today()) notes.push(nm + ': ' + nt.txt);
   });
   if(!sets.length) return null;
@@ -2483,17 +2606,23 @@ function touched(id){
 function savedToday(code){
   var d = today();
   return idsIn(code).some(function(id){
-    var h = state.hist[id];
-    return h && h.length && h[h.length-1].date === d;
+    var h = histFor(id, code);
+    return h.length && h[h.length-1].date === d;
   });
+}
+// an exercise's history as seen from one session: entries tagged with another
+// session (shared ids, 10/25) are ignored; untagged legacy entries count
+function histFor(id, code){
+  var own = !SHARES[id];   // untagged legacy entries belong to the original id's tab
+  return (state.hist[hid(id)] || []).filter(function(en){ return en.s ? en.s === code : own; });
 }
 function markSaved(code){
   var el = document.querySelector('#s-' + code + ' [data-saved]');
   if(!el) return;
   var d = today(), latest = null;
   idsIn(code).forEach(function(id){
-    var h = state.hist[id];
-    if(h && h.length && (!latest || h[h.length-1].date > latest)) latest = h[h.length-1].date;
+    var h = histFor(id, code);
+    if(h.length && (!latest || h[h.length-1].date > latest)) latest = h[h.length-1].date;
   });
   el.textContent = latest ? (latest === d ? ' \u00b7 banked today' : ' \u00b7 last banked ' + latest) : '';
 }
@@ -2538,10 +2667,13 @@ document.getElementById('finish').addEventListener('click', function(){
       var sets = realSets(id).map(function(st){
         return {w: st.w, r: st.r, d: st.d, e: st.e, p: st.p};
       });
-      var h = (state.hist[id] || []).slice();
-      if(h.length && h[h.length-1].date === d) h[h.length-1] = {date: d, sets: sets};
-      else h = h.concat([{date: d, sets: sets}]);
-      state.hist[id] = h.slice(-10);
+      var hk = hid(id), en9 = {date: d, sets: sets, s: code};
+      var h = (state.hist[hk] || []).slice(), li = h.length - 1;
+      // same day + same session = re-bank (replace); a shared id banked from
+      // another tab the same day keeps both entries
+      if(li >= 0 && h[li].date === d && (!h[li].s || h[li].s === code)) h[li] = en9;
+      else h = h.concat([en9]);
+      state.hist[hk] = h.slice(-10);
       delete state.cur[id];
     });
     ids.forEach(function(id){ if(live.indexOf(id) < 0) delete state.cur[id]; });
@@ -2972,11 +3104,15 @@ function applyContent(c){
   contentGoal = c._goal || null;
   contentWeighin = c._weighin || null;
   NEXT_OVR = {};
+  SHARES = {};
+  // sessions first, so cards can attach to a tab created by this same file
+  applySessions(c._sessions);
   Object.keys(c).forEach(function(id){
     if(id.charAt(0) === '_') return;
     var o = c[id];
     if(!o) return;
     if(o.next) NEXT_OVR[id] = o.next;
+    if(o.shares && String(o.shares) !== id) SHARES[id] = String(o.shares);
     // --- structure (coach-owned): remove / restore / create / move ---
     if(o.removed){
       var elR = exEl(id);
@@ -3075,6 +3211,7 @@ function applyContent(c){
     listed.concat(rest).forEach(function(e){ pane.appendChild(e); });
   });
   contentArms = c._arms || null;
+  computeRot(c._rotation);
   // _bw: coach-pushed body-comp readings (scale → Apple Health → coach →
   // here), merged into the bodyweight log with the coach's value winning on
   // a duplicate date — the app itself never collects weight in any form
@@ -3105,9 +3242,8 @@ function applyContent(c){
 // badges renumber on every apply and every arms fold — adds, removes and
 // moves change them even when _order is untouched
 function renumberPanes(){
-  ['A1', 'A2', 'B1', 'B2', 'AR'].forEach(function(code){
-    var pane = document.getElementById('s-' + code);
-    if(!pane) return;
+  [].slice.call(document.querySelectorAll('section.pane')).forEach(function(pane){
+    if(pane.id === 's-WK') return;
     var vis = [].slice.call(pane.querySelectorAll('.ex')).filter(function(e){
       return !e.classList.contains('armhide');
     });
@@ -3181,7 +3317,7 @@ function lastSession(){
   var best = null;
   ROT.forEach(function(code){
     idsIn(code).forEach(function(id){
-      (state.hist[id] || []).forEach(function(en){
+      histFor(id, code).forEach(function(en){
         if(!best || en.date > best.date) best = {date: en.date, code: code};
       });
     });
@@ -3194,13 +3330,13 @@ function nextSession(){
     if(ROT.indexOf(oc) >= 0){
       var asof = contentNext.asof || '0000-00-00', consumed = false;
       idsIn(oc).forEach(function(id){
-        (state.hist[id] || []).forEach(function(en){ if(en.date >= asof) consumed = true; });
+        histFor(id, oc).forEach(function(en){ if(en.date >= asof) consumed = true; });
       });
       if(!consumed) return oc;
     }
   }
   var best = lastSession();
-  return best ? ROT[(ROT.indexOf(best.code) + 1) % 4] : 'A1';
+  return best ? ROT[(ROT.indexOf(best.code) + 1) % ROT.length] : ROT[0];
 }
 function renderRot(){
   var el = document.getElementById('rotline'); if(!el) return;
@@ -3235,7 +3371,7 @@ function dayData(d){
       if(en.date !== d || !en.sets || !en.sets.length) return;
       var el = exEl(id) || stashedEx[id];
       var pane = el && el.closest ? el.closest('.pane') : null;
-      var code = pane && pane.id !== 's-WK' ? pane.id.slice(2) : id.slice(0, 2).toUpperCase();
+      var code = en.s || (pane && pane.id !== 's-WK' ? pane.id.slice(2) : id.slice(0, 2).toUpperCase());
       var nm = el && el.querySelector ? el.querySelector('.nm').textContent.replace(/\s+/g, ' ').trim() : id;
       (byCode[code] = byCode[code] || []).push({id: id, el: el, nm: nm, sets: en.sets});
     });

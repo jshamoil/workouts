@@ -111,6 +111,30 @@ Exercises (`tblmBTkSo88QCDDIc`, has `App ID` = a11…b27, do not edit), Daily, E
   hard-excluded from arms blocks — rehab needs frequency. renderArmsPane refilters
   from renderRot after every bank. Airtable Workouts.Session carries an "Arms" option
   (A1/A2 options exist but are unused, 9/2).
+- **Data-driven sessions (10/25, Josh's work order)**: `_sessions` in content.json is a
+  list of `{code, label, sub, detail, rotation, removed, warmup: [...], warmupMins}`.
+  `applySessions` runs FIRST inside `applyContent` so cards can attach to a tab created
+  by the same file; `ensureSession` builds the `<section id="s-<code>">` pane (inserted
+  before Arms) + `<button id="t-<code>">` tab, and `rebuildTabs` re-collects/binds tabs
+  and sizes the grid (`dense` class above 5 visible). Baked codes are addressed by
+  display name (U1/L1/U2/L2 → A1/A2/B1/B2 via `SESS_MAP`) and may be relabeled or set
+  `rotation:false`, never removed; coach codes are used verbatim as pane id AND Airtable
+  Session value (`/^[A-Za-z0-9_-]{1,12}$/`, internal codes R1/R2/AR/WK rejected); a
+  coach code dropped from the list is treated as removed (tab + pane hidden, history
+  kept). `_rotation` (display codes) feeds `computeRot` → `ROT`: `rotation:true` sessions
+  not listed are appended, `rotation:false`/removed filtered out; `nextSession` cycles
+  `ROT.length`, never 4. Cards attach via `session: "L3"`, order via `_order.L3`,
+  `renumberPanes` walks every `section.pane`. **`shares`** (per-id, e.g. L3's Bulgarian
+  `shares: "b22"`): `hid(id)` redirects every history-keyed site — hist, notes, setg,
+  suggest/override expiry, payload `id` — so one movement on two tabs never forks. Bank
+  entries now carry `s: <code>`; `histFor(id, code)` filters by it so a shared id can't
+  fool `savedToday`/`markSaved`/`lastSession`/`nextSession` or the day-detail view
+  (untagged legacy entries belong to the original id's tab). Same day + same session =
+  replace; same day from another tab appends. **A new session code needs a
+  Workouts.Session select option before its first bank** (the automation script does not
+  typecast; a missing option fails the run) — seed via `create_records_for_table` with
+  `typecast:true` (seed row for the coach to delete) or the coach adds it. `L3` was
+  seeded 10/25. Label is cosmetic: Airtable always gets the code.
 - Dynamic-card architecture (23.a): `buildExCard(id, o)` generates cards matching the
   baked selector contract; bindings are factored into `bindHd`/`bindRows`/`bindEx`/
   `injectSetg` so generated and rebuilt DOM gets wired identically to parsed DOM —
