@@ -115,8 +115,8 @@
     "next": {
       "w": 5,
       "r": 15,
-      "asof": "2026-10-25",
-      "why": "ceiling — rehab"
+      "asof": "2026-10-28",
+      "why": "both sets — elbow rehab"
     },
     "name": "Wrist Eccentrics — both directions",
     "equipment": "One dumbbell, 5 lb · forearm supported on a bench or your thigh",
@@ -168,8 +168,8 @@
     "next": {
       "w": 30,
       "r": 12,
-      "asof": "2026-10-25",
-      "why": "25x15x3 topped — up 5"
+      "asof": "2026-10-28",
+      "why": "30 x 12/10 — own 12"
     }
   },
   "a19": {
@@ -371,8 +371,8 @@
     "next": {
       "w": 45,
       "r": 12,
-      "asof": "2026-10-25",
-      "why": "hold 45 — set 3 Hard; own it untagged"
+      "asof": "2026-10-28",
+      "why": "45 x 12/10/10 on 10/27 (3 days after the last U1) — own 12 x3"
     },
     "meta": {
       "inc": 5
@@ -382,9 +382,9 @@
   "a12": {
     "next": {
       "w": 40,
-      "r": 10,
-      "asof": "2026-10-25",
-      "why": "35x12x3 clean — up 5 (careful: 45 twinged on 9/17)"
+      "r": 12,
+      "asof": "2026-10-28",
+      "why": "40x10x2 clean — climb to 12"
     },
     "meta": {
       "inc": 5
@@ -395,7 +395,7 @@
     "next": {
       "w": 90,
       "r": 15,
-      "asof": "2026-10-25",
+      "asof": "2026-10-28",
       "why": "hold 90, climb to 15"
     },
     "meta": {
@@ -408,8 +408,8 @@
     "next": {
       "w": 10,
       "r": 17,
-      "asof": "2026-10-25",
-      "why": "hold 10, climb toward 20"
+      "asof": "2026-10-28",
+      "why": "3 sets this time"
     },
     "meta": {
       "inc": 5,
@@ -570,7 +570,7 @@
     "next": {
       "w": 15,
       "r": 15,
-      "asof": "2026-10-25",
+      "asof": "2026-10-28",
       "why": "hold 15/hand"
     }
   },
@@ -655,9 +655,9 @@
     },
     "next": {
       "w": 25,
-      "r": 40,
-      "asof": "2026-10-25",
-      "why": "5 holds done 10/24 — add time: 40 sec"
+      "r": 45,
+      "asof": "2026-10-28",
+      "why": "40 sec x5 clean — up to 45"
     }
   },
   "b1a": {
